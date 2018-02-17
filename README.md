@@ -4,11 +4,11 @@
 --------
 Verifying Transactions with Human Intuition
 
->**Notes:**
-> HIPR takes in data sets, encrypts them into a tile slide puzzle game built on Nethereum + Unity, and compares and contrasts the data sets prior to 3rd Party future analysis. 
-> Leveraging Nethereum, HIPR has direct connections to the Ethereum Blockchain for input data for [PlayerScore](https://github.com/hercone/contracts/playerscore.sol) functionality for payouts to the end user in HERC tokens. 
-> The [Audit.sol Smart Contract](https://github.com/hercone/contracts/audit.sol) compares and contrasts the data sets from touchpointss along the same Supply Chain
-> The Audited files are sent to those involved in the Supply Chain Queries.
+> **Notes:**
+> - HIPR takes in data sets, encrypts them into a tile slide puzzle game built on Nethereum + Unity, and compares and contrasts the data sets prior to 3rd Party future analysis. 
+> - Leveraging Nethereum, HIPR has direct connections to the Ethereum Blockchain for input data for [PlayerScore](https://github.com/hercone/contracts/playerscore.sol) functionality for payouts to the end user in HERC tokens. 
+> - The [Audit.sol Smart Contract](https://github.com/hercone/contracts/audit.sol) compares and contrasts the data sets from touchpointss along the same Supply Chain
+> - The Audited files are sent to those involved in the Supply Chain Queries.
 
 # Getting Started
 --------
