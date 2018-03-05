@@ -2,9 +2,8 @@
 
 ![HIPR](https://github.com/HERCone/HIPR/blob/master/logo.JPG)
 --------
-# Human Intuition Picture Recognition
+# Human Initiated Performance Report
 --------
-Verifying Transactions with Human Intuition
 
 > **Notes:**
 > - HIPR takes in data sets, encrypts them into a tile slide puzzle game built on Nethereum + Unity, and compares and contrasts the data sets prior to 3rd Party future analysis. 
