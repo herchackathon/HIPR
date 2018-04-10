@@ -2,8 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ST_PuzzleDisplay : MonoBehaviour 
+public class ST_PuzzleDisplay : MonoBehaviour
 {
+    public static int PuzzleMoves = 0;
+    public static bool CanMove = false;
+    public static bool CanCount = false;
+
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
 
@@ -231,6 +235,9 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		StartCoroutine(CheckForComplete());
 
 		yield return null;
+
+	    CanMove = true;
+	    CanCount = true;
 	}
 
 	public IEnumerator CheckForComplete()

@@ -44,8 +44,8 @@ public class ST_PuzzleTile : MonoBehaviour
 			yield return null;
 		}
 
-		// after each move check if we are now in the correct location.
-		if(ArrayLocation == GridLocation){CorrectLocation = true;}else{CorrectLocation = false;}
+        // after each move check if we are now in the correct location.
+        if (ArrayLocation == GridLocation){CorrectLocation = true;}else{CorrectLocation = false;}
 
 		// if we are not an active tile then hide our renderer and collider.
 		if(Active == false)
@@ -55,7 +55,9 @@ public class ST_PuzzleTile : MonoBehaviour
 		}
 
 		yield return null;
-	}
+
+	    ST_PuzzleDisplay.CanMove = true;
+    }
 
 	public void ExecuteAdditionalMove()
 	{
@@ -63,9 +65,24 @@ public class ST_PuzzleTile : MonoBehaviour
 		LaunchPositionCoroutine(this.transform.parent.GetComponent<ST_PuzzleDisplay>().GetTargetLocation(this.GetComponent<ST_PuzzleTile>()));
 	}
 
-	void OnMouseDown()
+	protected void OnMouseDown()
 	{
-		// get the puzzle display and return the new target location from this tile. 
-		LaunchPositionCoroutine(this.transform.parent.GetComponent<ST_PuzzleDisplay>().GetTargetLocation(this.GetComponent<ST_PuzzleTile>()));
+	    if (ST_PuzzleDisplay.CanMove)
+	    {
+	        ST_PuzzleDisplay.CanMove = false;
+
+	        var movePosition = this.transform.parent.GetComponent<ST_PuzzleDisplay>().GetTargetLocation(this.GetComponent<ST_PuzzleTile>());
+
+	        if (movePosition == TargetPosition)
+	            ST_PuzzleDisplay.CanCount = false;
+
+	        if (ST_PuzzleDisplay.CanCount)
+	            ST_PuzzleDisplay.PuzzleMoves++;
+
+	        ST_PuzzleDisplay.CanCount = true;
+
+            // get the puzzle display and return the new target location from this tile. 
+            LaunchPositionCoroutine(movePosition);
+	    }
 	}
 }
