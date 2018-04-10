@@ -11,6 +11,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
 
+    public RectTransform CurrentCanvas;
+
 	// the width and height of the puzzle in tiles.
 	public int Height = 3;
 	public int Width  = 3;
@@ -48,8 +50,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
         PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
 
-		// create the games puzzle tiles from the provided image.
-		CreatePuzzleTiles();
+        // create the games puzzle tiles from the provided image.
+        CreatePuzzleTiles();
 
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
@@ -72,19 +74,45 @@ public class ST_PuzzleDisplay : MonoBehaviour
     private void PositionInView()
     {
         const float DISTANCE_FROM_CAM = 50;
-        //Calculate the max width the object is allowed to have in world space, based on the padding we decided.
-        float maxWidth = Vector3.Distance(Camera.main.ViewportToWorldPoint(new Vector3(padding.x, 0.5f, DISTANCE_FROM_CAM)),
-            Camera.main.ViewportToWorldPoint(new Vector3(1f - padding.x, 0.5f, DISTANCE_FROM_CAM)));
-        //Calculate the scale based on width only - you will have to check if the model is tall instead of wide and check against the aspect of the camera, and act accordingly.
-        float scale = (maxWidth / (Width * Tile.transform.localScale.x));
-        //Apply the scale to the model.
-        transform.localScale = Vector3.one * scale;
 
-        //Position the model at the desired distance.
-        Vector3 desiredPosition = DISTANCE_FROM_CAM * Camera.main.transform.forward + Camera.main.transform.position;
-        //The max width we calculated is for the entirety of the model in the viewport, so we need to position it so the front of the model is at the desired distance, not the center.
-        //You will also have to keep rotation of the camera and the model in mind.
-        transform.localPosition = desiredPosition + new Vector3(0, 0, (Height * Tile.transform.localScale.z) * scale);
+        if (CurrentCanvas.rect.width < CurrentCanvas.rect.height)
+        {
+            //Calculate the max width the object is allowed to have in world space, based on the padding we decided.
+            float maxWidth = Vector3.Distance(
+                Camera.main.ViewportToWorldPoint(new Vector3(padding.x, 0.5f, DISTANCE_FROM_CAM)),
+                Camera.main.ViewportToWorldPoint(new Vector3(1f - padding.x, 0.5f, DISTANCE_FROM_CAM)));
+            //Calculate the scale based on width only - you will have to check if the model is tall instead of wide and check against the aspect of the camera, and act accordingly.
+            float scale = (maxWidth / (Width * Tile.transform.localScale.x));
+            //Apply the scale to the model.
+            transform.localScale = Vector3.one * scale;
+
+            //Position the model at the desired distance.
+            Vector3 desiredPosition =
+                DISTANCE_FROM_CAM * Camera.main.transform.forward + Camera.main.transform.position;
+            //The max width we calculated is for the entirety of the model in the viewport, so we need to position it so the front of the model is at the desired distance, not the center.
+            //You will also have to keep rotation of the camera and the model in mind.
+            transform.localPosition =
+                desiredPosition + new Vector3(0, 0, (Height * Tile.transform.localScale.z) * scale);
+        }
+        else
+        {
+            //Calculate the max width the object is allowed to have in world space, based on the padding we decided.
+            float maxWidth = Vector3.Distance(
+                Camera.main.ViewportToWorldPoint(new Vector3(0.5f, padding.x, DISTANCE_FROM_CAM)),
+                Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1f - padding.x, DISTANCE_FROM_CAM)));
+            //Calculate the scale based on width only - you will have to check if the model is tall instead of wide and check against the aspect of the camera, and act accordingly.
+            float scale = (maxWidth / (Width * Tile.transform.localScale.x));
+            //Apply the scale to the model.
+            transform.localScale = Vector3.one * scale;
+
+            //Position the model at the desired distance.
+            Vector3 desiredPosition =
+                DISTANCE_FROM_CAM * Camera.main.transform.forward + Camera.main.transform.position;
+            //The max width we calculated is for the entirety of the model in the viewport, so we need to position it so the front of the model is at the desired distance, not the center.
+            //You will also have to keep rotation of the camera and the model in mind.
+            transform.localPosition =
+                desiredPosition + new Vector3(0, 0, (Height * Tile.transform.localScale.z) * scale);
+        }
     }
 
     public Vector3 GetTargetLocation(ST_PuzzleTile thisTile)
