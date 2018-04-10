@@ -56,13 +56,34 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	void Update () 
 	{
 		// move the puzzle to the position set in the inspector.
-		this.transform.localPosition = PuzzlePosition;
+		//this.transform.localPosition = PuzzlePosition;
+        PositionInView();
 
 		// set the scale of the entire puzzle object as set in the inspector.
-		this.transform.localScale = PuzzleScale;
+		//this.transform.localScale = PuzzleScale;
 	}
 
-	public Vector3 GetTargetLocation(ST_PuzzleTile thisTile)
+    public Vector2 padding = new Vector2(0.45f, 0.1f); //Distance we want to keep from the viewport borders.
+
+    private void PositionInView()
+    {
+        const float DISTANCE_FROM_CAM = 50;
+        //Calculate the max width the object is allowed to have in world space, based on the padding we decided.
+        float maxWidth = Vector3.Distance(Camera.main.ViewportToWorldPoint(new Vector3(padding.x, 0.5f, DISTANCE_FROM_CAM)),
+            Camera.main.ViewportToWorldPoint(new Vector3(1f - padding.x, 0.5f, DISTANCE_FROM_CAM)));
+        //Calculate the scale based on width only - you will have to check if the model is tall instead of wide and check against the aspect of the camera, and act accordingly.
+        float scale = (maxWidth / (Width * Tile.transform.localScale.x));
+        //Apply the scale to the model.
+        transform.localScale = Vector3.one * scale;
+
+        //Position the model at the desired distance.
+        Vector3 desiredPosition = DISTANCE_FROM_CAM * Camera.main.transform.forward + Camera.main.transform.position;
+        //The max width we calculated is for the entirety of the model in the viewport, so we need to position it so the front of the model is at the desired distance, not the center.
+        //You will also have to keep rotation of the camera and the model in mind.
+        transform.localPosition = desiredPosition + new Vector3(0, 0, (Height * Tile.transform.localScale.z) * scale);
+    }
+
+    public Vector3 GetTargetLocation(ST_PuzzleTile thisTile)
 	{
 		// check if we can move this tile and get the position we can move to.
 		ST_PuzzleTile MoveTo = CheckIfWeCanMove((int)thisTile.GridLocation.x, (int)thisTile.GridLocation.y, thisTile);
