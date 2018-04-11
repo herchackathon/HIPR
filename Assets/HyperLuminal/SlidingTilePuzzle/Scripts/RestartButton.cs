@@ -10,5 +10,8 @@ public class RestartButton : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneToStart);
+        ST_PuzzleDisplay.PuzzleMoves = 0;
+        ST_PuzzleDisplay.CanMove = false;
+        ST_PuzzleDisplay.CanCount = false;
     }
 }
