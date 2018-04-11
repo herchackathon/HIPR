@@ -7,10 +7,11 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public static int PuzzleMoves = 0;
     public static bool CanMove = false;
     public static bool CanCount = false;
+    public static ST_PuzzleDisplay Instance;
 
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
-
+    public RectTransform CompletingPopup;
     public RectTransform CurrentCanvas;
 
 	// the width and height of the puzzle in tiles.
@@ -47,7 +48,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	void Start () 
 	{
         //Texture2D encryptImg = PuzzleImage as Texture2D;
-
+	    Instance = this;
         PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
 
         // create the games puzzle tiles from the provided image.
@@ -296,6 +297,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
             Debug.Log(msg);
 
+            CompletingPopup.gameObject.SetActive(true);
 			//Debug.Log("Puzzle Complete!");
 		}
 

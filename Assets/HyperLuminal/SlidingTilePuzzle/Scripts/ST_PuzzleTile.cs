@@ -67,7 +67,7 @@ public class ST_PuzzleTile : MonoBehaviour
 
 	protected void OnMouseDown()
 	{
-	    if (ST_PuzzleDisplay.CanMove)
+	    if (ST_PuzzleDisplay.CanMove && !ST_PuzzleDisplay.Instance.Complete)
 	    {
 	        ST_PuzzleDisplay.CanMove = false;
 

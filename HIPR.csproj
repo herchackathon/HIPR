@@ -323,6 +323,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\MovesCountUpdater.cs" />
+    <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\RestartButton.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleTile.cs" />
     <Compile Include="Assets\Scripts\Account.cs" />

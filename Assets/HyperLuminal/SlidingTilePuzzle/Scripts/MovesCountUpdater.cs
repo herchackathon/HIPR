@@ -14,6 +14,6 @@ public class MovesCountUpdater : MonoBehaviour
 	// Update is called once per frame
 	protected void Update()
 	{
-	    m_text.text = ST_PuzzleDisplay.PuzzleMoves.ToString();
+	    m_text.text = "Moves: " + ST_PuzzleDisplay.PuzzleMoves.ToString();
 	}
 }

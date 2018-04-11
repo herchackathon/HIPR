@@ -40,7 +40,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d4dcadfc81e0b48b85c2466d186c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PuzzleImage: {fileID: 2800000, guid: d665876f0e017ce4bb5153877bf86f13, type: 3}
+  PuzzleImage: {fileID: 2800000, guid: 762a57900bf8e5540b21685f308e7f6d, type: 3}
+  CompletingPopup: {fileID: 0}
+  CurrentCanvas: {fileID: 0}
   Height: 3
   Width: 3
   PuzzleScale: {x: 1, y: 1, z: 1}
