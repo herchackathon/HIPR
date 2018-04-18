@@ -1,6 +1,8 @@
 # HIPR
-
+<div align="center">
 ![HIPR](https://github.com/HERCone/HIPR/blob/master/logo.JPG)
+
+</div>
 --------
 # Human Initiated Performance Report
 --------
