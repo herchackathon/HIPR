@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIPR", "HIPR.csproj", "{EE20825D-B382-CB78-F4B0-9F987779181F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIPR.Editor", "HIPR.Editor.csproj", "{0BF86DAF-BA21-B79C-6C6D-B531D783411E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{EE20825D-B382-CB78-F4B0-9F987779181F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE20825D-B382-CB78-F4B0-9F987779181F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE20825D-B382-CB78-F4B0-9F987779181F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BF86DAF-BA21-B79C-6C6D-B531D783411E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF86DAF-BA21-B79C-6C6D-B531D783411E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF86DAF-BA21-B79C-6C6D-B531D783411E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF86DAF-BA21-B79C-6C6D-B531D783411E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
