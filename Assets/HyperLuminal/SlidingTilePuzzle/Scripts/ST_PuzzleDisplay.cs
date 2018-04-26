@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using MHLab.SlidingTilePuzzle.Data;
+using MHLab.Web.Storage;
+using UnityEngine.UI;
 
 public class ST_PuzzleDisplay : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
     public RectTransform CompletingPopup;
+    public Text CompletingText;
     public RectTransform CurrentCanvas;
 
 	// the width and height of the puzzle in tiles.
@@ -298,7 +302,12 @@ public class ST_PuzzleDisplay : MonoBehaviour
             Debug.Log(msg);
 
             CompletingPopup.gameObject.SetActive(true);
-			//Debug.Log("Puzzle Complete!");
+
+		    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+
+		    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+
+		    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}
 
 		yield return null;

@@ -42,6 +42,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PuzzleImage: {fileID: 2800000, guid: e7cd60044196d65479326b0bd44be40e, type: 3}
   CompletingPopup: {fileID: 0}
+  CompletingText: {fileID: 0}
   CurrentCanvas: {fileID: 0}
   Height: 3
   Width: 3
