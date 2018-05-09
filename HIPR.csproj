@@ -13,14 +13,12 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -343,14 +341,15 @@
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\RestartButton.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleTile.cs" />
+    <Compile Include="Assets\MHLab\Nethereum\AccountManager.cs" />
+    <Compile Include="Assets\MHLab\Scripts\AddressChecker.cs" />
     <Compile Include="Assets\MHLab\Scripts\SlidingTilePuzzle\Data\StorageKeys.cs" />
-    <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorageManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorage.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorageManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Result.cs" />
     <Compile Include="Assets\Scripts\Account.cs" />
     <Compile Include="Assets\Steganography-master\Steganography.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

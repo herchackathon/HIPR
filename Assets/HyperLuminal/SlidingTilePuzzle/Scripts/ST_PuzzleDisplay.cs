@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using MHLab.Nethereum;
 using MHLab.SlidingTilePuzzle.Data;
 using MHLab.Web.Storage;
 using UnityEngine.UI;
@@ -306,6 +307,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
 
 		    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+
+		    AccountManager.AssignHercTokens(1);
 
 		    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}
