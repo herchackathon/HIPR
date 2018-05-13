@@ -1,61 +1,70 @@
-pragma solidity ^0.4.10
+pragma solidity ^0.4.21;
 
-contract PlayerScore {
+// A contract to manage players' top scores.
+contract PlayerScore
+{
+    // Represents the maximum amount of
+    // stored top scores.
+    uint m_maxScores = 5;
     
-    uint maxTopScores = 5;
-    address owner;
-
-    struct TopScore{
-        address addr;
+    // Represents the player-score entry.
+    struct Score
+    {
+        address player;
         int score;
     }
     
-    function PlayerScore(){
-        owner = msg.sender;
-    }
-
-    TopScore[] public topScores;
-
-    mapping (address=>int) public userTopScores;
+    // Top scores.
+    Score[] public TopScores;
     
-    function setTopScore(int256 score, uint8 v, bytes32 r, bytes32 s) {
-        var hash = sha3(msg.sender, owner, score);
-        var addressCheck = ecrecover(hash, v, r, s);
+    // Maps each player with its own score.
+    mapping(address=>int) public Scores;
+    
+    function SetScore(int score) public
+    {
+        int currentScore = Scores[msg.sender];
         
-        if(addressCheck != owner) throw;
-        
-        var currentTopScore = userTopScores[msg.sender];
-        if(currentTopScore < score){
-            userTopScores[msg.sender] = score;
+        // Replace the old score with the new one
+        // if it is higher.
+        if(currentScore < score)
+        {
+            Scores[msg.sender] = score;
         }
-
-        if(topScores.length < maxTopScores){
-            var topScore = TopScore(msg.sender, score);
-            topScores.push(topScore);
-        }else{
-            int lowestScore = 0;
-            uint lowestScoreIndex = 0; 
-            for (uint i = 0; i < topScores.length; i++)
+        
+        // Now we populate the top scores array.
+        if(TopScores.length < m_maxScores)
+        {
+            // If we didn't reach yet the maximum stored
+            // scores amount, we simply add the new entry.
+            Score memory newScore = Score(msg.sender, score);
+            TopScores.push(newScore);
+        }
+        else
+        {
+            // If we reached the maximum stored scores amount,
+            // we have to verify if the new received score is
+            // higher than the lowest one in the top scores array.
+            int lowestScore = TopScores[0].score;
+            uint lowestScoreIndex = 0;
+            
+            // We search for the lowest stored score.
+            for(uint i = 1; i < TopScores.length; i++)
             {
-                TopScore currentScore = topScores[i];
-                if(i == 0){
-                    lowestScore = currentScore.score;
+                Score memory current = TopScores[i];
+                if(lowestScore > current.score)
+                {
+                    lowestScore = current.score;
                     lowestScoreIndex = i;
-                }else{
-                    if(lowestScore > currentScore.score){
-                        lowestScore = currentScore.score;
-                        lowestScoreIndex = i;
-                    }
                 }
             }
-            if(score > lowestScore){
-                var newtopScore = TopScore(msg.sender, score);
-                topScores[lowestScoreIndex] = newtopScore;
+            
+            // Now we can check our new pushed score against
+            // the lowest one.
+            if(lowestScore < score)
+            {
+                Score memory newScoreToReplace = Score(msg.sender, score);
+                TopScores[lowestScoreIndex] = newScoreToReplace;
             }
         }
-    }
-
-    function getCountTopScores() returns(uint) {
-        return topScores.length;
     }
 }
