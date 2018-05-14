@@ -5,7 +5,7 @@ contract PlayerScore
 {
     // Represents the maximum amount of
     // stored top scores.
-    uint m_maxScores = 5;
+    uint constant m_maxScores = 5;
     
     // Represents the player-score entry.
     struct Score
@@ -20,6 +20,8 @@ contract PlayerScore
     // Maps each player with its own score.
     mapping(address=>int) public Scores;
     
+    // Sets the score for current sender.
+    // If no score exists, a new one is created.
     function SetScore(int score) public
     {
         int currentScore = Scores[msg.sender];
@@ -66,5 +68,11 @@ contract PlayerScore
                 TopScores[lowestScoreIndex] = newScoreToReplace;
             }
         }
+    }
+    
+    // Get the amount of top scores.
+    function GetTopScoresCount() view public returns (uint)
+    {
+        return TopScores.length;
     }
 }
