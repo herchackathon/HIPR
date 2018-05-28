@@ -275,45 +275,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto">
-      <HintPath>Assets/Nethereum/BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.ABI">
-      <HintPath>Assets/Nethereum/Nethereum.ABI.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.Contracts">
-      <HintPath>Assets/Nethereum/Nethereum.Contracts.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.Hex">
-      <HintPath>Assets/Nethereum/Nethereum.Hex.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.JsonRpc.Client">
-      <HintPath>Assets/Nethereum/Nethereum.JsonRpc.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.KeyStore">
-      <HintPath>Assets/Nethereum/Nethereum.KeyStore.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.RLP">
-      <HintPath>Assets/Nethereum/Nethereum.RLP.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.RPC">
-      <HintPath>Assets/Nethereum/Nethereum.RPC.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.Signer">
-      <HintPath>Assets/Nethereum/Nethereum.Signer.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.Unity">
-      <HintPath>Assets/Nethereum/Nethereum.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Nethereum.Util">
-      <HintPath>Assets/Nethereum/Nethereum.Util.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets/Nethereum/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>Assets/Nethereum/System.Threading.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/m4nu_/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -334,6 +295,45 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/m4nu_/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RPC">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.RPC.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Contracts">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Hex">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.Hex.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.RLP">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.RLP.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.JsonRpc.Client">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.JsonRpc.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.ABI">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.ABI.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Util">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Signer">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.Signer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Unity">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.KeyStore">
+      <HintPath>Assets/MHLab/Plugins/Nethereum/Nethereum.KeyStore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using MHLab.Nethereum;
 using MHLab.SlidingTilePuzzle.Data;
 using MHLab.Web.Storage;
 using UnityEngine.UI;
+using Account = MHLab.Nethereum.Account;
+using Debug = UnityEngine.Debug;
 
 public class ST_PuzzleDisplay : MonoBehaviour
 {
+    public static Stopwatch GameTimer = new Stopwatch();
     public static int PuzzleMoves = 0;
     public static bool CanMove = false;
     public static bool CanCount = false;
@@ -62,6 +67,18 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
 
+	    Debug.Log("Score: " + CalculateScore(1, 1));
+        Debug.Log("Score: " + CalculateScore(10, 20));
+	    Debug.Log("Score: " + CalculateScore(15, 30));
+	    Debug.Log("Score: " + CalculateScore(50, 230));
+
+        StartCoroutine(AccountManager.GetTopScores((scores) =>
+	    {
+	        foreach (var topScore in scores)
+	        {
+	            Debug.Log(topScore.PlayerAddress + " - " + topScore.Score);
+	        }
+	    }));
 	}
 	
 	// Update is called once per frame
@@ -272,6 +289,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	    CanMove = true;
 	    CanCount = true;
+        GameTimer = new Stopwatch();
+        GameTimer.Start();
 	}
 
 	public IEnumerator CheckForComplete()
@@ -298,6 +317,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// if we are still complete then all the tiles are correct.
 		if(Complete)
 		{
+            GameTimer.Stop();
+
             string msg = Steganography.Decode(PuzzleImage);
 
             Debug.Log(msg);
@@ -306,15 +327,30 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
 
-		    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+            CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
 
-		    AccountManager.AssignHercTokens(1);
+            // Assign a token.
+		    StartCoroutine(AccountManager.AssignHercTokens(1, (tokenAmount) =>
+		    {
+		        Debug.Log("Herc Token correctly assigned: " + tokenAmount);
+		    }));
 
-		    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
+            // Push the score.
+		    StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, GameTimer.Elapsed.Seconds), (score) =>
+		    {
+		        Debug.Log("Score correctly pushed: " + score);
+		    }));
+
+            LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}
 
 		yield return null;
 	}
+
+    private int CalculateScore(int moves, int seconds)
+    {
+        return (int)(1000000 / ((moves * 1.3f) + (seconds * 0.8f)));
+    }
 
 	private Vector2 ConvertIndexToGrid(int index)
 	{
