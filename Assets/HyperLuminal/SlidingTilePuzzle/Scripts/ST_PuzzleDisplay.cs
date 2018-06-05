@@ -18,6 +18,9 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public static bool CanCount = false;
     public static ST_PuzzleDisplay Instance;
 
+    public static string OriginalHash;
+    public static string CurrentHash;
+
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
     public RectTransform CompletingPopup;

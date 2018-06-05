@@ -27,11 +27,20 @@ namespace MHLab.Nethereum
 
         public static string EthereumEndpoint = "https://rinkeby.infura.io/CHs7q12LsOAlHu4D3Kvr";
 
-        public static string AssignTokenContractAbi = "";
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
+        public static string AssignTokenContractAbi = @"";
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
         public static string AssignTokenContractAddress = "0x0C97b0B42140D77dE45Fc669E826225E6bb6B3D2";
 
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
         public static string PlayerScoreContractAbi = @"[{""constant"": false,""inputs"": [{""name"": ""score"",""type"": ""int256""}],""name"": ""SetScore"",""outputs"": [],""payable"": false,""stateMutability"": ""nonpayable"",""type"": ""function""},{""constant"": true,""inputs"": [{""name"": """",""type"": ""uint256""}],""name"": ""TopScores"",""outputs"": [{""name"": ""player"",""type"": ""address""},{""name"": ""score"",""type"": ""int256""}],""payable"": false,""stateMutability"": ""view"",""type"": ""function""},{""constant"": true,""inputs"": [{""name"": """",""type"": ""address""}],""name"": ""Scores"",""outputs"": [{""name"": """",""type"": ""int256""}],""payable"": false,""stateMutability"": ""view"",""type"": ""function""},{""constant"": true,""inputs"": [],""name"": ""GetTopScoresCount"",""outputs"": [{""name"": """",""type"": ""uint256""}],""payable"": false,""stateMutability"": ""view"",""type"": ""function""}]";
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
         public static string PlayerScoreContractAddress = "0xa1F8C3310b944732150507Fb67edd70c75A4C5a1";
+
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
+        public static string PuzzleManagerContractAbi = @"";
+        // TODO: remove hardcoded ABI and Addresses. Create a web service to fetch information from. This is just to speed things up.
+        public static string PuzzleManagerContractAddress = "";
 
         public static IEnumerator Login(string accountAddress, string privateKey, Action<bool> callback)
         {
@@ -182,6 +191,25 @@ namespace MHLab.Nethereum
 
                 yield return new WaitForSeconds(5);
             }
+        }
+
+        public static IEnumerator GetPuzzleData(uint id, Action<string, string> callback)
+        {
+            var puzzleManagerRequest = new EthCallUnityRequest(EthereumEndpoint);
+            var contract = new Contract(null, PuzzleManagerContractAbi, PuzzleManagerContractAddress);
+            var getMetricsFunction = contract.GetFunction("GetPuzzleOriginalMetrics");
+
+            yield return puzzleManagerRequest.SendRequest(getMetricsFunction.CreateCallInput(id), BlockParameter.CreateLatest());
+
+            var metrics = getMetricsFunction.DecodeSimpleTypeOutput<byte[]>(puzzleManagerRequest.Result);
+
+            var original = new byte[32];
+            var current = new byte[32];
+
+            Buffer.BlockCopy(metrics, 0, original, 0, 32);
+            Buffer.BlockCopy(metrics, 31, current, 0, 32);
+
+            callback.Invoke(BitConverter.ToString(original), BitConverter.ToString(current));
         }
     }
 }
