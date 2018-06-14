@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using MHLab.Nethereum;
+using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
+using MHLab.SlidingTilePuzzle.Leaderboards;
 using MHLab.Web.Storage;
 using UnityEngine.UI;
 using Account = MHLab.Nethereum.Account;
@@ -12,7 +14,6 @@ using Debug = UnityEngine.Debug;
 
 public class ST_PuzzleDisplay : MonoBehaviour
 {
-    public static Stopwatch GameTimer = new Stopwatch();
     public static int PuzzleMoves = 0;
     public static bool CanMove = false;
     public static bool CanCount = false;
@@ -70,16 +71,13 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
 
-	    Debug.Log("Score: " + CalculateScore(1, 1));
-        Debug.Log("Score: " + CalculateScore(10, 20));
-	    Debug.Log("Score: " + CalculateScore(15, 30));
-	    Debug.Log("Score: " + CalculateScore(50, 230));
-
         StartCoroutine(AccountManager.GetTopScores((scores) =>
-	    {
+        {
+            int index = 0;
 	        foreach (var topScore in scores)
 	        {
-	            Debug.Log(topScore.PlayerAddress + " - " + topScore.Score);
+                LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
+	            index++;
 	        }
 	    }));
 	}
@@ -292,8 +290,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	    CanMove = true;
 	    CanCount = true;
-        GameTimer = new Stopwatch();
-        GameTimer.Start();
+        GameTimerUpdater.StartTimer();
 	}
 
 	public IEnumerator CheckForComplete()
@@ -320,8 +317,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// if we are still complete then all the tiles are correct.
 		if(Complete)
 		{
-            GameTimer.Stop();
-
+            GameTimerUpdater.StopTimer();
             string msg = Steganography.Decode(PuzzleImage);
 
             Debug.Log(msg);
@@ -339,7 +335,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		    }));
 
             // Push the score.
-		    StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, GameTimer.Elapsed.Seconds), (score) =>
+		    StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
 		    {
 		        Debug.Log("Score correctly pushed: " + score);
 		    }));

@@ -89,7 +89,7 @@ contract PuzzleManager
         {
             current = m_puzzles[puzzleId].Hashes[msg.sender];
         }
-
+ 
         bytes memory result = new bytes(64);
 
         uint index1 = 0;

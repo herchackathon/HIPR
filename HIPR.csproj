@@ -345,10 +345,14 @@
     <Compile Include="Assets\MHLab\Nethereum\AccountManager.cs" />
     <Compile Include="Assets\MHLab\Nethereum\TopScore.cs" />
     <Compile Include="Assets\MHLab\Scripts\AddressChecker.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Leaderboards\LeaderboardEntry.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Leaderboards\LeaderboardManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\PuzzleIdChecker.cs" />
     <Compile Include="Assets\MHLab\Scripts\SlidingTilePuzzle\Data\StorageKeys.cs" />
     <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorage.cs" />
     <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorageManager.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\LeaderboardUI.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\TriggerAnimation.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Result.cs" />
     <Compile Include="Assets\Scripts\Account.cs" />
     <Compile Include="Assets\Steganography-master\Steganography.cs" />
