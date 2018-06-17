@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHLab.SlidingTilePuzzle.Data
+﻿namespace MHLab.SlidingTilePuzzle.Data
 {
     public static class StorageKeys
     {
         public static string DecryptedAmountKey = "DecryptedAmount";
+        public static string AccountAddressKey = "AccountAddress";
+        public static string AccountPrivateKey = "AccountPrivateKey";
     }
 }

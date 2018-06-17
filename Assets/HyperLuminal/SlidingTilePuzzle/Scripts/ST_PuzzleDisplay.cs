@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using MHLab.Nethereum;
+using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
+using MHLab.SlidingTilePuzzle.Leaderboards;
 using MHLab.Web.Storage;
 using UnityEngine.UI;
+using Account = MHLab.Nethereum.Account;
+using Debug = UnityEngine.Debug;
 
 public class ST_PuzzleDisplay : MonoBehaviour
 {
@@ -11,6 +18,9 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public static bool CanMove = false;
     public static bool CanCount = false;
     public static ST_PuzzleDisplay Instance;
+
+    public static string OriginalHash;
+    public static string CurrentHash;
 
 	// this puzzle texture.
 	public Texture2D PuzzleImage;
@@ -61,6 +71,15 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
 
+        StartCoroutine(AccountManager.GetTopScores((scores) =>
+        {
+            int index = 0;
+	        foreach (var topScore in scores)
+	        {
+                LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
+	            index++;
+	        }
+	    }));
 	}
 	
 	// Update is called once per frame
@@ -271,6 +290,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	    CanMove = true;
 	    CanCount = true;
+        GameTimerUpdater.StartTimer();
 	}
 
 	public IEnumerator CheckForComplete()
@@ -297,6 +317,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// if we are still complete then all the tiles are correct.
 		if(Complete)
 		{
+            GameTimerUpdater.StopTimer();
             string msg = Steganography.Decode(PuzzleImage);
 
             Debug.Log(msg);
@@ -305,13 +326,30 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
 
-		    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+            CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
 
-		    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
+            // Assign a token.
+		    StartCoroutine(AccountManager.AssignHercTokens(1, (tokenAmount) =>
+		    {
+		        Debug.Log("Herc Token correctly assigned: " + tokenAmount);
+		    }));
+
+            // Push the score.
+		    StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
+		    {
+		        Debug.Log("Score correctly pushed: " + score);
+		    }));
+
+            LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}
 
 		yield return null;
 	}
+
+    private int CalculateScore(int moves, int seconds)
+    {
+        return (int)(1000000 / ((moves * 1.3f) + (seconds * 0.8f)));
+    }
 
 	private Vector2 ConvertIndexToGrid(int index)
 	{
