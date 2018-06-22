@@ -11,6 +11,16 @@ namespace MHLab.UI
             _anim = GetComponent<Animation>();
         }
 
+        public bool IsPlaying()
+        {
+            return _anim.isPlaying;
+        }
+
+        public bool IsPlaying(string anim)
+        {
+            return _anim.IsPlaying(anim);
+        }
+
         public void Trigger(string anim)
         {
             _anim.Play(anim);

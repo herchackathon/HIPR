@@ -263,12 +263,16 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.0f);
 
-		// hide a puzzle tile (one is always missing to allow the puzzle movement).
-		TileDisplayArray[0,0].GetComponent<ST_PuzzleTile>().Active = false;
+	    int tileToHideX = UnityEngine.Random.Range(0, Width);
+	    int tileToHideY = UnityEngine.Random.Range(0, Height);
+        // hide a puzzle tile (one is always missing to allow the puzzle movement).
+        TileDisplayArray[tileToHideX, tileToHideY].GetComponent<ST_PuzzleTile>().Active = false;
 
 		yield return new WaitForSeconds(1.0f);
 
-		for(int k = 0; k < 20; k++)
+	    int howManyShuffles = UnityEngine.Random.Range(20, 31);
+
+		for(int k = 0; k < howManyShuffles; k++)
 		{
 			// use random to position each puzzle section in the array delete the number once the space is filled.
 			for(int j = 0; j < Height; j++)

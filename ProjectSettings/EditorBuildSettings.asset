@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/MHLab/Scenes/Login.unity
     guid: 7de44ed749888984cab73f507a89c79c
   - enabled: 1
+    path: Assets/MHLab/Scenes/MainMenu.unity
+    guid: 510f212e19fb9994aa4ee36d34b31197
+  - enabled: 1
     path: Assets/HyperLuminal/SlidingTilePuzzle/Scenes/SlidingTilePuzzle.unity
     guid: c78156a8d0505db48bc2d754df2cd940
