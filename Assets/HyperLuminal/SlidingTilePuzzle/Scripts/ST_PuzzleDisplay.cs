@@ -71,6 +71,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
 
+        /*
         StartCoroutine(AccountManager.GetTopScores((scores) =>
         {
             int index = 0;
@@ -80,6 +81,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	            index++;
 	        }
 	    }));
+        */
 	}
 	
 	// Update is called once per frame
@@ -333,16 +335,16 @@ public class ST_PuzzleDisplay : MonoBehaviour
             CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
 
             // Assign a token.
-		    StartCoroutine(AccountManager.AssignHercTokens(1, (tokenAmount) =>
+		    /*StartCoroutine(AccountManager.AssignHercTokens(1, (tokenAmount) =>
 		    {
 		        Debug.Log("Herc Token correctly assigned: " + tokenAmount);
-		    }));
+		    }));*/
 
             // Push the score.
-		    StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
+		    /*StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
 		    {
 		        Debug.Log("Score correctly pushed: " + score);
-		    }));
+		    }));*/
 
             LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}

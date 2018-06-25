@@ -21,6 +21,8 @@ namespace MHLab.Nethereum
 
         protected void Awake()
         {
+            SceneManager.LoadScene(SceneToLoad);
+
             if (LocalStorage.HasKey(StorageKeys.AccountAddressKey))
             {
                 var address = LocalStorage.GetString(StorageKeys.AccountAddressKey);
