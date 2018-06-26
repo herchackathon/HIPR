@@ -54,6 +54,7 @@ public class PuzzleSelector : MonoBehaviour
         var level = PuzzleLevels[index];
 
         if (level == null) return;
+        if (LevelName == null) return;
 
         LevelName.text = level.Name;
         LevelDescription.text = level.Description;
