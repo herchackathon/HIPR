@@ -8,6 +8,7 @@ using MHLab.Nethereum;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
 using MHLab.SlidingTilePuzzle.Leaderboards;
+using MHLab.UI;
 using MHLab.Web.Storage;
 using UnityEngine.UI;
 using Account = MHLab.Nethereum.Account;
@@ -28,6 +29,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public RectTransform CompletingPopup;
     public Text CompletingText;
     public RectTransform CurrentCanvas;
+    public EnableForLimitedTime ShufflingPopup;
+    public EnableForLimitedTime LetsgoPopup;
 
 	// the width and height of the puzzle in tiles.
 	public int Height = 3;
@@ -264,7 +267,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	private IEnumerator JugglePuzzle()
 	{
-		yield return new WaitForSeconds(1.0f);
+	    ShufflingPopup.EnableFor(4);
+        yield return new WaitForSeconds(1.0f);
 
 	    int tileToHideX = UnityEngine.Random.Range(0, Width);
 	    int tileToHideY = UnityEngine.Random.Range(0, Height);
@@ -297,6 +301,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	    CanMove = true;
 	    CanCount = true;
+        LetsgoPopup.EnableFor(1);
         GameTimerUpdater.StartTimer();
 	}
 

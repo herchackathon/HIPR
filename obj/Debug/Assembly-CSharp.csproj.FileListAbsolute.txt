@@ -79,3 +79,7 @@ C:\Users\Ryan\Desktop\HIPR-master\Unity\HIPR_\obj\Debug\Assembly-CSharp.csprojRe
 C:\Users\Ryan\Desktop\HIPR-master\Unity\HIPR_\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\Ryan\Desktop\HIPR-master\Unity\HIPR_\obj\Debug\Assembly-CSharp.dll
 C:\Users\Ryan\Desktop\HIPR-master\Unity\HIPR_\obj\Debug\Assembly-CSharp.pdb
+D:\Lavori\HIPR\HIPR\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+D:\Lavori\HIPR\HIPR\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+D:\Lavori\HIPR\HIPR\obj\Debug\Assembly-CSharp.dll
+D:\Lavori\HIPR\HIPR\obj\Debug\Assembly-CSharp.pdb

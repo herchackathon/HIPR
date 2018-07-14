@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using MHLab.SlidingTilePuzzle;
 
 public class ST_PuzzleTile : MonoBehaviour 
 {
@@ -77,7 +78,10 @@ public class ST_PuzzleTile : MonoBehaviour
 	            ST_PuzzleDisplay.CanCount = false;
 
 	        if (ST_PuzzleDisplay.CanCount)
+	        {
 	            ST_PuzzleDisplay.PuzzleMoves++;
+                MovesCountUpdater.AddMoves();
+	        }
 
 	        ST_PuzzleDisplay.CanCount = true;
 

@@ -44,6 +44,8 @@ MonoBehaviour:
   CompletingPopup: {fileID: 0}
   CompletingText: {fileID: 0}
   CurrentCanvas: {fileID: 0}
+  ShufflingPopup: {fileID: 0}
+  LetsgoPopup: {fileID: 0}
   Height: 3
   Width: 3
   PuzzleScale: {x: 1, y: 1, z: 1}

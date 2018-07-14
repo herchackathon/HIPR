@@ -65,6 +65,11 @@
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\RestartButton.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleTile.cs" />
+    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\CameraController.cs" />
+    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\ControlsManager.cs" />
+    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikCube.cs" />
+    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikFace.cs" />
+    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikSubcube.cs" />
     <Compile Include="Assets\MHLab\Nethereum\AccountManager.cs" />
     <Compile Include="Assets\MHLab\Nethereum\TopScore.cs" />
     <Compile Include="Assets\MHLab\Scripts\AddressChecker.cs" />
@@ -74,6 +79,7 @@
     <Compile Include="Assets\MHLab\Scripts\SlidingTilePuzzle\Data\StorageKeys.cs" />
     <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorage.cs" />
     <Compile Include="Assets\MHLab\Scripts\Storage\LocalStorageManager.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\EnableForLimitedTime.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\LeaderboardUI.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonAnimation.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonNavigation.cs" />
