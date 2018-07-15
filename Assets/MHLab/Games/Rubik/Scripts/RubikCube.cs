@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using HIPR.Encoding;
 using MHLab.SlidingTilePuzzle;
 using MHLab.UI;
 using UnityEngine;
@@ -26,6 +27,10 @@ namespace MHLab.Games.Rubik
 
         #region Fields
         public float TimeRequiredForRotation = 0.5f;
+        public Texture2D PuzzleImage;
+        public Shader PuzzleShader;
+
+        public GameObject[] TilesForSteganography;
 
         public EnableForLimitedTime ShufflingPopup;
         public EnableForLimitedTime LetsgoPopup;
@@ -66,10 +71,36 @@ namespace MHLab.Games.Rubik
 
             _numberOfShuffles = UnityEngine.Random.Range(25, 50);
 
+            InitializeTextures();
+
             _canMove = true;
             _isShuffling = true;
 
             ShufflingPopup.EnableFor(2);
+        }
+
+        private void InitializeTextures()
+        {
+            PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
+
+            int index = 0;
+
+            for (var i = 0; i < 3; i++)
+            {
+                for (var j = 0; j < 3; j++)
+                {
+                    var material = new Material(PuzzleShader)
+                    {
+                        mainTexture = PuzzleImage,
+                        mainTextureOffset = new Vector2(1.0f / 3 * j, 1.0f / 3 * i),
+                        mainTextureScale = new Vector2(1.0f / 3, 1.0f / 3)
+                    };
+                    
+                    // assign the new material to this tile for display.
+                    TilesForSteganography[index].GetComponent<Renderer>().material = material;
+                    index++;
+                }
+            }
         }
 
         private RubikSubcube[] RotateFace(RubikSubcube[] face, bool clockwise)
@@ -624,6 +655,28 @@ namespace MHLab.Games.Rubik
         private void OnCompleted()
         {
             GameTimerUpdater.StopTimer();
+
+            DecodeTexture();
+        }
+
+        private void DecodeTexture()
+        {
+            var texture = new Texture2D(PuzzleImage.width, PuzzleImage.height);
+
+            var index = 0;
+
+            for (var i = 0; i < 3; i++)
+            {
+                for (var j = 0; j < 3; j++)
+                {
+                    var tmpTexture = TilesForSteganography[index].GetComponent<Renderer>().material.mainTexture as Texture2D;
+                    var pixels = tmpTexture.GetPixels((int)(texture.width / 3) * j, (int)(texture.height / 3) * i, (int)(texture.width / 3), (int)(texture.height / 3));
+                    texture.SetPixels((int)(texture.width / 3) * j, (int)(texture.height / 3) * i, (int)(texture.width / 3), (int)(texture.height / 3), pixels);
+                }
+            }
+
+            var decoded = Steganography.Decode(texture);
+            Debug.Log(decoded);
         }
 
         private void Shuffle()
