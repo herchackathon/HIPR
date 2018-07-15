@@ -82,6 +82,8 @@ namespace MHLab.Games.Rubik
                         if (selectedFace == RubikFaceType.Bottom && (faces.Contains(RubikFaceType.Right)))
                             clockwise = !clockwise;
 
+                        Debug.Log("Selected face: " + selectedFace);
+
                         Cube.Rotate(selectedFace, clockwise);
                     }
 

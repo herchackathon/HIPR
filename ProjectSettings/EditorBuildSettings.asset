@@ -14,3 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HyperLuminal/SlidingTilePuzzle/Scenes/SlidingTilePuzzle.unity
     guid: c78156a8d0505db48bc2d754df2cd940
+  - enabled: 1
+    path: Assets/MHLab/Games/Rubik/Scenes/Rubik.unity
+    guid: 82770bf307a924a46b2990151810fc9a
+  m_configObjects: {}
