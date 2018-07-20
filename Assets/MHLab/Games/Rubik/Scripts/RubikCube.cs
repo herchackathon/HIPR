@@ -42,6 +42,9 @@ namespace MHLab.Games.Rubik
         public RubikSubcube[] Back;
         public RubikSubcube[] Bottom;
 
+        public AudioClip VictorySound;
+        public AudioClip OnMoveSound;
+
         private readonly RubikSubcube[] _solutionFront = new RubikSubcube[9];
         private readonly RubikSubcube[] _solutionLeft = new RubikSubcube[9];
         private readonly RubikSubcube[] _solutionTop = new RubikSubcube[9];
@@ -57,6 +60,8 @@ namespace MHLab.Games.Rubik
         private int _shuffleCounter = 0;
         private bool _isShuffling = false;
         private bool _shuffleMode = true;
+
+        private AudioSource _audioSource;
         #endregion
 
         protected void Awake()
@@ -72,6 +77,8 @@ namespace MHLab.Games.Rubik
             _numberOfShuffles = UnityEngine.Random.Range(25, 50);
 
             InitializeTextures();
+
+            _audioSource = GetComponent<AudioSource>();
 
             _canMove = true;
             _isShuffling = true;
@@ -555,6 +562,7 @@ namespace MHLab.Games.Rubik
                 default:
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
+            _audioSource.PlayOneShot(OnMoveSound);
         }
 
         public bool CheckForCorrectness()
@@ -657,6 +665,8 @@ namespace MHLab.Games.Rubik
             GameTimerUpdater.StopTimer();
 
             DecodeTexture();
+
+            _audioSource.PlayOneShot(VictorySound);
         }
 
         private void DecodeTexture()

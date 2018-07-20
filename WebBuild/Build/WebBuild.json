@@ -2,6 +2,8 @@
 "companyName": "HyperLuminalGames",
 "productName": "TileSlidePuzzle",
 "dataUrl": "WebBuild.data.unityweb",
+"wasmCodeUrl": "WebBuild.wasm.code.unityweb",
+"wasmFrameworkUrl": "WebBuild.wasm.framework.unityweb",
 "asmCodeUrl": "WebBuild.asm.code.unityweb",
 "asmMemoryUrl": "WebBuild.asm.memory.unityweb",
 "asmFrameworkUrl": "WebBuild.asm.framework.unityweb",
@@ -9,5 +11,6 @@
 "graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
 "webglContextAttributes": {"preserveDrawingBuffer": false},
 "splashScreenStyle": "Dark",
-"backgroundColor": "#231F20"
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"}
 }

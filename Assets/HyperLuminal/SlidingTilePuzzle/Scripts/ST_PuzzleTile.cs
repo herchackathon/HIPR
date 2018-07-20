@@ -33,7 +33,7 @@ public class ST_PuzzleTile : MonoBehaviour
 
 		// start the movement coroutine to always move the objects to the new target position.
 		StartCoroutine(UpdatePosition());
-	}
+    }
 
 	public IEnumerator UpdatePosition()
 	{
@@ -81,7 +81,8 @@ public class ST_PuzzleTile : MonoBehaviour
 	        {
 	            ST_PuzzleDisplay.PuzzleMoves++;
                 MovesCountUpdater.AddMoves();
-	        }
+	            ST_PuzzleDisplay.Instance.AudioSource.PlayOneShot(ST_PuzzleDisplay.Instance.OnMoveSound);
+            }
 
 	        ST_PuzzleDisplay.CanCount = true;
 

@@ -85,6 +85,7 @@
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonNavigation.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\TriggerAnimation.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Utilities\BackgroundChanger.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPRequester.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPResponse.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\IRequester.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\Response.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Result.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Results\Result.cs" />
-    <Compile Include="Assets\Scripts\Account.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

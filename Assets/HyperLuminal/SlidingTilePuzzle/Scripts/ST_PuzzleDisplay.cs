@@ -32,6 +32,9 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public EnableForLimitedTime ShufflingPopup;
     public EnableForLimitedTime LetsgoPopup;
 
+    public AudioClip VictorySound;
+    public AudioClip OnMoveSound;
+
 	// the width and height of the puzzle in tiles.
 	public int Height = 3;
 	public int Width  = 3;
@@ -62,11 +65,14 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	// has the puzzle been completed?
 	public bool Complete = false;
 
+    public AudioSource AudioSource;
+
 	// Use this for initialization
 	void Start () 
 	{
         //Texture2D encryptImg = PuzzleImage as Texture2D;
 	    Instance = this;
+	    AudioSource = GetComponent<AudioSource>();
         PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
 
         // create the games puzzle tiles from the provided image.
@@ -333,6 +339,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
             string msg = Steganography.Decode(PuzzleImage);
 
             Debug.Log(msg);
+
+            AudioSource.PlayOneShot(VictorySound);
 
             CompletingPopup.gameObject.SetActive(true);
 
