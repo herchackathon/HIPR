@@ -2,9 +2,9 @@
 {
     public struct Result<TValue, TError>
     {
-        public TValue Value { get; }
+        public TValue Value;
 
-        public TError Error { get; }
+        public TError Error;
 
         internal Result(TValue value, TError error)
         {
@@ -21,10 +21,10 @@
 
     public struct Result<TValue1, TValue2, TError>
     {
-        public TValue1 Value1 { get; }
-        public TValue2 Value2 { get; }
+        public TValue1 Value1;
+        public TValue2 Value2;
 
-        public TError Error { get; }
+        public TError Error;
 
         internal Result(TValue1 value1, TValue2 value2, TError error)
         {

@@ -21,7 +21,8 @@ namespace MHLab.Games.Rubik
         // Use this for initialization
         protected void Start()
         {
-            _targetRot.Set(0, Target.transform.eulerAngles.y - 180);
+            //_targetRot.Set(0, Target.transform.eulerAngles.y - 180);
+            _targetRot.Set(0, transform.eulerAngles.y - 180);
         }
         
         // Update is called once per frame

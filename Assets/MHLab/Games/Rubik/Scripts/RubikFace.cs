@@ -13,12 +13,31 @@ namespace MHLab.Games.Rubik
         Front,
         Right,
         Bottom,
-        Back
+        Back,
+        None
+    }
+
+    public struct RubikMove
+    {
+        public RubikFaceType Type;
+        public int Index;
+
+        public RubikFaceType VerticalMove;
+        public bool InvertVerticalMove;
+
+        public RubikFaceType HorizontalMove;
+        public bool InvertHorizontalMove;
     }
 
     public class RubikFace : MonoBehaviour
     {
         public RubikFaceType Type;
-        public GameObject[] Cubies;
+        public int Index;
+
+        public RubikFaceType VerticalMove;
+        public bool InvertVerticalMove;
+
+        public RubikFaceType HorizontalMove;
+        public bool InvertHorizontalMove;
     }
 }

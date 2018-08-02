@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HIPR.Encoding;
 using MHLab.SlidingTilePuzzle;
 using MHLab.UI;
+using MHLab.Utilities;
 using UnityEngine;
 
 namespace MHLab.Games.Rubik
@@ -52,6 +53,9 @@ namespace MHLab.Games.Rubik
         private readonly RubikSubcube[] _solutionBack = new RubikSubcube[9];
         private readonly RubikSubcube[] _solutionBottom = new RubikSubcube[9];
 
+        private readonly Dictionary<RubikFaceType, List<RubikFace>> _faces = new Dictionary<RubikFaceType, List<RubikFace>>(6);
+        private readonly Dictionary<RubikFaceType, List<RubikMove>> _moves = new Dictionary<RubikFaceType, List<RubikMove>>(6);
+
         private bool _canMove = false;
         private bool _isCompleted = false;
 
@@ -62,6 +66,8 @@ namespace MHLab.Games.Rubik
         private bool _shuffleMode = true;
 
         private AudioSource _audioSource;
+
+        //private RubikFaceType _selectedFace = RubikFaceType.None;
         #endregion
 
         protected void Awake()
@@ -73,6 +79,31 @@ namespace MHLab.Games.Rubik
             Array.Copy(Right, _solutionRight, 9);
             Array.Copy(Back, _solutionBack, 9);
             Array.Copy(Bottom, _solutionBottom, 9);
+
+            var faces = GetComponentsInChildren<RubikFace>();
+            foreach (var rubikFace in faces)
+            {
+                if (!_faces.ContainsKey(rubikFace.Type))
+                {
+                    _faces.Add(rubikFace.Type, new List<RubikFace>(9));
+                    _moves.Add(rubikFace.Type, new List<RubikMove>(9));
+                    for (int i = 0; i < 9; i++)
+                    {
+                        _faces[rubikFace.Type].Add(null);
+                        _moves[rubikFace.Type].Add(new RubikMove());
+                    }
+                }
+                _faces[rubikFace.Type][rubikFace.Index] = rubikFace;
+                _moves[rubikFace.Type][rubikFace.Index] = new RubikMove()
+                {
+                    Index =  rubikFace.Index,
+                    Type = rubikFace.Type,
+                    VerticalMove = rubikFace.VerticalMove,
+                    InvertVerticalMove = rubikFace.InvertVerticalMove,
+                    HorizontalMove = rubikFace.HorizontalMove,
+                    InvertHorizontalMove = rubikFace.InvertHorizontalMove
+                };
+            }
 
             _numberOfShuffles = UnityEngine.Random.Range(25, 50);
 
@@ -110,7 +141,7 @@ namespace MHLab.Games.Rubik
             }
         }
 
-        private RubikSubcube[] RotateFace(RubikSubcube[] face, bool clockwise)
+        private RubikSubcube[] RotateFace(RubikSubcube[] face, RubikFaceType type, bool clockwise)
         {
             var newFace = new RubikSubcube[9];
             if (clockwise)
@@ -124,6 +155,28 @@ namespace MHLab.Games.Rubik
                 newFace[6] = face[0];
                 newFace[7] = face[3];
                 newFace[8] = face[6];
+
+                var faces = _faces[type];
+                var newFaces = new List<RubikFace>(9)
+                {
+                    faces[2],
+                    faces[5],
+                    faces[8],
+                    faces[1],
+                    faces[4],
+                    faces[7],
+                    faces[0],
+                    faces[3],
+                    faces[6]
+                };
+
+                for (int i = 0; i < 9; i++)
+                {
+                    newFaces[i].Index = i;
+                    newFaces[i].Type = type;
+                }
+
+                _faces[type] = newFaces;
             }
             else
             {
@@ -136,9 +189,45 @@ namespace MHLab.Games.Rubik
                 newFace[6] = face[8];
                 newFace[7] = face[5];
                 newFace[8] = face[2];
+                
+                var faces = _faces[type];
+                var newFaces = new List<RubikFace>(9)
+                {
+                    faces[6],
+                    faces[3],
+                    faces[0],
+                    faces[7],
+                    faces[4],
+                    faces[1],
+                    faces[8],
+                    faces[5],
+                    faces[2]
+                };
+
+                for (int i = 0; i < 9; i++)
+                    newFaces[i].Index = i;
+
+                _faces[type] = newFaces;
             }
 
             return newFace;
+        }
+
+        private void SwitchFaces(RubikFaceType from, int indexFrom, RubikFaceType to, int indexTo)
+        {
+            var faceFrom = _faces[from][indexFrom];
+            faceFrom.Index = indexTo;
+            faceFrom.Type = to;
+
+            _faces[to][indexTo] = faceFrom;
+        }
+
+        private void SwitchFaces(RubikFace from, RubikFaceType to, int indexTo)
+        {
+            from.Index = indexTo;
+            from.Type = to;
+
+            _faces[to][indexTo] = from;
         }
 
         private IEnumerator RotateFront(bool clockwise, Action callback = null)
@@ -147,12 +236,12 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Front = RotateFace(Front, clockwise);
+                Front = RotateFace(Front, RubikFaceType.Front, clockwise);
                 
                 Left[2] = Front[0];
                 Left[5] = Front[3];
                 Left[8] = Front[6];
-
+                
                 Top[0] = Front[6];
                 Top[1] = Front[7];
                 Top[2] = Front[8];
@@ -164,6 +253,44 @@ namespace MHLab.Games.Rubik
                 Bottom[6] = Front[0];
                 Bottom[7] = Front[1];
                 Bottom[8] = Front[2];
+
+                if (clockwise)
+                {
+                    var temp0 = _faces[RubikFaceType.Right][0];
+                    var temp3 = _faces[RubikFaceType.Right][3];
+                    var temp6 = _faces[RubikFaceType.Right][6];
+                    SwitchFaces(RubikFaceType.Top, 2, RubikFaceType.Right, 0);
+                    SwitchFaces(RubikFaceType.Top, 1, RubikFaceType.Right, 3);
+                    SwitchFaces(RubikFaceType.Top, 0, RubikFaceType.Right, 6);
+                    SwitchFaces(RubikFaceType.Left, 2, RubikFaceType.Top, 0);
+                    SwitchFaces(RubikFaceType.Left, 5, RubikFaceType.Top, 1);
+                    SwitchFaces(RubikFaceType.Left, 8, RubikFaceType.Top, 2);
+                    SwitchFaces(RubikFaceType.Bottom, 8, RubikFaceType.Left, 2);
+                    SwitchFaces(RubikFaceType.Bottom, 7, RubikFaceType.Left, 5);
+                    SwitchFaces(RubikFaceType.Bottom, 6, RubikFaceType.Left, 8);
+                    SwitchFaces(temp0, RubikFaceType.Bottom, 6);
+                    SwitchFaces(temp3, RubikFaceType.Bottom, 7);
+                    SwitchFaces(temp6, RubikFaceType.Bottom, 8);
+
+                }
+                else
+                {
+                    var temp0 = _faces[RubikFaceType.Right][0];
+                    var temp3 = _faces[RubikFaceType.Right][3];
+                    var temp6 = _faces[RubikFaceType.Right][6];
+                    SwitchFaces(RubikFaceType.Bottom, 6, RubikFaceType.Right, 0);
+                    SwitchFaces(RubikFaceType.Bottom, 7, RubikFaceType.Right, 3);
+                    SwitchFaces(RubikFaceType.Bottom, 8, RubikFaceType.Right, 6);
+                    SwitchFaces(RubikFaceType.Left, 8, RubikFaceType.Bottom, 6);
+                    SwitchFaces(RubikFaceType.Left, 5, RubikFaceType.Bottom, 7);
+                    SwitchFaces(RubikFaceType.Left, 2, RubikFaceType.Bottom, 8);
+                    SwitchFaces(RubikFaceType.Top, 0, RubikFaceType.Left, 2);
+                    SwitchFaces(RubikFaceType.Top, 1, RubikFaceType.Left, 5);
+                    SwitchFaces(RubikFaceType.Top, 2, RubikFaceType.Left, 8);
+                    SwitchFaces(temp6, RubikFaceType.Top, 0);
+                    SwitchFaces(temp3, RubikFaceType.Top, 1);
+                    SwitchFaces(temp0, RubikFaceType.Top, 2);
+                }
 
                 var center = Front[4];
 
@@ -210,7 +337,7 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Back = RotateFace(Back, clockwise);
+                Back = RotateFace(Back, RubikFaceType.Back, clockwise);
 
                 Right[2] = Back[0];
                 Right[5] = Back[3];
@@ -227,6 +354,43 @@ namespace MHLab.Games.Rubik
                 Bottom[2] = Back[0];
                 Bottom[1] = Back[1];
                 Bottom[0] = Back[2];
+
+                if (clockwise)
+                {
+                    var temp0 = _faces[RubikFaceType.Left][0];
+                    var temp3 = _faces[RubikFaceType.Left][3];
+                    var temp6 = _faces[RubikFaceType.Left][6];
+                    SwitchFaces(RubikFaceType.Top, 6, RubikFaceType.Left, 0);
+                    SwitchFaces(RubikFaceType.Top, 7, RubikFaceType.Left, 3);
+                    SwitchFaces(RubikFaceType.Top, 8, RubikFaceType.Left, 6);
+                    SwitchFaces(RubikFaceType.Right, 8, RubikFaceType.Top, 6);
+                    SwitchFaces(RubikFaceType.Right, 5, RubikFaceType.Top, 7);
+                    SwitchFaces(RubikFaceType.Right, 2, RubikFaceType.Top, 8);
+                    SwitchFaces(RubikFaceType.Bottom, 0, RubikFaceType.Right, 2);
+                    SwitchFaces(RubikFaceType.Bottom, 1, RubikFaceType.Right, 5);
+                    SwitchFaces(RubikFaceType.Bottom, 2, RubikFaceType.Right, 8);
+                    SwitchFaces(temp6, RubikFaceType.Bottom, 0);
+                    SwitchFaces(temp3, RubikFaceType.Bottom, 1);
+                    SwitchFaces(temp0, RubikFaceType.Bottom, 2);
+                }
+                else
+                {
+                    var temp0 = _faces[RubikFaceType.Left][0];
+                    var temp3 = _faces[RubikFaceType.Left][3];
+                    var temp6 = _faces[RubikFaceType.Left][6];
+                    SwitchFaces(RubikFaceType.Bottom, 2, RubikFaceType.Left, 0);
+                    SwitchFaces(RubikFaceType.Bottom, 1, RubikFaceType.Left, 3);
+                    SwitchFaces(RubikFaceType.Bottom, 0, RubikFaceType.Left, 6);
+                    SwitchFaces(RubikFaceType.Right, 2, RubikFaceType.Bottom, 0);
+                    SwitchFaces(RubikFaceType.Right, 5, RubikFaceType.Bottom, 1);
+                    SwitchFaces(RubikFaceType.Right, 8, RubikFaceType.Bottom, 2);
+                    SwitchFaces(RubikFaceType.Top, 8, RubikFaceType.Right, 2);
+                    SwitchFaces(RubikFaceType.Top, 7, RubikFaceType.Right, 5);
+                    SwitchFaces(RubikFaceType.Top, 6, RubikFaceType.Right, 8);
+                    SwitchFaces(temp0, RubikFaceType.Top, 6);
+                    SwitchFaces(temp3, RubikFaceType.Top, 7);
+                    SwitchFaces(temp6, RubikFaceType.Top, 8);
+                }
 
                 var center = Back[4];
 
@@ -273,7 +437,7 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Left = RotateFace(Left, clockwise);
+                Left = RotateFace(Left, RubikFaceType.Left, clockwise);
 
                 Back[2] = Left[0];
                 Back[5] = Left[3];
@@ -290,6 +454,44 @@ namespace MHLab.Games.Rubik
                 Bottom[0] = Left[0];
                 Bottom[3] = Left[1];
                 Bottom[6] = Left[2];
+
+
+                if (clockwise)
+                {
+                    var temp0 = _faces[RubikFaceType.Front][0];
+                    var temp3 = _faces[RubikFaceType.Front][3];
+                    var temp6 = _faces[RubikFaceType.Front][6];
+                    SwitchFaces(RubikFaceType.Top, 0, RubikFaceType.Front, 0);
+                    SwitchFaces(RubikFaceType.Top, 3, RubikFaceType.Front, 3);
+                    SwitchFaces(RubikFaceType.Top, 6, RubikFaceType.Front, 6);
+                    SwitchFaces(RubikFaceType.Back, 8, RubikFaceType.Top, 0);
+                    SwitchFaces(RubikFaceType.Back, 5, RubikFaceType.Top, 3);
+                    SwitchFaces(RubikFaceType.Back, 2, RubikFaceType.Top, 6);
+                    SwitchFaces(RubikFaceType.Bottom, 6, RubikFaceType.Back, 2);
+                    SwitchFaces(RubikFaceType.Bottom, 3, RubikFaceType.Back, 5);
+                    SwitchFaces(RubikFaceType.Bottom, 0, RubikFaceType.Back, 8);
+                    SwitchFaces(temp0, RubikFaceType.Bottom, 0);
+                    SwitchFaces(temp3, RubikFaceType.Bottom, 3);
+                    SwitchFaces(temp6, RubikFaceType.Bottom, 6);
+                }
+                else
+                {
+                    var temp0 = _faces[RubikFaceType.Front][0];
+                    var temp3 = _faces[RubikFaceType.Front][3];
+                    var temp6 = _faces[RubikFaceType.Front][6];
+                    SwitchFaces(RubikFaceType.Bottom, 0, RubikFaceType.Front, 0);
+                    SwitchFaces(RubikFaceType.Bottom, 3, RubikFaceType.Front, 3);
+                    SwitchFaces(RubikFaceType.Bottom, 6, RubikFaceType.Front, 6);
+                    SwitchFaces(RubikFaceType.Back, 8, RubikFaceType.Bottom, 0);
+                    SwitchFaces(RubikFaceType.Back, 5, RubikFaceType.Bottom, 3);
+                    SwitchFaces(RubikFaceType.Back, 2, RubikFaceType.Bottom, 6);
+                    SwitchFaces(RubikFaceType.Top, 6, RubikFaceType.Back, 2);
+                    SwitchFaces(RubikFaceType.Top, 3, RubikFaceType.Back, 5);
+                    SwitchFaces(RubikFaceType.Top, 0, RubikFaceType.Back, 8);
+                    SwitchFaces(temp0, RubikFaceType.Top, 0);
+                    SwitchFaces(temp3, RubikFaceType.Top, 3);
+                    SwitchFaces(temp6, RubikFaceType.Top, 6);
+                }
 
                 var center = Left[4];
 
@@ -336,7 +538,7 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Right = RotateFace(Right, clockwise);
+                Right = RotateFace(Right, RubikFaceType.Right, clockwise);
 
                 Front[2] = Right[0];
                 Front[5] = Right[3];
@@ -353,6 +555,43 @@ namespace MHLab.Games.Rubik
                 Bottom[8] = Right[0];
                 Bottom[5] = Right[1];
                 Bottom[2] = Right[2];
+
+                if (clockwise)
+                {
+                    var temp0 = _faces[RubikFaceType.Back][0];
+                    var temp3 = _faces[RubikFaceType.Back][3];
+                    var temp6 = _faces[RubikFaceType.Back][6];
+                    SwitchFaces(RubikFaceType.Top, 8, RubikFaceType.Back, 0);
+                    SwitchFaces(RubikFaceType.Top, 5, RubikFaceType.Back, 3);
+                    SwitchFaces(RubikFaceType.Top, 2, RubikFaceType.Back, 6);
+                    SwitchFaces(RubikFaceType.Front, 2, RubikFaceType.Top, 2);
+                    SwitchFaces(RubikFaceType.Front, 5, RubikFaceType.Top, 5);
+                    SwitchFaces(RubikFaceType.Front, 8, RubikFaceType.Top, 8);
+                    SwitchFaces(RubikFaceType.Bottom, 2, RubikFaceType.Front, 2);
+                    SwitchFaces(RubikFaceType.Bottom, 5, RubikFaceType.Front, 5);
+                    SwitchFaces(RubikFaceType.Bottom, 8, RubikFaceType.Front, 8);
+                    SwitchFaces(temp6, RubikFaceType.Bottom, 2);
+                    SwitchFaces(temp3, RubikFaceType.Bottom, 5);
+                    SwitchFaces(temp0, RubikFaceType.Bottom, 8);
+                }
+                else
+                {
+                    var temp0 = _faces[RubikFaceType.Back][0];
+                    var temp3 = _faces[RubikFaceType.Back][3];
+                    var temp6 = _faces[RubikFaceType.Back][6];
+                    SwitchFaces(RubikFaceType.Bottom, 8, RubikFaceType.Back, 0);
+                    SwitchFaces(RubikFaceType.Bottom, 5, RubikFaceType.Back, 3);
+                    SwitchFaces(RubikFaceType.Bottom, 2, RubikFaceType.Back, 6);
+                    SwitchFaces(RubikFaceType.Front, 2, RubikFaceType.Back, 2);
+                    SwitchFaces(RubikFaceType.Front, 5, RubikFaceType.Bottom, 5);
+                    SwitchFaces(RubikFaceType.Front, 8, RubikFaceType.Bottom, 8);
+                    SwitchFaces(RubikFaceType.Top, 2, RubikFaceType.Front, 2);
+                    SwitchFaces(RubikFaceType.Top, 5, RubikFaceType.Front, 5);
+                    SwitchFaces(RubikFaceType.Top, 8, RubikFaceType.Front, 8);
+                    SwitchFaces(temp6, RubikFaceType.Top, 2);
+                    SwitchFaces(temp3, RubikFaceType.Top, 5);
+                    SwitchFaces(temp0, RubikFaceType.Top, 8);
+                }
 
                 var center = Right[4];
 
@@ -399,7 +638,7 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Top = RotateFace(Top, clockwise);
+                Top = RotateFace(Top, RubikFaceType.Top, clockwise);
 
                 Left[8] = Top[0];
                 Left[7] = Top[3];
@@ -416,6 +655,43 @@ namespace MHLab.Games.Rubik
                 Front[6] = Top[0];
                 Front[7] = Top[1];
                 Front[8] = Top[2];
+
+                if (clockwise)
+                {
+                    var temp6 = _faces[RubikFaceType.Right][6];
+                    var temp7 = _faces[RubikFaceType.Right][7];
+                    var temp8 = _faces[RubikFaceType.Right][8];
+                    SwitchFaces(RubikFaceType.Back, 6, RubikFaceType.Right, 6);
+                    SwitchFaces(RubikFaceType.Back, 7, RubikFaceType.Right, 7);
+                    SwitchFaces(RubikFaceType.Back, 8, RubikFaceType.Right, 8);
+                    SwitchFaces(RubikFaceType.Left, 6, RubikFaceType.Back, 6);
+                    SwitchFaces(RubikFaceType.Left, 7, RubikFaceType.Back, 7);
+                    SwitchFaces(RubikFaceType.Left, 8, RubikFaceType.Back, 8);
+                    SwitchFaces(RubikFaceType.Front, 6, RubikFaceType.Left, 6);
+                    SwitchFaces(RubikFaceType.Front, 7, RubikFaceType.Left, 7);
+                    SwitchFaces(RubikFaceType.Front, 8, RubikFaceType.Left, 8);
+                    SwitchFaces(temp6, RubikFaceType.Front, 6);
+                    SwitchFaces(temp7, RubikFaceType.Front, 7);
+                    SwitchFaces(temp8, RubikFaceType.Front, 8);
+                }
+                else
+                {
+                    var temp6 = _faces[RubikFaceType.Right][6];
+                    var temp7 = _faces[RubikFaceType.Right][7];
+                    var temp8 = _faces[RubikFaceType.Right][8];
+                    SwitchFaces(RubikFaceType.Front, 6, RubikFaceType.Right, 6);
+                    SwitchFaces(RubikFaceType.Front, 7, RubikFaceType.Right, 7);
+                    SwitchFaces(RubikFaceType.Front, 8, RubikFaceType.Right, 8);
+                    SwitchFaces(RubikFaceType.Left, 6, RubikFaceType.Front, 6);
+                    SwitchFaces(RubikFaceType.Left, 7, RubikFaceType.Front, 7);
+                    SwitchFaces(RubikFaceType.Left, 8, RubikFaceType.Front, 8);
+                    SwitchFaces(RubikFaceType.Back, 6, RubikFaceType.Left, 6);
+                    SwitchFaces(RubikFaceType.Back, 7, RubikFaceType.Left, 7);
+                    SwitchFaces(RubikFaceType.Back, 8, RubikFaceType.Left, 8);
+                    SwitchFaces(temp6, RubikFaceType.Back, 6);
+                    SwitchFaces(temp7, RubikFaceType.Back, 7);
+                    SwitchFaces(temp8, RubikFaceType.Back, 8);
+                }
 
                 var center = Top[4];
 
@@ -462,7 +738,7 @@ namespace MHLab.Games.Rubik
             {
                 BeginMove();
 
-                Bottom = RotateFace(Bottom, clockwise);
+                Bottom = RotateFace(Bottom, RubikFaceType.Bottom, clockwise);
 
                 Left[0] = Bottom[0];
                 Left[1] = Bottom[3];
@@ -479,6 +755,43 @@ namespace MHLab.Games.Rubik
                 Back[2] = Bottom[0];
                 Back[1] = Bottom[1];
                 Back[0] = Bottom[2];
+
+                if (clockwise)
+                {
+                    var temp0 = _faces[RubikFaceType.Right][0];
+                    var temp1 = _faces[RubikFaceType.Right][1];
+                    var temp2 = _faces[RubikFaceType.Right][2];
+                    SwitchFaces(RubikFaceType.Front, 0, RubikFaceType.Right, 0);
+                    SwitchFaces(RubikFaceType.Front, 1, RubikFaceType.Right, 1);
+                    SwitchFaces(RubikFaceType.Front, 2, RubikFaceType.Right, 2);
+                    SwitchFaces(RubikFaceType.Left, 0, RubikFaceType.Front, 0);
+                    SwitchFaces(RubikFaceType.Left, 1, RubikFaceType.Front, 1);
+                    SwitchFaces(RubikFaceType.Left, 2, RubikFaceType.Front, 2);
+                    SwitchFaces(RubikFaceType.Back, 0, RubikFaceType.Left, 0);
+                    SwitchFaces(RubikFaceType.Back, 1, RubikFaceType.Left, 1);
+                    SwitchFaces(RubikFaceType.Back, 2, RubikFaceType.Left, 2);
+                    SwitchFaces(temp0, RubikFaceType.Back, 0);
+                    SwitchFaces(temp1, RubikFaceType.Back, 1);
+                    SwitchFaces(temp2, RubikFaceType.Back, 2);
+                }
+                else
+                {
+                    var temp0 = _faces[RubikFaceType.Right][0];
+                    var temp1 = _faces[RubikFaceType.Right][1];
+                    var temp2 = _faces[RubikFaceType.Right][2];
+                    SwitchFaces(RubikFaceType.Back, 0, RubikFaceType.Right, 0);
+                    SwitchFaces(RubikFaceType.Back, 1, RubikFaceType.Right, 1);
+                    SwitchFaces(RubikFaceType.Back, 2, RubikFaceType.Right, 2);
+                    SwitchFaces(RubikFaceType.Left, 0, RubikFaceType.Back, 0);
+                    SwitchFaces(RubikFaceType.Left, 1, RubikFaceType.Back, 1);
+                    SwitchFaces(RubikFaceType.Left, 2, RubikFaceType.Back, 2);
+                    SwitchFaces(RubikFaceType.Front, 0, RubikFaceType.Left, 0);
+                    SwitchFaces(RubikFaceType.Front, 1, RubikFaceType.Left, 1);
+                    SwitchFaces(RubikFaceType.Front, 2, RubikFaceType.Left, 2);
+                    SwitchFaces(temp0, RubikFaceType.Front, 0);
+                    SwitchFaces(temp1, RubikFaceType.Front, 1);
+                    SwitchFaces(temp2, RubikFaceType.Front, 2);
+                }
 
                 var center = Bottom[4];
 
@@ -527,6 +840,72 @@ namespace MHLab.Games.Rubik
         private void EndMove(Action callback)
         {
             _isCompleted = CheckForCorrectness();
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Front[i];
+                var face = current.GetFaceWithType(RubikFaceType.Front);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Front;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Back[i];
+                var face = current.GetFaceWithType(RubikFaceType.Back);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Back;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Left[i];
+                var face = current.GetFaceWithType(RubikFaceType.Left);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Left;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Right[i];
+                var face = current.GetFaceWithType(RubikFaceType.Right);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Right;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Top[i];
+                var face = current.GetFaceWithType(RubikFaceType.Top);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Top;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                var current = Bottom[i];
+                var face = current.GetFaceWithType(RubikFaceType.Bottom);
+                if (face != null)
+                {
+                    face.Index = i;
+                    face.Type = RubikFaceType.Bottom;
+                }
+            }
 
             if (callback != null)
                 callback.Invoke();
@@ -660,6 +1039,66 @@ namespace MHLab.Games.Rubik
             return faces;
         }
 
+        public Result<RubikFaceType, int> GetSubcubeFaceAndIndex(RubikSubcube subcube)
+        {
+            var instanceId = subcube.GetInstanceID();
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Front[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Front, i);
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Left[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Left, i);
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Right[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Right, i);
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Top[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Top, i);
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Back[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Back, i);
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (Bottom[i].GetInstanceID() == instanceId)
+                {
+                    return Result<RubikFaceType, int>.Create(RubikFaceType.Bottom, i);
+                }
+            }
+
+            throw new ArgumentException("This subcube is not contained in the initial state.", "subcube");
+        }
+
+        public RubikMove GetStartingFaceData(RubikFace face)
+        {
+            return _moves[face.Type][face.Index];
+        }
+
         private void OnCompleted()
         {
             GameTimerUpdater.StopTimer();
@@ -743,7 +1182,7 @@ namespace MHLab.Games.Rubik
             {
                 if (_shuffleCounter < _numberOfShuffles && _canMove)
                 {
-                    var type = (RubikFaceType) _moveTypes.GetValue(UnityEngine.Random.Range(0, _moveTypes.Length));
+                    var type = (RubikFaceType) _moveTypes.GetValue(UnityEngine.Random.Range(0, _moveTypes.Length - 1));
                     var clockwise = (UnityEngine.Random.value <= 0.5f);
                     _isShuffling = true;
 
