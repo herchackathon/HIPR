@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MHLab/Games/Rubik/Scenes/Rubik.unity
     guid: 82770bf307a924a46b2990151810fc9a
+  - enabled: 1
+    path: Assets/MHLab/Games/Matching/Scenes/MatchingGame.unity
+    guid: 24150febdd96d964d96d48b2e766b2e1
   m_configObjects: {}

@@ -23,7 +23,7 @@ namespace MHLab.SlidingTilePuzzle
 
         public static void AddMoves(int count = 1)
         {
-            Counter += 1;
+            Counter += count;
         }
     }
 }

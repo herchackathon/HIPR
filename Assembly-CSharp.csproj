@@ -67,12 +67,17 @@
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\RestartButton.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleTile.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\BorderBall.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\Generators\IGenerator.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\Generators\MatchingGenerator.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\MatchingGame.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\MatchingGrid.cs" />
+    <Compile Include="Assets\MHLab\Games\Matching\Scripts\MatchingTile.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\CameraController.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\ControlsManager.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikCube.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikFace.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikSubcube.cs" />
-    <Compile Include="Assets\MHLab\Games\Rubik\Scripts\SoundsActivator.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\SwipingModeActivator.cs" />
     <Compile Include="Assets\MHLab\Nethereum\AccountManager.cs" />
     <Compile Include="Assets\MHLab\Nethereum\TopScore.cs" />
@@ -88,8 +93,11 @@
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonAnimation.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonNavigation.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\ScoreCounter.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\SoundsActivator.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\TriggerAnimation.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\BackgroundChanger.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Utilities\MusicManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPRequester.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPResponse.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\IRequester.cs" />
@@ -98,17 +106,8 @@
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\Response.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Result.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Results\Result.cs" />
-    <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Unity3D/2018.2.0f2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -343,12 +342,6 @@
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>D:/Lavori/HIPR/HIPR/Assets/MHLab/Plugins/Nethereum/System.Threading.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/m4nu_/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/m4nu_/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Unity3D/2018.2.0f2/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>

@@ -39,6 +39,13 @@ public class PuzzleSelector : MonoBehaviour
                 Description = "Let's solve the classic Rubik's puzzle to restore the original image! Pay attention to the moves count and to the time! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/RubikPuzzleMiniature")
             },
+            new PuzzleLevelData()
+            {
+                SceneIndex = 4,
+                Name = "Matching Cubes",
+                Description = "Let's pop off all color groups to restore the original background image! Pay attention to the time and groups' size! Your score will be based on them!",
+                Image = Resources.Load<Sprite>("Sprites/MatchingGameMiniature")
+            },
         };
     }
 
