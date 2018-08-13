@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using HIPR.Encoding;
 using MHLab.Games.Matching.Generators;
 using MHLab.SlidingTilePuzzle;
+using MHLab.SlidingTilePuzzle.Data;
 using MHLab.UI;
+using MHLab.Web.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +39,7 @@ namespace MHLab.Games.Matching
 
         protected void Awake()
         {
+            LocalStorage.Store(StorageKeys.ColorBlindnessMode, 1);
             _audioSource = GetComponent<AudioSource>();
             _grid = new MatchingGrid((int)Size.x, (int)Size.y, TilePrefabs, Border, Angle, BorderBall, this, ref Image);
             LetsGoPopup.EnableFor(1);

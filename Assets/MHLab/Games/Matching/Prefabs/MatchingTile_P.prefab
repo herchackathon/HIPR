@@ -110,3 +110,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: P
   GridPosition: {x: 0, y: 0}
+  ColorblindnessMaterial: {fileID: 2100000, guid: 349807f64f5c73b468cb503bfae30a72,
+    type: 2}

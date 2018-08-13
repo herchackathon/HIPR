@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MHLab.SlidingTilePuzzle.Data;
+using MHLab.Web.Storage;
+using UnityEngine;
 
 namespace MHLab.Utilities
 {
@@ -15,6 +17,16 @@ namespace MHLab.Utilities
             _audioSource.clip = Musics[UnityEngine.Random.Range(0, Musics.Length)];
 
             _audioSource.Play();
+
+            var isMusicAllowed = LocalStorage.GetInt(StorageKeys.SoundsMode).Value;
+            if (isMusicAllowed == 1)
+            {
+                AudioListener.volume = 1f;
+            }
+            else
+            {
+                AudioListener.volume = 0f;
+            }
         }
     }
 }
