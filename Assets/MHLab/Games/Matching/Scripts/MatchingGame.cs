@@ -20,11 +20,13 @@ namespace MHLab.Games.Matching
         public BorderBall BorderBall;
         public Texture2D Image;
 
+        public RectTransform OnCompletedPopup;
+        public Text OnCompletedPopupText;
+
         public int MinimumAmountOfGroupedTiles = 2;
         public int SingleTileScore = 100;
         public int SingleTileScoreIncrement = 10;
         
-
         public EnableForLimitedTime LetsGoPopup;
         public AudioClip[] OnMoveSounds;
         public AudioClip OnVictorySound;
@@ -39,7 +41,6 @@ namespace MHLab.Games.Matching
 
         protected void Awake()
         {
-            LocalStorage.Store(StorageKeys.ColorBlindnessMode, 1);
             _audioSource = GetComponent<AudioSource>();
             _grid = new MatchingGrid((int)Size.x, (int)Size.y, TilePrefabs, Border, Angle, BorderBall, this, ref Image);
             LetsGoPopup.EnableFor(1);
@@ -96,6 +97,13 @@ namespace MHLab.Games.Matching
             _audioSource.PlayOneShot(OnVictorySound);
 
             var decryptedText = Steganography.Decode(Image);
+
+            var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+
+            OnCompletedPopupText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+            OnCompletedPopup.gameObject.SetActive(true);
+
+            LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
         }
 
         private int CalculateScore(int tilesCount)

@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using HIPR.Encoding;
 using MHLab.SlidingTilePuzzle;
+using MHLab.SlidingTilePuzzle.Data;
 using MHLab.UI;
 using MHLab.Utilities;
+using MHLab.Web.Storage;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MHLab.Games.Rubik
 {
@@ -45,6 +48,9 @@ namespace MHLab.Games.Rubik
 
         public AudioClip VictorySound;
         public AudioClip OnMoveSound;
+
+        public RectTransform OnCompletedPopup;
+        public Text OnCompletedPopupText;
 
         private readonly RubikSubcube[] _solutionFront = new RubikSubcube[9];
         private readonly RubikSubcube[] _solutionLeft = new RubikSubcube[9];
@@ -978,7 +984,8 @@ namespace MHLab.Games.Rubik
             }
 
             // Ok, if we are here the puzzle is completed.
-            OnCompleted();
+            if(!_shuffleMode)
+                OnCompleted();
 
             return true;
         }
@@ -1106,6 +1113,13 @@ namespace MHLab.Games.Rubik
             DecodeTexture();
 
             _audioSource.PlayOneShot(VictorySound);
+
+            var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+
+            OnCompletedPopupText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+            OnCompletedPopup.gameObject.SetActive(true);
+
+            LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
         }
 
         private void DecodeTexture()
