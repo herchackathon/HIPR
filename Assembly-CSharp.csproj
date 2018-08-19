@@ -92,6 +92,7 @@
     <Compile Include="Assets\MHLab\Scripts\UI\LeaderboardUI.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonAnimation.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\MenuButtonNavigation.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\ObjectToggler.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\OptionsSetter.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\ScoreCounter.cs" />

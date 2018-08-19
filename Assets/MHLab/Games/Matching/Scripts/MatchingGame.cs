@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using HIPR.Encoding;
-using MHLab.Games.Matching.Generators;
+﻿using HIPR.Encoding;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
 using MHLab.UI;
