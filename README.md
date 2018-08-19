@@ -1,9 +1,7 @@
-# HIPR
+
+# HIPR - Human Initiated Performance Report
 
 ![HIPR](https://github.com/HERCone/HIPR/blob/master/logo.png)
---------
-# Human Initiated Performance Report
---------
 
 > **Notes:**
 > - HIPR takes in data sets, encrypts them into a tile slide puzzle game built on Nethereum + Unity, and compares and contrasts the data sets prior to 3rd Party future analysis. 
@@ -12,12 +10,10 @@
 > - The Audited files are sent to those involved in the Supply Chain Queries.
 
 # Getting Started
---------
 # Nethereum
 [![Join the chat at https://gitter.im/juanfranblanco/Ethereum.RPC](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/juanfranblanco/Ethereum.RPC?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Documentation Status](https://readthedocs.org/projects/nethereum/badge/?version=latest)](https://nethereum.readthedocs.io/en/latest/) [![NuGet version](https://badge.fury.io/nu/nethereum.web3.svg)](https://badge.fury.io/nu/nethereum.web3)
 
-Nethereum is the .Net integration library for Ethereum, it allows you to interact with Ethereum clients like geth, eth or parity using RPC. 
-
+Nethereum is the .NET integration library for Ethereum. It allows you to interact with Ethereum clients like geth, eth or parity using RPC.
 The library has very similar functionality as the Javascript Etherum Web3 RPC Client Library.
 
 All the JSON RPC/IPC methods are implemented as they appear in new versions of the clients. 
@@ -26,7 +22,7 @@ The geth client is the one that is closely supported and tested, including its m
 
 Interaction with contracts has been simplified for deployment, function calling, transaction and event filtering and decoding of topics.
 
-The library has been tested in all the platforms .Net Core, Mono, Linux, iOS, Android, Raspberry PI, Xbox and of course Windows.
+The library has been tested in all the platforms: .NET Core, Mono, Linux, iOS, Android, Raspberry PI, Xbox and of course Windows.
 
 ## Issues, Requests and help
 
@@ -75,8 +71,13 @@ There a few video guides, which might be helpful to get started.
 The code for these tutorials can be found [here](https://github.com/Nethereum/Nethereum/tree/master/src/Nethereum.Tutorials)
 
 --------
-# Unity
-Build from download manager
-https://unity3d.com/get-unity/download
- > Download and load project
---------
+# Unity3D
+HIPR is built with Unity3D engine, so in order to build it you have to install the latest version of the Unity3D Editor. Currently the version we are using is ***2018.2.0f2***. 
+You can download it on the official website: https://unity3d.com/get-unity/download
+
+>1. Clone the repository
+>2. Open the Assets folder in your Unity3D Editor
+>3. Open *File > Build Settings* and select your favorite platform
+>4. Press "*Build*" button
+>5. Enjoy HIPR
+
