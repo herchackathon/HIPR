@@ -162,6 +162,20 @@ namespace MHLab.Games.Matching
             }
         }
 
+        public void ExchangeTiles(MatchingTile tile1, MatchingTile tile2)
+        {
+            var position1 = new Vector3(tile2.transform.position.x, tile2.transform.position.y, tile2.transform.position.z);
+            var gridPosition1 = new Vector2(tile2.GridPosition.x, tile2.GridPosition.y);
+
+            tile2.GridPosition = tile1.GridPosition;
+            tile2.transform.position = tile1.transform.position;
+            tile1.GridPosition = gridPosition1;
+            tile1.transform.position = position1;
+
+            _grid[(int)tile2.GridPosition.x, (int)tile2.GridPosition.y] = tile2;
+            _grid[(int)tile1.GridPosition.x, (int)tile1.GridPosition.y] = tile1;
+        }
+
         public bool IsCompleted()
         {
             if (_tilesCounter < Owner.MinimumAmountOfGroupedTiles) return true;

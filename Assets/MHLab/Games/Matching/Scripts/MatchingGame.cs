@@ -36,6 +36,9 @@ namespace MHLab.Games.Matching
         private AudioSource _audioSource;
         private MatchingGrid _grid;
 
+        private MatchingTile _currentSelectedTile;
+        private MatchingTile _targetSelectedTile;
+
         protected void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
@@ -46,7 +49,7 @@ namespace MHLab.Games.Matching
 
         protected void Update()
         {
-            if (Input.GetMouseButtonUp(0))
+            /*if (Input.GetMouseButtonUp(0))
             {
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -66,8 +69,61 @@ namespace MHLab.Games.Matching
                         }
                     }
                 }
+            }*/
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                RaycastHit hit;
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.transform != null)
+                    {
+                        var tile = hit.transform.gameObject.GetComponent<MatchingTile>();
+                        if (tile != null)
+                        {
+                            ManageMove(tile);
+
+                            if (_grid.IsCompleted())
+                            {
+                                OnVictory();
+                            }
+                        }
+                    }
+                }
             }
-            
+        }
+
+        private void ManageMove(MatchingTile tile)
+        {
+            if (_currentSelectedTile == null)
+            {
+                _currentSelectedTile = tile;
+                return;
+            }
+
+            _targetSelectedTile = tile;
+
+            if (_currentSelectedTile == _targetSelectedTile)
+            {
+                ClearMove();
+                return;
+            }
+
+            if (_targetSelectedTile.IsNearTo(_currentSelectedTile))
+            {
+                _grid.ExchangeTiles(_currentSelectedTile, _targetSelectedTile);
+                StartCheckingForMove(_currentSelectedTile);
+                StartCheckingForMove(_targetSelectedTile);
+            }
+
+            ClearMove();
+        }
+
+        private void ClearMove()
+        {
+            _currentSelectedTile = null;
+            _targetSelectedTile = null;
         }
 
         private void StartCheckingForMove(MatchingTile tile)
