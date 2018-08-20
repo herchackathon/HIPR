@@ -64,7 +64,6 @@
     <Compile Include="Assets\HIPR\Encoding\Steganography.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\GameTimerUpdater.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\MovesCountUpdater.cs" />
-    <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\RestartButton.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\HyperLuminal\SlidingTilePuzzle\Scripts\ST_PuzzleTile.cs" />
     <Compile Include="Assets\MHLab\Games\Matching\Scripts\BorderBall.cs" />
@@ -95,6 +94,7 @@
     <Compile Include="Assets\MHLab\Scripts\UI\ObjectToggler.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\OptionsSetter.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\RestartButton.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\ScoreCounter.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\SoundsActivator.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\TriggerAnimation.cs" />

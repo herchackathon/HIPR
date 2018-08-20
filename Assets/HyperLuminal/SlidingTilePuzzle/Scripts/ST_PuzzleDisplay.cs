@@ -68,10 +68,13 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public AudioSource AudioSource;
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
 	{
+	    ST_PuzzleDisplay.PuzzleMoves = 0;
+	    ST_PuzzleDisplay.CanMove = false;
+	    ST_PuzzleDisplay.CanCount = false;
         //Texture2D encryptImg = PuzzleImage as Texture2D;
-	    Instance = this;
+        Instance = this;
 	    AudioSource = GetComponent<AudioSource>();
         PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
 
