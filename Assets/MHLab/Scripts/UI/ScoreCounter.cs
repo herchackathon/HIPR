@@ -16,6 +16,7 @@ namespace MHLab.UI
         // Use this for initialization
         protected void Start()
         {
+            Counter = 0;
             m_text = GetComponent<Text>();
         }
 
