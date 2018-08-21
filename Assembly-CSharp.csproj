@@ -96,8 +96,10 @@
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\RestartButton.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\ScoreCounter.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\ScreenSwipe.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\SoundsActivator.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\TriggerAnimation.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\Tween\iTween.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\BackgroundChanger.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\MusicManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPRequester.cs" />
