@@ -24,6 +24,7 @@ namespace MHLab.Games.Matching.Generators
                     tile.transform.parent = owner;
                     tile.transform.position = new Vector3(startingPosition.x + i, startingPosition.y + j, startingPosition.z);
                     tile.GridPosition = new Vector2(i, j);
+                    tile.Owner = owner.GetComponent<MatchingGame>().Grid;
 
                     grid[i, j] = tile;
                 }

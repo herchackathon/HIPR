@@ -107,13 +107,9 @@ D:\Lavori\HIPR\HIPR\Temp\bin\Debug\System.Xml.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\System.Xml.Linq.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Unity.Locator.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Unity.PackageManagerUI.Editor.dll
-D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Unity.TextMeshPro.dll
-D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEditor.dll
-D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEditor.StandardEvents.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.AccessibilityModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.AIModule.dll
-D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.Analytics.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.AnimationModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.ARModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.AssetBundleModule.dll
@@ -149,7 +145,6 @@ D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.SpatialTracking.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.SpatialTrackingModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.SpriteMaskModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.SpriteShapeModule.dll
-D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.StandardEvents.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.StreamingModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.StyleSheetsModule.dll
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.SubstanceModule.dll

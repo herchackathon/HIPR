@@ -5,6 +5,7 @@ using MHLab.UI;
 using MHLab.Web.Storage;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace MHLab.Games.Matching
 {
@@ -32,45 +33,28 @@ namespace MHLab.Games.Matching
         public EnableForLimitedTime ScorePopup;
 
         public ParticleSystem OnMoveParticles;
+        public ParticleSystem OnScoreParticles;
+        public ParticleSystem OnExplosionParticles;
+
+        public MatchingGrid Grid;
 
         private AudioSource _audioSource;
-        private MatchingGrid _grid;
 
         private MatchingTile _currentSelectedTile;
         private MatchingTile _targetSelectedTile;
 
+        private bool _canMove = true;
+
         protected void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            _grid = new MatchingGrid((int)Size.x, (int)Size.y, TilePrefabs, Border, Angle, BorderBall, this, ref Image);
+            Grid = new MatchingGrid((int)Size.x, (int)Size.y, TilePrefabs, Border, Angle, BorderBall, this, ref Image);
             LetsGoPopup.EnableFor(1);
             GameTimerUpdater.StartTimer();
         }
 
         protected void Update()
         {
-            /*if (Input.GetMouseButtonUp(0))
-            {
-                RaycastHit hit;
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.transform != null)
-                    {
-                        var tile = hit.transform.gameObject.GetComponent<MatchingTile>();
-                        if (tile != null)
-                        {
-                            StartCheckingForMove(tile);
-
-                            if (_grid.IsCompleted())
-                            {
-                                OnVictory();
-                            }
-                        }
-                    }
-                }
-            }*/
-
             if (Input.GetMouseButtonUp(0))
             {
                 RaycastHit hit;
@@ -82,42 +66,142 @@ namespace MHLab.Games.Matching
                         var tile = hit.transform.gameObject.GetComponent<MatchingTile>();
                         if (tile != null)
                         {
-                            ManageMove(tile);
-
-                            if (_grid.IsCompleted())
-                            {
-                                OnVictory();
-                            }
+                            ManageMove2(tile);
                         }
                     }
                 }
             }
         }
 
+        private void ManageMove2(MatchingTile tile)
+        {
+            if (_canMove)
+            {
+                if (_currentSelectedTile == null)
+                {
+                    _currentSelectedTile = tile;
+                    return;
+                }
+
+                _targetSelectedTile = tile;
+
+                if (_currentSelectedTile == _targetSelectedTile)
+                {
+                    ClearMove();
+                    return;
+                }
+
+                if (_targetSelectedTile.IsNearTo(_currentSelectedTile))
+                {
+                    _canMove = false;
+                    // Here the move is valid and it can start.
+                    Grid.ExchangeTiles(_currentSelectedTile, _targetSelectedTile, OnExchangingCompleted);
+                }
+                else
+                {
+                    ClearMove();
+                    return;
+                }
+            }
+        }
+
         private void ManageMove(MatchingTile tile)
         {
-            if (_currentSelectedTile == null)
+            if (_canMove)
             {
-                _currentSelectedTile = tile;
+                if (_currentSelectedTile == null)
+                {
+                    _currentSelectedTile = tile;
+                    return;
+                }
+
+                _targetSelectedTile = tile;
+
+                if (_currentSelectedTile == _targetSelectedTile)
+                {
+                    ClearMove();
+                    return;
+                }
+
+                if (_targetSelectedTile.IsNearTo(_currentSelectedTile))
+                {
+                    _canMove = false;
+                    // Here the move is valid and it can start.
+                    Grid.ExchangeTiles(_currentSelectedTile, _targetSelectedTile, OnExchangingCompleted);
+                }
+                else
+                {
+                    ClearMove();
+                    return;
+                }
+            }
+        }
+
+        public void OnExchangingCompleted(object parameters)
+        {
+            var tiles = (MatchingTile[])parameters;
+            var tilesGroup1 = Grid.GetValidTilesGroup(tiles[0]);
+            var tilesGroup2 = Grid.GetValidTilesGroup(tiles[1]);
+
+            if (tilesGroup1.Count < MinimumAmountOfGroupedTiles && tilesGroup2.Count < MinimumAmountOfGroupedTiles)
+            {
+                Grid.ExchangeTiles(tiles[0], tiles[1], (obj) =>
+                {
+                    ClearMove();
+                    _canMove = true;
+                });
                 return;
             }
 
-            _targetSelectedTile = tile;
+            var tilesToPop = new List<MatchingTile>();
+            if(tilesGroup1.Count >= MinimumAmountOfGroupedTiles)
+                tilesToPop.AddRange(tilesGroup1);
+            if (tilesGroup2.Count >= MinimumAmountOfGroupedTiles)
+                tilesToPop.AddRange(tilesGroup2);
 
-            if (_currentSelectedTile == _targetSelectedTile)
+            _audioSource.PlayOneShot(OnMoveSounds[UnityEngine.Random.Range(0, OnMoveSounds.Length)]);
+            foreach (var matchingTile in tilesToPop)
+            {
+                Grid.PopTile(matchingTile);
+            }
+            OnMoveParticles.transform.position = new Vector3(tiles[0].transform.position.x, tiles[0].transform.position.y, tiles[0].transform.position.z - 1f);
+            OnMoveParticles.Play();
+            OnExplosionParticles.transform.position = new Vector3(tilesToPop[tilesToPop.Count - 1].transform.position.x, tilesToPop[tilesToPop.Count - 1].transform.position.y, tilesToPop[tilesToPop.Count - 1].transform.position.z - 1f);
+            OnExplosionParticles.Play();
+            var score = CalculateScore(tilesToPop.Count);
+            ScorePopupText.text = "+" + score;
+            ScorePopup.transform.position = Camera.main.WorldToScreenPoint(tiles[0].transform.position);
+            ScorePopup.EnableFor(0.5f);
+            OnScoreParticles.transform.position = new Vector3(tiles[0].transform.position.x, tiles[0].transform.position.y, tiles[0].transform.position.z - 1f);
+            OnScoreParticles.Play();
+            ScoreCounter.AddScore(score);
+
+            Grid.Compact(() =>
             {
                 ClearMove();
-                return;
-            }
+                if (Grid.IsCompleted())
+                {
+                    OnVictory();
+                }
+                _canMove = true;
+            });
 
-            if (_targetSelectedTile.IsNearTo(_currentSelectedTile))
+            
+
+            /*_grid.OnExchangingCompleted(parameters, () =>
             {
-                _grid.ExchangeTiles(_currentSelectedTile, _targetSelectedTile);
-                StartCheckingForMove(_currentSelectedTile);
-                StartCheckingForMove(_targetSelectedTile);
-            }
+                var tiles = (MatchingTile[])parameters;
+                StartCheckingForMove(tiles[0], tiles[1]);
+                //StartCheckingForMove(tiles[1]);
+                ClearMove();
 
-            ClearMove();
+                if (_grid.IsCompleted())
+                {
+                    OnVictory();
+                }
+
+                _canMove = true;
+            });*/
         }
 
         private void ClearMove()
@@ -126,21 +210,24 @@ namespace MHLab.Games.Matching
             _targetSelectedTile = null;
         }
 
-        private void StartCheckingForMove(MatchingTile tile)
+        private void StartCheckingForMove(MatchingTile tile, MatchingTile tile2)
         {
-            var tiles = _grid.GetValidTilesGroup(tile);
+            var tiles = Grid.GetValidTilesGroup(tile);
+            tiles.AddRange(Grid.GetValidTilesGroup(tile2));
             if (tiles.Count < MinimumAmountOfGroupedTiles) return;
             
             _audioSource.PlayOneShot(OnMoveSounds[UnityEngine.Random.Range(0, OnMoveSounds.Length)]);
-            _grid.PerformMove(tiles);
+            Grid.PerformMove(tiles, OnExplosionParticles);
 
-            OnMoveParticles.transform.position = tile.transform.position;
+            OnMoveParticles.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z - 1f);
             OnMoveParticles.Play();
 
             var score = CalculateScore(tiles.Count);
             ScorePopupText.text = "+" + score;
             ScorePopup.transform.position = Camera.main.WorldToScreenPoint(tile.transform.position);
             ScorePopup.EnableFor(0.5f);
+            OnScoreParticles.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z - 1f);
+            OnScoreParticles.Play();
             ScoreCounter.AddScore(score);
         }
 

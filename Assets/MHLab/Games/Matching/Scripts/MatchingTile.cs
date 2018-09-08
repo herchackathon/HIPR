@@ -9,6 +9,7 @@ namespace MHLab.Games.Matching
         public string Type;
         public Vector2 GridPosition;
         public Material ColorblindnessMaterial;
+        public MatchingGrid Owner;
 
         private MeshRenderer _renderer;
 
