@@ -25,6 +25,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public static string CurrentHash;
 
 	// this puzzle texture.
+    public Texture2D[] PuzzleImages;
 	public Texture2D PuzzleImage;
     public RectTransform CompletingPopup;
     public Text CompletingText;
@@ -76,6 +77,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
         //Texture2D encryptImg = PuzzleImage as Texture2D;
         Instance = this;
 	    AudioSource = GetComponent<AudioSource>();
+
+	    PuzzleImage = PuzzleImages[UnityEngine.Random.Range(0, PuzzleImages.Length)];
         PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
 
         // create the games puzzle tiles from the provided image.
