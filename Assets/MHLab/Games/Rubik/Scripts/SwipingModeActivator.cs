@@ -8,6 +8,8 @@ namespace MHLab.Games.Rubik
         public Text Text;
         public GameObject RotateClockwiseButton;
         public GameObject RotateAnticlockwiseButton;
+        public GameObject ActivatedState;
+        public GameObject DeactivatedState;
 
         protected void Awake()
         {
@@ -25,13 +27,15 @@ namespace MHLab.Games.Rubik
         {
             if (ControlsManager.EnableSwiping)
             {
-                Text.text = "SWIPING: ON";
+                ActivatedState.SetActive(true);
+                DeactivatedState.SetActive(false);
                 RotateAnticlockwiseButton.SetActive(false);
                 RotateClockwiseButton.SetActive(false);
             }
             else
             {
-                Text.text = "SWIPING: OFF";
+                ActivatedState.SetActive(false);
+                DeactivatedState.SetActive(true);
                 RotateAnticlockwiseButton.SetActive(true);
                 RotateClockwiseButton.SetActive(true);
             }

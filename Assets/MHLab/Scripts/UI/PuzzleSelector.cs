@@ -32,7 +32,7 @@ public class PuzzleSelector : MonoBehaviour
                 Description = "Let's reorder puzzle pieces to restore the original image! But pay attention to moves count and to the time! Your score will be influenced by them!",
                 Image = Resources.Load<Sprite>("Sprites/SlidingPuzzleMiniature")
             },
-            new PuzzleLevelData()
+            /*new PuzzleLevelData()
             {
                 SceneIndex = 3,
                 Name = "Rubik's Cube",
@@ -45,7 +45,7 @@ public class PuzzleSelector : MonoBehaviour
                 Name = "Matching Cubes",
                 Description = "Let's pop off all color groups to restore the original background image! Pay attention to the time and groups' size! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/MatchingGameMiniature")
-            },
+            },*/
         };
     }
 

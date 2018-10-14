@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using HIPR.Encoding;
+using MHLab;
 using MHLab.Nethereum;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
@@ -87,8 +88,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
 
-        /*
-        StartCoroutine(AccountManager.GetTopScores((scores) =>
+        
+        StartCoroutine(WebServiceManager.GetTopScores((scores) =>
         {
             int index = 0;
 	        foreach (var topScore in scores)
@@ -97,7 +98,6 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	            index++;
 	        }
 	    }));
-        */
 	}
 	
 	// Update is called once per frame
@@ -361,10 +361,10 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		    }));*/
 
             // Push the score.
-		    /*StartCoroutine(AccountManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
+		    StartCoroutine(WebServiceManager.SetTopScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
 		    {
 		        Debug.Log("Score correctly pushed: " + score);
-		    }));*/
+		    }));
 
             LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
 		}

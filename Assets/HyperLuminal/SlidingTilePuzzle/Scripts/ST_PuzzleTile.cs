@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MHLab.SlidingTilePuzzle;
+using MHLab.UI;
 
 public class ST_PuzzleTile : MonoBehaviour 
 {
@@ -80,7 +81,7 @@ public class ST_PuzzleTile : MonoBehaviour
 	        if (ST_PuzzleDisplay.CanCount)
 	        {
 	            ST_PuzzleDisplay.PuzzleMoves++;
-                MovesCountUpdater.AddMoves();
+	            ScoreCounter.AddScore();
 	            ST_PuzzleDisplay.Instance.AudioSource.PlayOneShot(ST_PuzzleDisplay.Instance.OnMoveSound);
             }
 

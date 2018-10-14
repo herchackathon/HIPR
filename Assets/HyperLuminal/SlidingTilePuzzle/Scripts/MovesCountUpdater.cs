@@ -19,7 +19,7 @@ namespace MHLab.SlidingTilePuzzle
         // Update is called once per frame
         protected void Update()
         {
-            m_text.text = "Moves: " + Counter;
+            m_text.text = Counter.ToString();
         }
 
         public static void AddMoves(int count = 1)

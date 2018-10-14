@@ -6,6 +6,7 @@ using MHLab.Web.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using MHLab.SlidingTilePuzzle.Leaderboards;
 
 namespace MHLab.Games.Matching
 {
@@ -48,6 +49,15 @@ namespace MHLab.Games.Matching
         protected void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            StartCoroutine(WebServiceManager.GetTopScores((scores) =>
+            {
+                int index = 0;
+                foreach (var topScore in scores)
+                {
+                    LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
+                    index++;
+                }
+            }));
             Grid = new MatchingGrid((int)Size.x, (int)Size.y, TilePrefabs, Border, Angle, BorderBall, this, ref Image);
             LetsGoPopup.EnableFor(1);
             GameTimerUpdater.StartTimer();
@@ -239,6 +249,11 @@ namespace MHLab.Games.Matching
             var decryptedText = Steganography.Decode(Image);
 
             var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+
+            StartCoroutine(WebServiceManager.SetTopScore(ScoreCounter.GetScore(), (score) =>
+            {
+                Debug.Log("Score correctly pushed: " + score);
+            }));
 
             OnCompletedPopupText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
             OnCompletedPopup.gameObject.SetActive(true);

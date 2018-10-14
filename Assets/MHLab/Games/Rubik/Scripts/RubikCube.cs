@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HIPR.Encoding;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
+using MHLab.SlidingTilePuzzle.Leaderboards;
 using MHLab.UI;
 using MHLab.Utilities;
 using MHLab.Web.Storage;
@@ -85,6 +86,16 @@ namespace MHLab.Games.Rubik
             Array.Copy(Right, _solutionRight, 9);
             Array.Copy(Back, _solutionBack, 9);
             Array.Copy(Bottom, _solutionBottom, 9);
+
+            StartCoroutine(WebServiceManager.GetTopScores((scores) =>
+            {
+                int index = 0;
+                foreach (var topScore in scores)
+                {
+                    LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
+                    index++;
+                }
+            }));
 
             var faces = GetComponentsInChildren<RubikFace>();
             foreach (var rubikFace in faces)
@@ -917,7 +928,7 @@ namespace MHLab.Games.Rubik
                 callback.Invoke();
 
             if(!_shuffleMode)
-                MovesCountUpdater.AddMoves();
+                ScoreCounter.AddScore();
 
             _canMove = true;
         }
@@ -1113,6 +1124,11 @@ namespace MHLab.Games.Rubik
             DecodeTexture();
 
             _audioSource.PlayOneShot(VictorySound);
+
+            StartCoroutine(WebServiceManager.SetTopScore(ScoreCounter.GetScore(), (score) =>
+            {
+                Debug.Log("Score correctly pushed: " + score);
+            }));
 
             var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
 

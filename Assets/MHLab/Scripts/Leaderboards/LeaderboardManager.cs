@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using MHLab.Nethereum;
 using UnityEngine;
 
 namespace MHLab.SlidingTilePuzzle.Leaderboards
