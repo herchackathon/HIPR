@@ -10,6 +10,7 @@ namespace MHLab.Metamask
         /// <summary>
         /// Retrieves the injected Metamask account.
         /// </summary>
+        /// <returns>The account address.</returns>
         [DllImport("__Internal")]
         public static extern string GetAccount();
 
