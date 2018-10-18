@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace MHLab.Nethereum
+namespace MHLab.Ethereum
 {
     public class PuzzleIdChecker : MonoBehaviour
     {
@@ -21,12 +21,12 @@ namespace MHLab.Nethereum
         public void OnStartPressed()
         {
             var puzzleId = uint.Parse(PuzzleIdText.text.Trim().Replace(IdPrefix, ""));
-            StartCoroutine(AccountManager.GetPuzzleData(puzzleId, (originalMetrics, currentMetrics) =>
+            /*StartCoroutine(AccountManager.GetPuzzleData(puzzleId, (originalMetrics, currentMetrics) =>
             {
                 ST_PuzzleDisplay.OriginalHash = originalMetrics;
                 ST_PuzzleDisplay.CurrentHash = currentMetrics;
                 SceneManager.LoadScene(SceneToLoad);
-            }));
+            }));*/
         }
     }
 }

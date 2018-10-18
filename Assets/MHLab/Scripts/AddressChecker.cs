@@ -1,92 +1,60 @@
-﻿using MHLab.SlidingTilePuzzle.Data;
-using MHLab.Web.Storage;
+﻿using System;
+using MHLab.Ethereum;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace MHLab.Nethereum
+namespace MHLab.UI
 {
     public class AddressChecker : MonoBehaviour
     {
-        // The scene index to load after a successful login.
-        public int SceneToLoad = 1;
-
-        // The input field that contains the address.
-        public InputField AddressText;
-        // The input field that contains the private key.
-        public InputField PrivateKeyText;
-
-        public Text VerifyingText;
-        public Text ErrorText;
+        public Text LogText;
+        public UITextFader LogFader;
+        public UIScaler Logo;
+        public UITextFader Text1;
+        public UITextFader Text2;
+        public UIImageFader Background;
+        public Text Debug;
+        public Image StaticLogo;
 
         protected void Awake()
         {
-            SceneManager.LoadScene(SceneToLoad);
-
-            if (LocalStorage.HasKey(StorageKeys.AccountAddressKey))
+            if (!string.IsNullOrEmpty(AccountManager.Address))
             {
-                var address = LocalStorage.GetString(StorageKeys.AccountAddressKey);
-                if (!address.HasError)
-                {
-                    // Set the UI field accordingly.
-                    AddressText.text = address.Value;
-                }
-            }
-
-            if (LocalStorage.HasKey(StorageKeys.AccountPrivateKey))
-            {
-                var privateKey = LocalStorage.GetString(StorageKeys.AccountPrivateKey);
-                if (!privateKey.HasError)
-                {
-                    // Set the UI field accordingly.
-                    PrivateKeyText.text = privateKey.Value;
-                }
-            }
-
-            // On startup, we check if an address and a private key are already stored.
-            if (LocalStorage.HasKey(StorageKeys.AccountAddressKey) && LocalStorage.HasKey(StorageKeys.AccountPrivateKey))
-            {
-                // If so, we retrieve them.
-                var address = LocalStorage.GetString(StorageKeys.AccountAddressKey);
-                var privateKey = LocalStorage.GetString(StorageKeys.AccountPrivateKey);
-
-                if (!address.HasError && !privateKey.HasError)
-                {
-                    // We start the login process with the stored address.
-                    StartCoroutine(AccountManager.Login(address.Value, privateKey.Value, OnLoginCompleted));
-
-                    if (VerifyingText != null)
-                        VerifyingText.gameObject.SetActive(true);
-                    if (AddressText != null)
-                        AddressText.readOnly = true;
-                }
+                LogText.gameObject.SetActive(false);
+                Logo.gameObject.SetActive(false);
+                Text1.gameObject.SetActive(false);
+                Text2.gameObject.SetActive(false);
+                Background.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
+                StaticLogo.enabled = true;
             }
         }
 
         public void PerformLogin()
         {
-            if (ErrorText != null)
-                ErrorText.gameObject.SetActive(false);
-            if (AddressText != null)
-                AddressText.readOnly = true;
-            StartCoroutine(AccountManager.Login(AddressText.text, PrivateKeyText.text, OnLoginCompleted));
+            LogText.text = "Fetching account information...";
+            try
+            {
+                AccountManager.GetAccount(OnLoginCompleted);
+            }
+            catch (Exception e)
+            {
+                LogText.text = "Something gone terribly wrong!";
+            }
         }
 
-        private void OnLoginCompleted(bool success)
+        private void OnLoginCompleted(string account)
         {
-            if (success)
-            {
-                if (VerifyingText != null)
-                    VerifyingText.gameObject.SetActive(false);
-                SceneManager.LoadScene(SceneToLoad);
-            }
-            else
-            {
-                if (ErrorText != null)
-                    ErrorText.gameObject.SetActive(true);
-                if (AddressText != null)
-                    AddressText.readOnly = false;
-            }
+            LogText.text = "Success!";
+
+            Logo.enabled = true;
+            Text1.enabled = true;
+            Text2.enabled = true;
+            Background.enabled = true;
+            this.gameObject.SetActive(false);
+            LogFader.enabled = true;
+
+            Debug.text = AccountManager.Address;
         }
     }
 }

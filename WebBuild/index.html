@@ -6,52 +6,10 @@
     <title>Unity WebGL Player | TileSlidePuzzle</title>
     <script src="Build/UnityLoader.js"></script>
     <script>
-    	var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
-
-    	window.addEventListener('load', function() {
-    	        // Checking if Web3 has been injected in the browser (Mist/MetaMask)
-    	        if (typeof web3 !== 'undefined') 
-    	        {
-    	          web3.version.getNetwork(
-    	          	(err, netId) => 
-    	          	{
-    	          		// netId is the ID of the connected network (4 = Rinkeby)
-						window.web3 = new Web3(web3.currentProvider);
-						if(typeof(window.web3.eth.accounts[0]) == 'undefined')
-						{
-							document.getElementById("metamaskWarning").innerText = 'Please unlock Metamask to view and submit your top scores';       
-						}
-						else
-						{
-							document.getElementById("metamaskWarning").innerText = '';       
-						}
-    	            });
-    	        } 
-    	        else 
-    	        {
-    	        	document.getElementById("metamaskWarning").innerText = 'Please install Metamask and connect to Rinkeby to view and submit your top scores';
-    	        }
-    	    });
-
+      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
     </script>
   </head>
   <body>
-    <div id="gameContainer" style="width: 100%; height: 100%; position: absolute; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; padding: 0px; border: 0px; background: rgb(35, 31, 32);"></div>
-	<div class="footer">
-		<div class="webgl-logo"></div> 
-		<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-	</div>
-	<div class="footer">
-		<h2 id="metamaskWarning" style="color:red">Please install Metamask and connect to Rinkeby to submit your top score</h2>
-	</div>
-	<div class="footer">
-		<div class="title">Can you beat your top score and the top 5? Your Top score will be stored in chain once the game is finished</div>
-	</div>
-	<div class="footer">
-		<div class="title">Metamask required with an account in Rinkeby</div>
-	</div>
-	<div class="footer">
-		<div class="title">Contract address: 0x32eb97b8ad202b072fd9066c03878892426320ed</div>
-	</div>
+    <div id="gameContainer" style="width: 500px; height: 500px; margin: auto"></div>
   </body>
 </html>

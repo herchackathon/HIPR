@@ -1,18 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using HIPR.Encoding;
+﻿using HIPR.Encoding;
 using MHLab;
-using MHLab.Nethereum;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
 using MHLab.SlidingTilePuzzle.Leaderboards;
 using MHLab.UI;
 using MHLab.Web.Storage;
+using System.Collections;
+using System.Collections.Generic;
+using MHLab.Ethereum;
+using UnityEngine;
 using UnityEngine.UI;
-using Account = MHLab.Nethereum.Account;
 using Debug = UnityEngine.Debug;
 
 public class ST_PuzzleDisplay : MonoBehaviour
@@ -344,29 +341,27 @@ public class ST_PuzzleDisplay : MonoBehaviour
             GameTimerUpdater.StopTimer();
             string msg = Steganography.Decode(PuzzleImage);
 
-            Debug.Log(msg);
+            PuzzleManager.ValidatePuzzleResult(msg, (isValid) =>
+            {
+                if (isValid)
+                {
+                    AudioSource.PlayOneShot(VictorySound);
 
-            AudioSource.PlayOneShot(VictorySound);
+                    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+                    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+                    
+                    CompletingPopup.gameObject.SetActive(true);
 
-            CompletingPopup.gameObject.SetActive(true);
+                    ScoresManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) => { Debug.Log("Score correctly pushed: " + score); });
+                    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
+                }
+                else
+                {
+                    CompletingText.text = "Uhm, it seems you did not decrypted correctly this hash. But you can retry!";
 
-		    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
-
-            CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
-
-            // Assign a token.
-		    /*StartCoroutine(AccountManager.AssignHercTokens(1, (tokenAmount) =>
-		    {
-		        Debug.Log("Herc Token correctly assigned: " + tokenAmount);
-		    }));*/
-
-            // Push the score.
-		    StartCoroutine(WebServiceManager.SetTopScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) =>
-		    {
-		        Debug.Log("Score correctly pushed: " + score);
-		    }));
-
-            LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
+                    CompletingPopup.gameObject.SetActive(true);
+                }
+            });
 		}
 
 		yield return null;

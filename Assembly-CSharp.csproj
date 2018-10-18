@@ -72,6 +72,11 @@
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\MHLab\Ethereum\AccountManager.cs" />
+    <Compile Include="Assets\MHLab\Ethereum\EthereumSettings.cs" />
+    <Compile Include="Assets\MHLab\Ethereum\PuzzleManager.cs" />
+    <Compile Include="Assets\MHLab\Ethereum\ScoresManager.cs" />
+    <Compile Include="Assets\MHLab\Ethereum\TopScore.cs" />
     <Compile Include="Assets\MHLab\Games\Matching\Scripts\BorderBall.cs" />
     <Compile Include="Assets\MHLab\Games\Matching\Scripts\Generators\IGenerator.cs" />
     <Compile Include="Assets\MHLab\Games\Matching\Scripts\Generators\MatchingGenerator.cs" />
@@ -84,8 +89,7 @@
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikFace.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikSubcube.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\SwipingModeActivator.cs" />
-    <Compile Include="Assets\MHLab\Nethereum\AccountManager.cs" />
-    <Compile Include="Assets\MHLab\Nethereum\TopScore.cs" />
+    <Compile Include="Assets\MHLab\Metamask\MetamaskManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\AddressChecker.cs" />
     <Compile Include="Assets\MHLab\Scripts\Leaderboards\LeaderboardEntry.cs" />
     <Compile Include="Assets\MHLab\Scripts\Leaderboards\LeaderboardManager.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="Assets\MHLab\Scripts\UI\OptionsSetter.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\PuzzleSelector.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\RestartButton.cs" />
+    <Compile Include="Assets\MHLab\Scripts\UI\RestartPuzzle.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\ScoreCounter.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\ScreenSwipe.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\SoundsActivator.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="Assets\MHLab\Scripts\UI\UIScaler.cs" />
     <Compile Include="Assets\MHLab\Scripts\UI\UITextFader.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\BackgroundChanger.cs" />
+    <Compile Include="Assets\MHLab\Scripts\Utilities\MainThreadDispatcher.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\MusicManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPRequester.cs" />
     <Compile Include="Assets\MHLab\Scripts\Utilities\Requester\HTTP\HTTPResponse.cs" />

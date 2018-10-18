@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHLab.Ethereum;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,10 @@ public class PuzzleSelector : MonoBehaviour
     public Text LevelName;
     public Text LevelDescription;
     public Image LevelImage;
+
+    public GameObject FetchingScreen;
+    public Text FetchingText;
+    public Button ErrorButton;
 
     private class PuzzleLevelData
     {
@@ -27,21 +32,21 @@ public class PuzzleSelector : MonoBehaviour
         {
             new PuzzleLevelData()
             {
-                SceneIndex = 2,
+                SceneIndex = 1,
                 Name = "Sliding Puzzle",
                 Description = "Let's reorder puzzle pieces to restore the original image! But pay attention to moves count and to the time! Your score will be influenced by them!",
                 Image = Resources.Load<Sprite>("Sprites/SlidingPuzzleMiniature")
             },
             /*new PuzzleLevelData()
             {
-                SceneIndex = 3,
+                SceneIndex = 2,
                 Name = "Rubik's Cube",
                 Description = "Let's solve the classic Rubik's puzzle to restore the original image! Pay attention to the moves count and to the time! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/RubikPuzzleMiniature")
             },
             new PuzzleLevelData()
             {
-                SceneIndex = 4,
+                SceneIndex = 3,
                 Name = "Matching Cubes",
                 Description = "Let's pop off all color groups to restore the original background image! Pay attention to the time and groups' size! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/MatchingGameMiniature")
@@ -88,6 +93,14 @@ public class PuzzleSelector : MonoBehaviour
 
     public void SelectLevel()
     {
-        SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex);
+        FetchingScreen.SetActive(true);
+        PuzzleManager.GetPuzzleHash(
+            (hash) => { SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex); },
+            (error) =>
+            {
+                FetchingText.text = error.Message;
+                ErrorButton.gameObject.SetActive(true);
+            }
+        );
     }
 }
