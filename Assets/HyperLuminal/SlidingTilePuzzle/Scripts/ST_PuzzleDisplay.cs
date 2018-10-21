@@ -84,17 +84,6 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		// mix up the puzzle.
 		StartCoroutine(JugglePuzzle());
-
-        
-        StartCoroutine(WebServiceManager.GetTopScores((scores) =>
-        {
-            int index = 0;
-	        foreach (var topScore in scores)
-	        {
-                LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
-	            index++;
-	        }
-	    }));
 	}
 	
 	// Update is called once per frame
@@ -352,7 +341,14 @@ public class ST_PuzzleDisplay : MonoBehaviour
                     
                     CompletingPopup.gameObject.SetActive(true);
 
-                    ScoresManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds), (score) => { Debug.Log("Score correctly pushed: " + score); });
+                    ScoresManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds),
+                        (score, done) =>
+                        {
+                            if(done)
+                                Debug.Log("Score correctly pushed: " + score);
+                            else
+                                Debug.Log("Score has not been pushed.");
+                        });
                     LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
                 }
                 else

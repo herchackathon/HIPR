@@ -1,6 +1,5 @@
-﻿using System;
+﻿using MHLab.Ethereum;
 using System.Collections.Generic;
-using MHLab.Ethereum;
 using UnityEngine;
 
 namespace MHLab.SlidingTilePuzzle.Leaderboards
@@ -8,27 +7,29 @@ namespace MHLab.SlidingTilePuzzle.Leaderboards
     public class LeaderboardManager : MonoBehaviour
     {
         public static LeaderboardManager Instance;
-        private readonly List<LeaderboardEntry> _entries = new List<LeaderboardEntry>();
+        private LeaderboardEntry[] _entries = new LeaderboardEntry[5];
 
         protected void Awake()
         {
             Instance = this;
 
-            var entries = GetComponentsInChildren<LeaderboardEntry>();
-
-            for (int i = 0; i < entries.Length; i++)
+            _entries = GetComponentsInChildren<LeaderboardEntry>();
+            
+            ScoresManager.GetTopScores((scores) =>
             {
-                var entry = entries[i];
-                entry.Position.text = (i + 1).ToString();
-                entry.Address.text = "---";
-                entry.Score.text = "---";
-                _entries.Add(entry);
-            }
+                int index = 1;
+                foreach (var topScore in scores)
+                {
+                    LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
+                    index++;
+                }
+            });
         }
 
         public void SetEntry(int index, string address, int score)
         {
             var entry = _entries[index];
+            entry.Position.text = index.ToString();
             entry.Address.text = address;
             entry.Score.text = score.ToString();
         }
