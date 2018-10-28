@@ -1,5 +1,7 @@
 ﻿using System;
+using AOT;
 using MHLab.Ethereum;
+using MHLab.Metamask;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,5 +58,5 @@ namespace MHLab.UI
 
             Debug.text = AccountManager.Address;
         }
-    }
+	}
 }

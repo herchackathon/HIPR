@@ -1,13 +1,12 @@
 ﻿using MHLab.Metamask;
+using MHLab.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MHLab.Utilities;
-using Org.BouncyCastle.Crypto.Prng;
 
 namespace MHLab.Ethereum
 {
-    public class ScoresManager
+	public class ScoresManager
     {
         public static void GetTopScores(Action<List<TopScore>> callback)
         {
@@ -15,7 +14,16 @@ namespace MHLab.Ethereum
             {
                 try
                 {
-                    var entries = MetamaskManager.GetTopScores(5);
+                    MetamaskManager.GetTopScores(5);
+
+	                var result = string.Empty;
+	                do
+	                {
+		                result = MetamaskManager.GetResults("GetTopScores");
+	                } while (result == string.Empty);
+
+	                var entries = result.Split(';');
+
                     var list = new List<TopScore>();
 
                     foreach (var entry in entries)
@@ -60,11 +68,11 @@ namespace MHLab.Ethereum
         {
             Task.Factory.StartNew(() => 
             {
-                var response = MetamaskManager.SetScore(score);
+                MetamaskManager.SetScore(score);
 
                 MainThreadDispatcher.EnqueueAction(() =>
                 {
-                    callback.Invoke(score, response);
+                    callback.Invoke(score, true);
                 });
             });
         }

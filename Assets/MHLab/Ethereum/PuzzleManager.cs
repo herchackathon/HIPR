@@ -13,12 +13,16 @@ namespace MHLab.Ethereum
         {
             Task.Factory.StartNew(() =>
             {
-#if UNITY_EDITOR
-                var hash = "asdniajdiasjdsajidjaicnncavnoajvdaojvaoi";
-#else
+	            var hash = "asdniajdiasjdsajidjaicnncavnoajvdaojvaoi";
+#if !UNITY_EDITOR
                 try
                 {
-                    var hash = MetamaskManager.GetPuzzle();
+					hash = string.Empty;
+                    MetamaskManager.GetPuzzle();
+					do
+	                {
+		                hash = MetamaskManager.GetResults("GetPuzzle");
+	                } while (hash == string.Empty);
                 }
                 catch(Exception e)
                 {
@@ -28,7 +32,7 @@ namespace MHLab.Ethereum
                     });
                 }
 #endif
-                CurrentHash = hash;
+				CurrentHash = hash;
 
                 if (string.IsNullOrEmpty(CurrentHash))
                 {
@@ -51,10 +55,17 @@ namespace MHLab.Ethereum
 #if UNITY_EDITOR
                 var result = true;
 #else
-                var result = MetamaskManager.ValidatePuzzleResult(hash);
+                MetamaskManager.ValidatePuzzleResult(hash);
+				var tmp = string.Empty;
+				do
+	            {
+		            tmp = MetamaskManager.GetResults("GetPuzzle");
+	            } while (tmp == string.Empty);
+
+				var result = bool.Parse(tmp);
 #endif
 
-                CurrentHash = null;
+				CurrentHash = null;
 
                 MainThreadDispatcher.EnqueueAction(() =>
                 {

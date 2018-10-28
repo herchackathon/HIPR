@@ -1,20 +1,9 @@
-mergeInto(LibraryManager.library, 
-{
+var LibraryHIPR = {
+	$HIPR: {},
 
-	SendTransaction: function(to, data) 
+	GetResults: function(key)
 	{
-		var tostr = Pointer_stringify(to);
-		var from = web3.eth.accounts[0];
-		var datastr = Pointer_stringify(data);
-		web3.eth.sendTransaction({from: from, to: tostr, data: datastr} , function(error, hash){  
-		    if(error){
-		        console.log(error);
-		    }
-		    else {
-		        console.log(hash);
-		    }
-		}    
-		);
+
 	},
 
 	/// <summary>
@@ -78,5 +67,7 @@ mergeInto(LibraryManager.library,
 	{
 
 	},
+};
 
-});
+autoAddDeps(LibraryHIPR, '$HIPR');
+mergeInto(LibraryManager.library, LibraryHIPR);
