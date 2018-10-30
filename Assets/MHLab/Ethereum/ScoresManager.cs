@@ -10,17 +10,17 @@ namespace MHLab.Ethereum
     {
         public static void GetTopScores(Action<List<TopScore>> callback)
         {
-            Task.Factory.StartNew(() =>
-            {
+            /*Task.Factory.StartNew(() =>
+            {*/
                 try
                 {
-                    MetamaskManager.GetTopScores(5);
+                    //MetamaskManager.GetTopScores(5);
 
-	                var result = string.Empty;
-	                do
+	                var result = "0x111111111|15;0x22222222|12;0x33333333|11;0x444444444|9;0x555555555|3";//string.Empty;
+	                /*do
 	                {
 		                result = MetamaskManager.GetResults("GetTopScores");
-	                } while (result == string.Empty);
+	                } while (result == string.Empty);*/
 
 	                var entries = result.Split(';');
 
@@ -39,10 +39,10 @@ namespace MHLab.Ethereum
                         });
                     }
 
-                    MainThreadDispatcher.EnqueueAction(() =>
+                    /*MainThreadDispatcher.EnqueueAction(() =>
                     {
                         callback.Invoke(list);
-                    });
+                    });*/
                 }
                 catch
                 {
@@ -56,25 +56,25 @@ namespace MHLab.Ethereum
                         });
                     }
 
-                    MainThreadDispatcher.EnqueueAction(() =>
+                    /*MainThreadDispatcher.EnqueueAction(() =>
                     {
                         callback.Invoke(list);
-                    });
+                    });*/
                 }
-            });
+            //});
         }
 
         public static void PushScore(int score, Action<int, bool> callback)
         {
-            Task.Factory.StartNew(() => 
-            {
-                MetamaskManager.SetScore(score);
+            /*Task.Factory.StartNew(() => 
+            {*/
+                //MetamaskManager.SetScore(score);
 
                 MainThreadDispatcher.EnqueueAction(() =>
                 {
                     callback.Invoke(score, true);
                 });
-            });
+            //});
         }
     }
 }

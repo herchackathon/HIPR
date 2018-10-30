@@ -11,10 +11,10 @@ namespace MHLab.Ethereum
 
         public static void GetPuzzleHash(Action<string> callback, Action<Exception> errorCallback)
         {
-            Task.Factory.StartNew(() =>
-            {
+            /*Task.Factory.StartNew(() =>
+            {*/
 	            var hash = "asdniajdiasjdsajidjaicnncavnoajvdaojvaoi";
-#if !UNITY_EDITOR
+/*#if !UNITY_EDITOR && !TEST
                 try
                 {
 					hash = string.Empty;
@@ -31,7 +31,7 @@ namespace MHLab.Ethereum
                         errorCallback.Invoke(e);
                     });
                 }
-#endif
+#endif*/
 				CurrentHash = hash;
 
                 if (string.IsNullOrEmpty(CurrentHash))
@@ -45,14 +45,14 @@ namespace MHLab.Ethereum
                 {
                     MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(hash); });
                 }
-            });
+            //});
         }
 
         public static void ValidatePuzzleResult(string hash, Action<bool> callback)
         {
-            Task.Factory.StartNew(() =>
-            {
-#if UNITY_EDITOR
+            /*Task.Factory.StartNew(() =>
+            {*/
+/*#if UNITY_EDITOR
                 var result = true;
 #else
                 MetamaskManager.ValidatePuzzleResult(hash);
@@ -63,15 +63,15 @@ namespace MHLab.Ethereum
 	            } while (tmp == string.Empty);
 
 				var result = bool.Parse(tmp);
-#endif
+#endif*/
 
 				CurrentHash = null;
 
                 MainThreadDispatcher.EnqueueAction(() =>
                 {
-                    callback.Invoke(result);
+                    callback.Invoke(true);
                 });
-            });
+            //});
         }
     }
 }

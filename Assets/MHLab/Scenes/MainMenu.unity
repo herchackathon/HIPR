@@ -1349,8 +1349,8 @@ RectTransform:
   - {fileID: 782866706}
   - {fileID: 1704632174}
   - {fileID: 677307326}
-  - {fileID: 56836182}
   - {fileID: 1834368186}
+  - {fileID: 56836182}
   - {fileID: 2010965406}
   - {fileID: 2121638700}
   m_Father: {fileID: 0}
@@ -3934,7 +3934,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WELCOME
+  m_Text: WELCOME!
 --- !u!222 &1266692111
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5285,7 +5285,7 @@ PrefabInstance:
     - target: {fileID: 360055031030272948, guid: 48611eaa7a82d2a4aa17767dd798697f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 360055031030272948, guid: 48611eaa7a82d2a4aa17767dd798697f,
         type: 3}
@@ -6355,7 +6355,7 @@ PrefabInstance:
     - target: {fileID: 1016494631462349611, guid: f61aa2964d6968041b3e413dcd2ef9b5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1016494631462349611, guid: f61aa2964d6968041b3e413dcd2ef9b5,
         type: 3}
@@ -6465,6 +6465,16 @@ PrefabInstance:
     - target: {fileID: 1016494631507591054, guid: f61aa2964d6968041b3e413dcd2ef9b5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016494630771466647, guid: f61aa2964d6968041b3e413dcd2ef9b5,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -6.8116574
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016494631462349608, guid: f61aa2964d6968041b3e413dcd2ef9b5,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
