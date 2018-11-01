@@ -1,77 +1,61 @@
 ﻿using MHLab.Metamask;
-using System;
-using System.Threading.Tasks;
 using MHLab.Utilities;
+using System;
+using UnityEngine.SceneManagement;
 
 namespace MHLab.Ethereum
 {
-    public class PuzzleManager
+	public class PuzzleManager
     {
         public static string CurrentHash;
 
         public static void GetPuzzleHash(Action<string> callback, Action<Exception> errorCallback)
-        {
-            /*Task.Factory.StartNew(() =>
-            {*/
-	            var hash = "asdniajdiasjdsajidjaicnncavnoajvdaojvaoi";
-/*#if !UNITY_EDITOR && !TEST
-                try
-                {
-					hash = string.Empty;
-                    MetamaskManager.GetPuzzle();
-					do
-	                {
-		                hash = MetamaskManager.GetResults("GetPuzzle");
-	                } while (hash == string.Empty);
-                }
-                catch(Exception e)
-                {
-                    MainThreadDispatcher.EnqueueAction(() =>
-                    {
-                        errorCallback.Invoke(e);
-                    });
-                }
-#endif*/
-				CurrentHash = hash;
-
-                if (string.IsNullOrEmpty(CurrentHash))
-                {
-                    MainThreadDispatcher.EnqueueAction(() =>
-                    {
-                        errorCallback.Invoke(new Exception("No hash fetched from the puzzle manager. Retry later."));
-                    });
-                }
-                else
-                {
-                    MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(hash); });
-                }
-            //});
+		{
+			if (!JavascriptInteractor.Actions.ContainsKey("GetPuzzle"))
+				JavascriptInteractor.Actions.Add("GetPuzzle", callback);
+			MetamaskManager.GetPuzzle();
+			//MainThreadDispatcher.EnqueueActionForNextFrame(() => { GetPuzzleHashInternal(callback, errorCallback);});
         }
+
+	    /*private static void GetPuzzleHashInternal(Action<string> callback, Action<Exception> errorCallback)
+	    {
+		    var result = MetamaskManager.GetResults("GetPuzzle");
+
+		    if (result.Trim() == string.Empty)
+		    {
+				MainThreadDispatcher.EnqueueActionForNextFrame(() => GetPuzzleHashInternal(callback, errorCallback));
+		    }
+		    else
+		    {
+			    CurrentHash = result;
+				MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(result); });
+			}
+	    }*/
 
         public static void ValidatePuzzleResult(string hash, Action<bool> callback)
-        {
-            /*Task.Factory.StartNew(() =>
-            {*/
-/*#if UNITY_EDITOR
-                var result = true;
-#else
-                MetamaskManager.ValidatePuzzleResult(hash);
-				var tmp = string.Empty;
-				do
-	            {
-		            tmp = MetamaskManager.GetResults("GetPuzzle");
-	            } while (tmp == string.Empty);
-
-				var result = bool.Parse(tmp);
-#endif*/
-
-				CurrentHash = null;
-
-                MainThreadDispatcher.EnqueueAction(() =>
-                {
-                    callback.Invoke(true);
-                });
-            //});
+		{
+			if (!JavascriptInteractor.Actions.ContainsKey("ValidatePuzzleResult"))
+				JavascriptInteractor.Actions.Add("ValidatePuzzleResult", (result) =>
+				{
+					callback.Invoke(bool.Parse(result));
+				});
+			MetamaskManager.ValidatePuzzleResult(hash);
+	        //MainThreadDispatcher.EnqueueActionForNextFrame(() => { ValidatePuzzleResultInternal(hash, callback); });
         }
-    }
+
+	    /*public static void ValidatePuzzleResultInternal(string hash, Action<bool> callback)
+	    {
+		    var result = MetamaskManager.GetResults("ValidatePuzzleResult");
+
+		    if (result.Trim() == string.Empty)
+		    {
+			    MainThreadDispatcher.EnqueueActionForNextFrame(() => ValidatePuzzleResultInternal(hash, callback));
+		    }
+		    else
+		    {
+			    CurrentHash = null;
+			    MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(bool.Parse(result)); });
+		    }
+		}*/
+	}
 }

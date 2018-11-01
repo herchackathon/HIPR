@@ -1,13 +1,11 @@
-﻿using System;
-using AOT;
-using MHLab.Ethereum;
-using MHLab.Metamask;
+﻿using MHLab.Ethereum;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MHLab.UI
 {
-    public class AddressChecker : MonoBehaviour
+	public class AddressChecker : MonoBehaviour
     {
         public Text LogText;
         public UITextFader LogFader;

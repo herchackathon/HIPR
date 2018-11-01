@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MHLab.Ethereum;
+using MHLab.Metamask;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

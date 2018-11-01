@@ -89,6 +89,7 @@
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikFace.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\RubikSubcube.cs" />
     <Compile Include="Assets\MHLab\Games\Rubik\Scripts\SwipingModeActivator.cs" />
+    <Compile Include="Assets\MHLab\Metamask\JavascriptInteractor.cs" />
     <Compile Include="Assets\MHLab\Metamask\MetamaskManager.cs" />
     <Compile Include="Assets\MHLab\Scripts\AddressChecker.cs" />
     <Compile Include="Assets\MHLab\Scripts\Leaderboards\LeaderboardEntry.cs" />

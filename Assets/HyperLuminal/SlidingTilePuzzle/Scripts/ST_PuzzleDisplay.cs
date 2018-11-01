@@ -342,10 +342,10 @@ public class ST_PuzzleDisplay : MonoBehaviour
                     CompletingPopup.gameObject.SetActive(true);
 
                     ScoresManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds),
-                        (score, done) =>
+                        (done) =>
                         {
                             if(done)
-                                Debug.Log("Score correctly pushed: " + score);
+                                Debug.Log("Score correctly pushed");
                             else
                                 Debug.Log("Score has not been pushed.");
                         });

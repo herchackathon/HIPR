@@ -4,6 +4,88 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>HIPR</title>
+    <script type="text/javascript">
+        var options = {
+            contracts: {
+                'PlayerScore': {
+                    abi: [{"constant":false,"inputs":[{"name":"score","type":"int256"}],"name":"SetScore","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"TopScores","outputs":[{"name":"player","type":"address"},{"name":"score","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"Scores","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"GetTopScoresCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}],
+                    net: 'ropsten',
+                    address: '0xA07B1FE246D9020f6884eA9d432B551Ea534b13f',
+                },
+                'PuzzleManager': {
+                    abi: [{"constant":false,"inputs":[],"name":"acceptPuzzle","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"puzzleId","type":"uint256"}],"name":"GetPuzzleMetrics","outputs":[{"name":"","type":"bytes"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"puzzleId","type":"uint256"}],"name":"CompareMetrics","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"puzzleId","type":"uint256"}],"name":"GetPuzzleOriginalMetrics","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"metrics","type":"string"},{"name":"uniqueId","type":"string"}],"name":"CreatePuzzle","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"puzzleId","type":"uint256"},{"name":"metrics","type":"string"}],"name":"PushMetrics","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"puzzleId","type":"uint256"},{"indexed":false,"name":"uniqueId","type":"string"}],"name":"PuzzleCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}],
+                    net: 'ropsten',
+                    address: '0xA07B1FE246D9020f6884eA9d432B551Ea534b13f',
+                }
+            }
+        };
+        var contracts = {};
+
+        var isInit = false;
+
+        function contractInit(web3, options) {
+            let contract = web3.eth.contract(options.abi).at(options.address);
+            
+            if (contract)
+                console.log('new contract success at address:', options.address);
+
+            return contract;
+        }
+
+        function initWeb3(web3) {
+            contracts.playerScore = contractInit(web3, options.contracts['PlayerScore']);
+            contracts.puzzleManager = contractInit(web3, options.contracts['PuzzleManager']);
+            isInit = true;
+        }
+
+        function defaultWeb3() {
+            if(!isInit)
+            {
+                initWeb3(window.web3);
+            }
+            return window.web3;//this.getWeb3('metamask')
+        }
+
+        var gameInstance = "undefined";
+
+        function SendResultBack(key, result)
+        {
+            var message = key + "#" + result;
+            gameInstance.SendMessage('JavascriptInteractor', 'ProcessResult', message);
+        }
+
+        function GetPuzzleInternal()
+        {
+            defaultWeb3();
+            console.log("GetPuzzle sending...");
+            SendResultBack("GetPuzzle", "ajdhajsndjsadjsah");
+            console.log("GetPuzzle sent.");
+        }
+
+        function GetTopScoresInternal()
+        {
+            defaultWeb3();
+            console.log("TopScores sending...");
+            SendResultBack("GetTopScores", "0x1111111111111111111111111111111111111111|15;0x2222222222222222222222222222222222222222|12;0x3333333333333333333333333333333333333333|11;0x4444444444444444444444444444444444444444|9;0x5555555555555555555555555555555555555555|3");
+            console.log("TopScores sent.");
+        }
+
+        function SetScoreInternal()
+        {
+            defaultWeb3();
+            console.log("SetScore sending...");
+            SendResultBack("SetScore", "true");
+            console.log("SetScore sent.");
+        }
+
+        function ValidatePuzzleResultInternal()
+        {
+            defaultWeb3();
+            console.log("ValidatePuzzleResult sending...");
+            SendResultBack("ValidatePuzzleResult", "true");
+            console.log("ValidatePuzzleResult sent.");
+        }
+    </script>
     <script src="Build/UnityLoader.js"></script>
     <script>
     	window.addEventListener('load', async () => {
@@ -40,7 +122,7 @@
     		}
     		else
     		{
-				var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
+				gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
     		}
     	}
 
@@ -49,33 +131,6 @@
     		document.getElementById("metamaskWarning").innerText = message;
     		document.getElementById("gameContainer").style.display = "none";
     	}
-
-
-    	/*window.addEventListener('load', function() {
-    	        // Checking if Web3 has been injected in the browser (Mist/MetaMask)
-    	        if (typeof web3 !== 'undefined') 
-    	        {
-    	          web3.version.getNetwork(
-    	          	(err, netId) => 
-    	          	{
-    	          		// netId is the ID of the connected network (4 = Rinkeby)
-						window.web3 = new Web3(web3.currentProvider);
-						if(typeof(window.web3.eth.accounts[0]) == 'undefined')
-						{
-							document.getElementById("metamaskWarning").innerText = 'Please unlock Metamask to view and submit your top scores';       
-						}
-						else
-						{
-							document.getElementById("metamaskWarning").innerText = '';
-    						var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
-						}
-    	            });
-    	        } 
-    	        else 
-    	        {
-    	        	document.getElementById("metamaskWarning").innerText = 'Please install Metamask to view and submit your top scores';
-    	        }
-    	    });*/
 
     </script>
   </head>

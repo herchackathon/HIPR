@@ -17,7 +17,7 @@ namespace MHLab.SlidingTilePuzzle.Leaderboards
             
             ScoresManager.GetTopScores((scores) =>
             {
-                int index = 1;
+                int index = 0;
                 foreach (var topScore in scores)
                 {
                     LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
@@ -29,7 +29,7 @@ namespace MHLab.SlidingTilePuzzle.Leaderboards
         public void SetEntry(int index, string address, int score)
         {
             var entry = _entries[index];
-            entry.Position.text = index.ToString();
+            entry.Position.text = (index + 1).ToString();
             entry.Address.text = address;
             entry.Score.text = score.ToString();
         }
