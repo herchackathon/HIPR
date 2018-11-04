@@ -102,8 +102,23 @@ namespace MHLab.Ethereum
 
 		public static void PushScore(int score, Action<bool> callback)
 		{
-			if (!JavascriptInteractor.Actions.ContainsKey("PushScore"))
-				JavascriptInteractor.Actions.Add("PushScore", (result) => callback.Invoke(bool.Parse(result)));
+			if (!JavascriptInteractor.Actions.ContainsKey("SetScore"))
+				JavascriptInteractor.Actions.Add("SetScore", (result) =>
+				{
+					bool r = false;
+					try
+					{
+						r = bool.Parse(result);
+					}
+					catch
+					{
+						if (result == "true")
+							r = true;
+						else
+							r = false;
+					}
+					callback.Invoke(r);
+				});
 			MetamaskManager.SetScore(score);
 
             /*MainThreadDispatcher.EnqueueActionForNextFrame(() =>

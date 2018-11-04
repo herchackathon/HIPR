@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace MHLab.Metamask
@@ -17,9 +15,7 @@ namespace MHLab.Metamask
 
 		public void ProcessResult(string result)
 		{
-			var tmp = result.Split('#');
-
-			Actions[tmp[0]].Invoke(tmp[1]);
+			ProcessResultGlobal(result);
 		}
 
 		public static void ProcessResultGlobal(string result)
