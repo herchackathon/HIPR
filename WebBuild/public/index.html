@@ -52,24 +52,27 @@
 
         function GetPuzzleInternal()
         {
+            HIPRInternal.GetPuzzle()
             // -> "ajdhajsndjsadjsah"
         }
 
         function GetTopScoresInternal(count)
         {
-            return HIPRInternal.GetTopScores(count)
+            HIPRInternal.GetTopScores(count)
             // -> "0x111111111|15;0x22222222|12;0x33333333|11;0x444444444|9;0x555555555|3;"
         }
 
         function SetScoreInternal(score)
-        {
-            return HIPRInternal.SetScore();
+        {console.log("oh yeah: " + score);
+            HIPRInternal.SetScore(score);
             // -> "true"
         }
 
-        function ValidatePuzzleResultInternal()
+        function ValidatePuzzleResultInternal(resultHash)
         {
-            return HIPRInternal.ValidatePuzzleResult();
+            console.log(resultHash);
+            SendResultBack('ValidatePuzzleResult', 'true');
+            //return HIPRInternal.ValidatePuzzleResult();
             // -> "true"
         }
     </script>
@@ -118,7 +121,7 @@
                 document.getElementById("gameContainer").style.display = "block";
                 
                 if (window.UnityLoader)
-                    gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
+                    gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json");
                 
                 HIPRInternal.init()
     		}

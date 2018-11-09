@@ -6,25 +6,6 @@ namespace MHLab.Metamask
 {
     public class MetamaskManager
     {
-#if UNITY_EDITOR
-		private static readonly Dictionary<string, string> _results = new Dictionary<string, string>()
-		{
-			{ "GetTopScores", "" },
-			{ "GetPuzzle", "" },
-			{ "SetScore", "" },
-			{ "ValidatePuzzleResult", "" }
-		};
-#endif
-
-/*#if UNITY_EDITOR
-		public static string GetResults(string key)
-		{
-			return _results[key];
-		}
-#else
-		[DllImport("__Internal")]
-	    public static extern string GetResults(string key);
-#endif*/
 	    /// <summary>
 	    /// Retrieves the injected Metamask account.
 	    /// </summary>
@@ -46,7 +27,9 @@ namespace MHLab.Metamask
 #if UNITY_EDITOR
 	    public static void GetTopScores(int count)
 	    {
-			JavascriptInteractor.ProcessResultGlobal("GetTopScores#0x1111111111111111111111111111111111111111|15;0x2222222222222222222222222222222222222222|12;0x3333333333333333333333333333333333333333|11;0x4444444444444444444444444444444444444444|9;0x5555555555555555555555555555555555555555|3");
+			//[0xf55f45267258efbfcefb795a688630a26576635e, 9727], [0xf55f45267258efbfcefb795a688630a26576635e, 4574], [0xf55f45267258efbfcefb795a688630a26576635e, 15948], [0xf55f45267258efbfcefb795a688630a26576635e, 9425], [0x8f96f32db25b2d4fa0787d6e045630caaf2d09f7, 789]
+			//JavascriptInteractor.ProcessResultGlobal("GetTopScores#0x1111111111111111111111111111111111111111|15;0x2222222222222222222222222222222222222222|12;0x3333333333333333333333333333333333333333|11;0x4444444444444444444444444444444444444444|9;0x5555555555555555555555555555555555555555|3");
+		    JavascriptInteractor.ProcessResultGlobal("GetTopScores#[0xf55f45267258efbfcefb795a688630a26576635e, 9727], [0xf55f45267258efbfcefb795a688630a26576635e, 4574], [0xf55f45267258efbfcefb795a688630a26576635e, 15948], [0xf55f45267258efbfcefb795a688630a26576635e, 9425], [0x8f96f32db25b2d4fa0787d6e045630caaf2d09f7, 789]");
 		}
 #else
 		[DllImport("__Internal")]
@@ -60,7 +43,7 @@ namespace MHLab.Metamask
 #if UNITY_EDITOR
 	    public static void SetScore(int score)
 	    {
-		    JavascriptInteractor.ProcessResultGlobal("SetScore#78231");
+		    JavascriptInteractor.ProcessResultGlobal("SetScore#true");
 	    }
 #else
 		[DllImport("__Internal")]

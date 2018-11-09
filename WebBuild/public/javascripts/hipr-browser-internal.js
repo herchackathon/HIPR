@@ -5,7 +5,7 @@ HIPRInternal = {
     init () {
 		this.defaultWeb3()
 		
-		this.TestApi()
+		//this.TestApi()
     },
 
     // restructured code class
@@ -274,7 +274,14 @@ HIPRInternal = {
     /// <returns>The metrics hash to encode.</returns>
     GetPuzzle: function()
     {
+    	this.defaultWeb3();
 
+		var self = this,
+			requestId = this.getRequestId('GetPuzzle')
+
+		self.setRequestValue(requestId, "testHashJustForTestingPurposes")
+
+		return requestId
     },
 
 

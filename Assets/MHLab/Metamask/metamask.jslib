@@ -21,7 +21,7 @@ var LibraryHIPR = {
     /// <returns>A string array where every entry has this format: "accountAddress|score"</returns>
     GetTopScores: function(count)
     {
-    	GetTopScoresInternal();
+    	GetTopScoresInternal(count);
     },
 
 
@@ -31,7 +31,7 @@ var LibraryHIPR = {
     /// <param name="score">The score to set.</param>
     SetScore: function(score)
     {
-    	SetScoreInternal();
+    	SetScoreInternal(score);
     },
 
 
@@ -52,7 +52,7 @@ var LibraryHIPR = {
 	/// <returns>True if correctly validated, false if not.</returns>
 	ValidatePuzzleResult: function(resultHash)
 	{
-		ValidatePuzzleResultInternal();
+		ValidatePuzzleResultInternal(resultHash);
 	},
 };
 

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MHLab.Games.Matching.Generators;
+﻿using MHLab.Games.Matching.Generators;
 using MHLab.UI.Tween;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MHLab.Games.Matching
 {
-    public class MatchingGrid
+	public class MatchingGrid
     {
         private readonly MatchingTile[,] _grid;
         private int _tilesCounter;

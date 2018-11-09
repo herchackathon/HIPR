@@ -10,27 +10,13 @@ namespace MHLab.Ethereum
         public static string CurrentHash;
 
         public static void GetPuzzleHash(Action<string> callback, Action<Exception> errorCallback)
-		{
-			if (!JavascriptInteractor.Actions.ContainsKey("GetPuzzle"))
-				JavascriptInteractor.Actions.Add("GetPuzzle", callback);
+        {
+	        if (!JavascriptInteractor.Actions.ContainsKey("GetPuzzle"))
+		        JavascriptInteractor.Actions.Add("GetPuzzle", callback);
+	        else
+		        JavascriptInteractor.Actions["GetPuzzle"] = callback;
 			MetamaskManager.GetPuzzle();
-			//MainThreadDispatcher.EnqueueActionForNextFrame(() => { GetPuzzleHashInternal(callback, errorCallback);});
         }
-
-	    /*private static void GetPuzzleHashInternal(Action<string> callback, Action<Exception> errorCallback)
-	    {
-		    var result = MetamaskManager.GetResults("GetPuzzle");
-
-		    if (result.Trim() == string.Empty)
-		    {
-				MainThreadDispatcher.EnqueueActionForNextFrame(() => GetPuzzleHashInternal(callback, errorCallback));
-		    }
-		    else
-		    {
-			    CurrentHash = result;
-				MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(result); });
-			}
-	    }*/
 
         public static void ValidatePuzzleResult(string hash, Action<bool> callback)
 		{
@@ -39,23 +25,12 @@ namespace MHLab.Ethereum
 				{
 					callback.Invoke(bool.Parse(result));
 				});
+			else
+				JavascriptInteractor.Actions["ValidatePuzzleResult"] = (result) =>
+				{
+					callback.Invoke(bool.Parse(result));
+				};
 			MetamaskManager.ValidatePuzzleResult(hash);
-	        //MainThreadDispatcher.EnqueueActionForNextFrame(() => { ValidatePuzzleResultInternal(hash, callback); });
         }
-
-	    /*public static void ValidatePuzzleResultInternal(string hash, Action<bool> callback)
-	    {
-		    var result = MetamaskManager.GetResults("ValidatePuzzleResult");
-
-		    if (result.Trim() == string.Empty)
-		    {
-			    MainThreadDispatcher.EnqueueActionForNextFrame(() => ValidatePuzzleResultInternal(hash, callback));
-		    }
-		    else
-		    {
-			    CurrentHash = null;
-			    MainThreadDispatcher.EnqueueAction(() => { callback.Invoke(bool.Parse(result)); });
-		    }
-		}*/
 	}
 }

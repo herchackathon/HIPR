@@ -275,7 +275,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		yield return new WaitForSeconds(1.0f);
 
-	    int howManyShuffles = UnityEngine.Random.Range(20, 31);
+		int howManyShuffles = UnityEngine.Random.Range(20, 35);
 
 		for(int k = 0; k < howManyShuffles; k++)
 		{
@@ -334,14 +334,18 @@ public class ST_PuzzleDisplay : MonoBehaviour
             {
                 if (isValid)
                 {
-                    AudioSource.PlayOneShot(VictorySound);
+					if(AudioSource == null)
+						AudioSource = GetComponent<AudioSource>();
+					AudioSource.PlayOneShot(VictorySound);
 
-                    var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
-                    CompletingText.text = "You won 1 Herc token and decrypted\nHerciD: " + amount.ToString("000-000-000");
+	                var score = CalculateScore(PuzzleMoves, (int) GameTimerUpdater.ElapsedSeconds);
+
+					var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+                    CompletingText.text = "You won 1 Herc token with score " + score + "\nand decrypted HerciD: " + amount.ToString("000-000-000");
                     
                     CompletingPopup.gameObject.SetActive(true);
 
-                    ScoresManager.PushScore(CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds),
+                    ScoresManager.PushScore(score,
                         (done) =>
                         {
                             if(done)

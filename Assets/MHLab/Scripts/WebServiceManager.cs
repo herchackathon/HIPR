@@ -1,16 +1,13 @@
-﻿using System;
+﻿using MHLab.Ethereum;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MHLab.Ethereum;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace MHLab
 {
-    public class WebServiceManager
+	public class WebServiceManager
     {
         private const string Endpoint = "";
         ///GET api/1.0/getTopScores (index=0, count=1) => {topScores::array[]}
