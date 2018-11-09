@@ -1,10 +1,10 @@
 var express = require('express');
+var fs = require('fs');
 var router = express.Router();
 
 /* GET game page. */
 router.get('/', function(req, res, next) {
-    //res.send('respond with a resource');
-    res.render('game', { title: 'Express Game' });
+    res.sendFile('game.html', { root: __dirname + '/../public/' });
 });
 
 module.exports = router;

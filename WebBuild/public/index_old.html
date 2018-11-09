@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>HIPR</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
     <script src="Build/UnityLoader.js"></script>
     
     <!-- STEP 1. define gameInstance -->
@@ -58,13 +63,14 @@
         }
 
         function SetScoreInternal(score)
-        {
+        {console.log("oh yeah: " + score);
             HIPRInternal.SetScore(score);
             // -> "true"
         }
 
         function ValidatePuzzleResultInternal(resultHash)
         {
+            console.log(resultHash);
             SendResultBack('ValidatePuzzleResult', 'true');
             //return HIPRInternal.ValidatePuzzleResult();
             // -> "true"
@@ -110,7 +116,10 @@
     			OnError("Please log into Metamask to play on HIPR.");
     		}
     		else
-    		{                
+    		{
+                document.getElementById("errorPage").style.display = "none";
+                document.getElementById("gameContainer").style.display = "block";
+                
                 if (window.UnityLoader)
                     gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json");
                 
@@ -120,7 +129,8 @@
 
     	function OnError(message)
     	{
-            window.location.href = "/";
+            document.getElementById("web3Error").style.visibility = "visible";
+        	document.getElementById("gameContainer").style.display = "none";
     	}
 
     </script>
@@ -129,7 +139,7 @@
 <body style="background: rgb(35, 31, 32);">
     <div id="gameContainer" style="width: 100%; height: 100%; position: absolute; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; padding: 0px; border: 0px; background: rgb(35, 31, 32);"></div>
   
-    <!--<div id="errorPage">
+    <div id="errorPage">
         <div class="container grid-lg errorContainer">
             <div class="columns">
                 <div class="column col-5 col-xl-12">
@@ -161,7 +171,7 @@
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
 </body>
 </html>

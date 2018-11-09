@@ -9,77 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="Build/UnityLoader.js"></script>
-    
-    <!-- STEP 1. define gameInstance -->
-
-    <script type="text/javascript">
         
-        // just comment game instance if Unity
-        var gameInstance = {
-            SetFullscreen: (v) => {
-                console.log('SetFullscreen', v)
-            },
-            SendMessage: (interactor, fn, message) => {
-                console.log('SendMessage', interactor, fn, message)
-            }
-        }
-    </script>
-
-    <!-- STEP 2. load metamask web3 -->
-
-    <script src="javascripts/web3-client-internal.js"></script>
-
-    <!-- STEP 3. connect to hipr browser internal -->
-
-    <script src="javascripts/hipr-browser-internal.js"></script>
-
-    <!-- STEP 4. define internal api -->
-    
-    <script type="text/javascript">
-        // API
-
-        // CALLBACK
-
-        function SendResultBack(key, result)
-        {
-            var message = key + "#" + result;
-            console.log('SendResultBack', message)
-            gameInstance.SendMessage('JavascriptInteractor', 'ProcessResult', message);
-        }
-
-        // METHODS
-
-        function GetPuzzleInternal()
-        {
-            HIPRInternal.GetPuzzle()
-            // -> "ajdhajsndjsadjsah"
-        }
-
-        function GetTopScoresInternal(count)
-        {
-            HIPRInternal.GetTopScores(count)
-            // -> "0x111111111|15;0x22222222|12;0x33333333|11;0x444444444|9;0x555555555|3;"
-        }
-
-        function SetScoreInternal(score)
-        {console.log("oh yeah: " + score);
-            HIPRInternal.SetScore(score);
-            // -> "true"
-        }
-
-        function ValidatePuzzleResultInternal(resultHash)
-        {
-            console.log(resultHash);
-            SendResultBack('ValidatePuzzleResult', 'true');
-            //return HIPRInternal.ValidatePuzzleResult();
-            // -> "true"
-        }
-    </script>
-
-    <!-- STEP 5. onload init web3 -->
-    
-    <script src="Build/UnityLoader.js"></script>
     <script>
     	window.addEventListener('load', async () => {
             document.getElementById("playButton").addEventListener('click', async () => {
@@ -116,29 +46,21 @@
     			OnError("Please log into Metamask to play on HIPR.");
     		}
     		else
-    		{
-                document.getElementById("errorPage").style.display = "none";
-                document.getElementById("gameContainer").style.display = "block";
-                
-                if (window.UnityLoader)
-                    gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json");
-                
-                HIPRInternal.init()
+    		{                
+                // TODO: go to game page.
+                window.location.href = "/validate";
     		}
     	}
 
     	function OnError(message)
     	{
             document.getElementById("web3Error").style.visibility = "visible";
-        	document.getElementById("gameContainer").style.display = "none";
     	}
 
     </script>
 
 </head>
 <body style="background: rgb(35, 31, 32);">
-    <div id="gameContainer" style="width: 100%; height: 100%; position: absolute; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; padding: 0px; border: 0px; background: rgb(35, 31, 32);"></div>
-  
     <div id="errorPage">
         <div class="container grid-lg errorContainer">
             <div class="columns">
