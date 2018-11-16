@@ -22,7 +22,7 @@ namespace MHLab.UI
         public string ActivatedValue;
         public string DeactivatedValue;
 
-        protected void Awake()
+        protected void Start()
         {
             if (!LocalStorage.HasKey(KeyToQuery))
             {
