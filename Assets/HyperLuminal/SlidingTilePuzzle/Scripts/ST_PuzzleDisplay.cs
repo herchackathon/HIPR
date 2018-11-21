@@ -67,7 +67,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public AudioSource AudioSource;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
 	    ST_PuzzleDisplay.PuzzleMoves = 0;
 	    ST_PuzzleDisplay.CanMove = false;
@@ -87,7 +87,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update() 
 	{
 		// move the puzzle to the position set in the inspector.
 		//this.transform.localPosition = PuzzlePosition;
@@ -95,6 +95,11 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		// set the scale of the entire puzzle object as set in the inspector.
 		//this.transform.localScale = PuzzleScale;
+
+		if (Input.GetKeyUp(KeyCode.S))
+		{
+			Complete = true;
+		}
 	}
 
     public Vector2 padding = new Vector2(0.45f, 0.1f); //Distance we want to keep from the viewport borders.
