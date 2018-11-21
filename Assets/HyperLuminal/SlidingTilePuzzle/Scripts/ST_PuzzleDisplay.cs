@@ -77,7 +77,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	    AudioSource = GetComponent<AudioSource>();
 
 	    PuzzleImage = PuzzleImages[UnityEngine.Random.Range(0, PuzzleImages.Length)];
-        PuzzleImage = Steganography.Encode(PuzzleImage, "1234");
+        PuzzleImage = Steganography.Encode(PuzzleImage, PuzzleManager.CurrentHash);
 
         // create the games puzzle tiles from the provided image.
         CreatePuzzleTiles();
