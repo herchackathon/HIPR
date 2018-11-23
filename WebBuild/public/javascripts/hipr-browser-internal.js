@@ -5,7 +5,7 @@ HIPRInternal = {
     init () {
 		this.defaultWeb3()
 		
-		//this.TestApi()
+		this.TestApi()
     },
 
     // restructured code class
@@ -67,7 +67,7 @@ HIPRInternal = {
 		req.done = true
     },
     
-    TestApi () {
+    TestApi0 () {
 		var self = this
 		var rid = self.SetScore(789)
 		var puzzleId
@@ -101,6 +101,31 @@ HIPRInternal = {
 		}, 100)
 	},
 
+    TestApi () {
+		var self = this
+		var address = web3.eth.defaultAccount
+		var rid = self.RegisterPuzzle(address, 'username/assetid/factomchainhash/ipfsHash/0xaddress')
+		var puzzleId
+		setInterval(()=>{
+
+			var req = self.GetRequest(rid)
+			if (req) {
+				console.log(req)
+				if (rid == 1) {
+					rid = self.GetPuzzle(address, '15-test')
+				}
+				else if (rid == 2) {
+					debugger
+					puzzleId = req.puzzleId
+					metrics
+					rid = self.ValidatePuzzleResult(puzzleId, 'puzzle 2b')
+				}
+			}
+
+		}, 100)
+	},
+	
+
     /// <summary>
 	/// Get request for id
     /// <param name="requestId">Request id returned by previous function call</param>
@@ -113,7 +138,7 @@ HIPRInternal = {
 				return null
 			}
 
-			var s = `${req.value}`
+			var s = typeof req.value === 'object' ? req.value : `${req.value}`
 
             return s
 		}
@@ -269,21 +294,74 @@ HIPRInternal = {
 	},
 
     /// <summary>
+    /// Register puzzle for testing purposes
+    /// </summary>
+    /// <param name="address">0xaddress</param>
+    /// <param name="params">Params into hiprs like 'username/assetid/factomchainhash/ipfsHash/0xaddress'</param>
+    /// <returns>Request id -> true or false</returns>
+	RegisterPuzzle: function(address, params)
+	{
+    	this.defaultWeb3();
+
+		var self = this,
+			requestId = this.getRequestId('RegisterPuzzle')
+
+		var url = `${Web3Options[Web3Options.env].hipr_restful}/registerPuzzleAddress/${address}/${encodeURIComponent(params)}`
+
+		axios.post(url)
+			.then(function (response) {
+				// handle success
+//				console.log(requestId, response);
+				self.setRequestValue(requestId, response.data)
+			})
+			.catch(function (error) {
+				// handle error
+//				console.log(error);
+				this.setRequestError(requestId, error)
+			})
+
+		return requestId
+	},
+
+    /// <summary>
     /// Retrieves a puzzle hash from the blockchain.
     /// </summary>
-    /// <returns>The metrics hash to encode.</returns>
-    GetPuzzle: function()
+    /// <param name="address">0xaddress</param>
+    /// <param name="puzzleType">Puzzle type ("rubic-cube", "15")</param>
+    /// <param name="mode">Mode creation hipr-restful (default) or web3-browser (not implemented)</param>
+    /// <returns>Request id -> true or false</returns>
+    GetPuzzle: function(address, puzzleType, mode)
     {
     	this.defaultWeb3();
 
 		var self = this,
 			requestId = this.getRequestId('GetPuzzle')
 
-		self.setRequestValue(requestId, "testHashJustForTestingPurposes")
+		var modes = {
+			'hipr-restful': '(default, secure)',
+			'web3-browser': '(unsecure, not implemented)',
+		}
+
+		mode = 'hipr-restful'; // always hipr-restful mode in this update
+
+		var url = `${Web3Options[Web3Options.env].hipr_restful}/createPuzzleSecure/${address}/${puzzleType}/undefined`
+
+		axios.post(url)
+			.then(function (response) {
+				// handle success
+//				console.log(requestId, response);
+				self.setRequestValue(requestId, response)
+
+				HIPRInternal.setRequestValue(requestId, response)
+			})
+			.catch(function (error) {
+				// handle error
+//				console.log(error);
+				this.setRequestError(requestId, error)
+			})
 
 		return requestId
     },
-
 
     /// <summary>
 	/// Pushes the puzzle result to the smart contract for validation.
@@ -298,11 +376,13 @@ HIPRInternal = {
 		var self = this,
 			requestId = this.getRequestId('ValidatePuzzleResult')
 
-		this.puzzleManager.PushMetrics(puzzleId, resultHash, (error, result) => {
+		this.puzzleManager.PushSecureMetrics(puzzleId, resultHash, (error, result) => {
 			if (!error) {
-				this.puzzleManager.CompareMetrics(puzzleId, (error, result) => {
+				this.puzzleManager.compareSecureMetrics(puzzleId, (error, result) => {
 					if (!error) {
 						self.setRequestValue(requestId, result)
+
+						HIPRInternal.setRequestValue(requestId, result)
 					}
 					else {
 						this.setRequestError(requestId, error)

@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>HIPR</title>
-    <script src="Build/UnityLoader.js"></script>
-    
+<!--    <script src="Build/UnityLoader.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <!-- STEP 1. define gameInstance -->
 
     <script type="text/javascript">
@@ -23,6 +24,7 @@
 
     <!-- STEP 2. load metamask web3 -->
 
+    <script src="javascripts/config.js"></script>
     <script src="javascripts/web3-client-internal.js"></script>
 
     <!-- STEP 3. connect to hipr browser internal -->
@@ -73,7 +75,7 @@
 
     <!-- STEP 5. onload init web3 -->
     
-    <script src="Build/UnityLoader.js"></script>
+<!--    <script src="Build/UnityLoader.js"></script> -->
     <script>
     	window.addEventListener('load', async () => {
             // Modern dapp browsers...
@@ -118,7 +120,7 @@
 
     	function OnError(message)
     	{
-            window.location.href = "/";
+//            window.location.href = "/";
     	}
 
     </script>
