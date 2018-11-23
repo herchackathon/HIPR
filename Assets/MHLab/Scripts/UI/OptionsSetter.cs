@@ -27,7 +27,6 @@ namespace MHLab.UI
             if (!LocalStorage.HasKey(KeyToQuery))
             {
                 LocalStorage.Store(KeyToQuery, ActivatedValue);
-                return;
             }
 
             switch (ValueType)

@@ -96,7 +96,11 @@ public class PuzzleSelector : MonoBehaviour
     {
         FetchingScreen.SetActive(true);
         PuzzleManager.GetPuzzleHash(
-            (hash) => { SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex); },
+            (hash) =>
+            {
+	            PuzzleManager.CurrentHash = hash;
+	            SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex);
+            },
             (error) =>
             {
                 FetchingText.text = error.Message;
