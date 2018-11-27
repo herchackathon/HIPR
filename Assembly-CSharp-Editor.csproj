@@ -68,9 +68,6 @@
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Lavori/HIPR/HIPR/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Unity3D/2018.3.0b6/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
