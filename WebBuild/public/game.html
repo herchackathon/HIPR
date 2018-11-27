@@ -12,14 +12,14 @@
     <script type="text/javascript">
         
         // just comment game instance if Unity
-        var gameInstance = {
+        /*var gameInstance = {
             SetFullscreen: (v) => {
                 console.log('SetFullscreen', v)
             },
             SendMessage: (interactor, fn, message) => {
                 console.log('SendMessage', interactor, fn, message)
             }
-        }
+        }*/
     </script>
 
     <!-- STEP 2. load metamask web3 -->
@@ -49,8 +49,8 @@
 
         function GetPuzzleInternal()
         {
-            HIPRInternal.GetPuzzle()
-            // -> "ajdhajsndjsadjsah"
+            //HIPRInternal.GetPuzzle()
+            SendResultBack("GetPuzzle", "ajdhajsndjsadjsah");
         }
 
         function GetTopScoresInternal(count)

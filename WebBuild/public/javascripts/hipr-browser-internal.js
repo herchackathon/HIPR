@@ -5,7 +5,7 @@ HIPRInternal = {
     init () {
 		this.defaultWeb3()
 		
-		this.TestApi()
+		//this.TestApi()
     },
 
     // restructured code class
