@@ -194,10 +194,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: When you win the game you'll win HERC tokens and the playerScore.sol contract
-    will register the score you took to the blockchain! This formatting of the data
-    into a pre-audit report can be considered an internal control an entity would
-    establish to allow an auditor a more simplified environment setup.
+  m_Text: When you win the game the playerScore.sol contract will register the score
+    you took to the blockchain! At the end of every game season, the top 5 scores
+    will be paid out! This formatting of the data into a pre-audit report can be considered
+    an internal control an entity would establish to allow an auditor a more simplified
+    environment setup.
 --- !u!222 &65389949
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -796,10 +797,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Loop: 1
   AutoPlay: 1
-  FileName: herc_logo_hipr_512.gif
+  FileName: herc_logo_hipr_256.gif
   Path: 0
   CacheFrames: 1
-  BufferAllFrames: 1
+  BufferAllFrames: 0
   UseThreadedDecoder: 1
   OverrideTimeScale: 0
   TimeScale: 1
