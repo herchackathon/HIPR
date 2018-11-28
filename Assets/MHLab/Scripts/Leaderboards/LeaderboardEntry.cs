@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace MHLab.SlidingTilePuzzle.Leaderboards
 {
-    public class LeaderboardEntry : MonoBehaviour
+	public class LeaderboardEntry : MonoBehaviour
     {
         public Text Position;
         public Text Address;

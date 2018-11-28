@@ -7,7 +7,7 @@ namespace MHLab.Ethereum
 {
 	public class PuzzleManager
     {
-        public static string CurrentHash;
+        public static string CurrentHash = "TestIt";
 
         public static void GetPuzzleHash(Action<string> callback, Action<Exception> errorCallback)
         {

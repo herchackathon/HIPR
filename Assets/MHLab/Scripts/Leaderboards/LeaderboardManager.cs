@@ -1,13 +1,12 @@
 ﻿using MHLab.Ethereum;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MHLab.SlidingTilePuzzle.Leaderboards
 {
-    public class LeaderboardManager : MonoBehaviour
+	public class LeaderboardManager : MonoBehaviour
     {
         public static LeaderboardManager Instance;
-        private LeaderboardEntry[] _entries = new LeaderboardEntry[5];
+        public LeaderboardEntry[] _entries = new LeaderboardEntry[5];
 
         protected void Awake()
         {
@@ -24,7 +23,7 @@ namespace MHLab.SlidingTilePuzzle.Leaderboards
                     index++;
                 }
             });
-        }
+		}
 
         public void SetEntry(int index, string address, int score)
         {
