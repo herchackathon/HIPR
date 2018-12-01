@@ -24,6 +24,18 @@ body {
 	box-sizing: border-box;
 	padding: 3rem;
 }
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+	#errorPage {
+		padding: 1rem;
+	}
+
+	.errorContainer {
+		padding: 2rem;
+	}
+}
+
 .hiprLogo {
     margin: auto;
     height: 300px;
