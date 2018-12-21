@@ -13,6 +13,19 @@ var LibraryHIPR = {
 		return buffer;
 	},
 
+	/// <summary>
+    /// Retrieves the end of season date.
+    /// </summary>
+    /// <returns>The end of season date.</returns>
+	GetEndOfSeason: function() 
+	{
+		var date = GetEndOfSeasonInternal();
+
+		var buffer = _malloc(lengthBytesUTF8(date) + 1);
+		stringToUTF8(date, buffer, date.length + 1);
+		return buffer;
+	},
+
 
 	/// <summary>
     /// Get top scores.

@@ -20,12 +20,26 @@ namespace MHLab.Metamask
         public static extern string GetAccount();
 #endif
 
-	    /// <summary>
-	    /// Get top scores.
-	    /// </summary>
-	    /// <param name="count">The amount of top scores to retrieve.</param>
+        /// <summary>
+        /// Retrieves the injected Metamask account.
+        /// </summary>
+        /// <returns>The account address.</returns>
 #if UNITY_EDITOR
-	    public static void GetTopScores(int count)
+        public static string GetEndOfSeason()
+        {
+            return "21/12/2018 23:59";
+        }
+#else
+		[DllImport("__Internal")]
+        public static extern string GetEndOfSeason();
+#endif
+
+        /// <summary>
+        /// Get top scores.
+        /// </summary>
+        /// <param name="count">The amount of top scores to retrieve.</param>
+#if UNITY_EDITOR
+        public static void GetTopScores(int count)
 	    {
 			//[0xf55f45267258efbfcefb795a688630a26576635e, 9727], [0xf55f45267258efbfcefb795a688630a26576635e, 4574], [0xf55f45267258efbfcefb795a688630a26576635e, 15948], [0xf55f45267258efbfcefb795a688630a26576635e, 9425], [0x8f96f32db25b2d4fa0787d6e045630caaf2d09f7, 789]
 			//JavascriptInteractor.ProcessResultGlobal("GetTopScores#0x1111111111111111111111111111111111111111|15;0x2222222222222222222222222222222222222222|12;0x3333333333333333333333333333333333333333|11;0x4444444444444444444444444444444444444444|9;0x5555555555555555555555555555555555555555|3");

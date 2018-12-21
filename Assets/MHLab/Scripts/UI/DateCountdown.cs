@@ -1,4 +1,5 @@
 ﻿using System;
+using MHLab.Metamask;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,21 @@ public class DateCountdown : MonoBehaviour
     private void Start()
     {
 	    _text = GetComponent<Text>();
+        string date = null;
+        try
+        {
+            date = MetamaskManager.GetEndOfSeason();
+        }
+        catch
+        {
+            
+        }
+
+        if (!string.IsNullOrWhiteSpace(date))
+        {
+            TargetDate = date;
+        }
+
 		_target = DateTime.ParseExact(TargetDate, "dd/MM/yyyy HH:mm", null);
 		UpdateText();
     }
