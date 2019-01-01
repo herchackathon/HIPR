@@ -25,7 +25,10 @@ body {
 	padding: 3rem;
 }
 
-/* On screens that are 600px or less, set the background color to olive */
+.dapp-error-text p {
+    margin: 0 0 0.2rem 0;
+}
+
 @media screen and (max-width: 600px) {
 	#errorPage {
 		padding: 1rem;
@@ -37,6 +40,25 @@ body {
 
 	.description {
 		margin-top: 2rem;
+	}
+
+	.wallet-icon {
+		max-height: 60px;
+		max-width: 60px;
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.description-2 {
+		margin-top: 4rem;
+	}
+
+	.dapp-error-text {
+		font-size: 20px;
+		color: #909090;
+	}
+	.dapp-error-text p {
+		margin: 0 0 1.2rem 0;
 	}
 }
 
@@ -61,4 +83,16 @@ body {
 	visibility: hidden;
 	margin-bottom: 0;
 	margin-top: 0;
+}
+.wallet-icon {
+	margin: auto;
+	max-height: 60px;
+	max-width: 60px;
+}
+.small-description {
+	font-size: 14px;
+}
+.dapp-error-text {
+	font-size: 20px;
+	color: #909090;
 }
