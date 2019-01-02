@@ -92,7 +92,12 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		// move the puzzle to the position set in the inspector.
 		//this.transform.localPosition = PuzzlePosition;
         PositionInView();
-	}
+
+	    /*if (Input.GetKeyUp(KeyCode.S))
+	    {
+	        Complete = true;
+	    }*/
+    }
 
     public Vector2 padding = new Vector2(0.45f, 0.1f); //Distance we want to keep from the viewport borders.
 

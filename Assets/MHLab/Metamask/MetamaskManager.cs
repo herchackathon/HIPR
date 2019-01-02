@@ -25,13 +25,13 @@ namespace MHLab.Metamask
         /// </summary>
         /// <returns>The account address.</returns>
 #if UNITY_EDITOR
-        public static string GetEndOfSeason()
+        public static void GetEndOfSeason()
         {
-            return "21/12/2018 23:59";
+            JavascriptInteractor.ProcessResultGlobal("GetEndOfSeason#1547510399000");
         }
 #else
 		[DllImport("__Internal")]
-        public static extern string GetEndOfSeason();
+        public static extern long GetEndOfSeason();
 #endif
 
         /// <summary>
