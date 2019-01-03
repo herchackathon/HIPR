@@ -96,3 +96,105 @@ body {
 	font-size: 20px;
 	color: #909090;
 }
+
+#menu_toggle {
+    position: fixed;
+	bottom: 0;    
+	left: 50%;
+    margin-left: -40px;
+    z-index: auto;
+    color: #ecd23a;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 40px;
+    background-color: #08112b;
+    border-left: 2px solid #ecd23a;
+    border-right: 2px solid #ecd23a;
+    border-top: 2px solid #ecd23a;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+}
+
+#menu {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: auto;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.hide {
+	display: none;
+}
+
+.dialog {
+	background-color: #08112b;
+    border: 2px solid #ecd23a;
+	border-radius: 15px;
+	margin: auto;
+	max-width: 400px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	color: #ecd23a;    
+	margin-top: 30px;
+}
+.dialog .title {
+	text-align: center;    
+	padding: 10px;
+}
+.dialog .scores-list > ul {
+	list-style: none;
+}
+.dialog .scores-list .position {
+    margin-right: 10px;
+}
+.dialog .scores-list .entry {
+    text-align: center;
+    margin-top: -20px;
+}
+.dialog .scores-list .entry-container {
+    margin-bottom: 10px;
+}
+.dialog .address {
+    font-size: 9px;
+    color: #9e903a;
+}
+.dialog .score {
+	font-size: 23px;
+}
+.dialog .scores-list {
+    max-height: 450px;
+	overflow-y: auto;    
+	margin: 10px;
+}
+.dialog .scores-list::-webkit-scrollbar {
+    width: 12px;
+}
+
+.dialog .scores-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #9e903a; 
+    border-radius: 10px;
+}
+
+.dialog .scores-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #ecd23a; 
+}
+
+.dialog .podium td {
+	text-align: center;
+}
+.dialog .podium .podium-cell{
+    background-color: #ecd23a;
+	width: 40px;    
+	height: 40px;
+    color: #08112b;
+}
+.dialog .podium {
+    padding: 10px 0 10px 50px;
+}

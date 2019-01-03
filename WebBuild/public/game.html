@@ -5,7 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>HIPR</title>
 	<script src="Build/UnityLoader.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
 
     <!-- STEP 1. define gameInstance -->
 
@@ -131,42 +134,101 @@
     </script>
 
 </head>
-<body style="background: rgb(35, 31, 32);">
+<body style="background: rgb(35, 31, 32); margin:0;">
     <div id="gameContainer" style="width: 100%; height: 100%; position: absolute; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; padding: 0px; border: 0px; background: rgb(35, 31, 32);"></div>
   
-    <!--<div id="errorPage">
-        <div class="container grid-lg errorContainer">
-            <div class="columns">
-                <div class="column col-5 col-xl-12">
-                    <div class="column col-12 text-center">
-                        <h2>Human Initiated Performance Report</h2>
-                    </div>
-                    <div class="column col-12 text-center">
-                        <img class="img-responsive hiprLogo" src="images/hipr_logo_loop.gif" />
-                    </div>
-                    <div id="web3Error" class="column col-12 text-center description">
-                        HIPR requires a dApp browser to work.
-                    </div>
-                    <div class="columns">
-                        <div class="column col-6 buttonsContainer text-center">
-                            <a id="playButton" class="playButton float-right" href="#"><img class="img-responsive" src="images/PlayButton.png" /></a>
-                        </div>
-                        <div class="column col-6">
-                            <a class="infoButton float-left" href="#"><img class="img-responsive" src="images/InfoButton.png" /></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="column col-7 col-xl-12">
-                    <div class="column col-12 description text-center">
-                        The first ever gamified "Internal Review" function; whereas the software validates the integrity of the chain data and secures the network through human initiation of smart contract chacksums.
-                    </div>
-                    <div class="column col-12">
-                        <img class="img-responsive puzzleImage" src="images/puzzle.png" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 
+	<div id="menu" class="hide">
+		<div class="dialog">
+			<div class="title">Top 50 Players</div>
+			<div class="podium">
+				<table style="border-spacing: 0">
+					<tbody>
+						<tr>
+							<td colspan="4">
+								<div id="score_number_one" class="entry"><div class="address">0xf55f45267258EFbFCefB795a688630A26576635e</div><div class="score">54552</div></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="podium-cell">1°</td>
+							<td colspan="3">
+								<div id="score_number_two" class="entry"><div class="address">0xf55f45267258EFbFCefB795a688630A26576635e</div><div class="score">54552</div></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="podium-cell"></td>
+							<td class="podium-cell">2°</td>
+							<td colspan="2">
+								<div id="score_number_three" class="entry"><div class="address">0xf55f45267258EFbFCefB795a688630A26576635e</div><div class="score">54552</div></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="podium-cell"></td>
+							<td class="podium-cell"></td>
+							<td class="podium-cell">3°</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="scores-list">
+				<ul>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div id="menu_toggle">&equiv;</div>
+	
+	<script>
+		jQuery("#menu_toggle").on("click", function(event) {
+			var menu = jQuery("#menu");
+			if(menu.hasClass("hide"))
+			{
+				HIPRInternal.GetTopScoresForMenu(50, function(result) {
+					//console.log(result);
+
+					var list = jQuery("#menu .scores-list > ul");
+					list.html("");
+					
+					result.forEach(function(item, index) {
+						if(index < 3)
+						{
+							let address = item.value[0];
+							let score = item.value[1];
+							if(index == 0)
+							{
+								jQuery("#score_number_one .address").html(address);
+								jQuery("#score_number_one .score").html(score);
+							}
+							if(index == 1)
+							{
+								jQuery("#score_number_two .address").html(address);
+								jQuery("#score_number_two .score").html(score);
+							}
+							if(index == 2)
+							{
+								jQuery("#score_number_three .address").html(address);
+								jQuery("#score_number_three .score").html(score);
+							}
+							return;
+						}
+						//console.log(item.value[0] + ", " + item.value[1]);
+						let address = item.value[0];
+						let score = item.value[1];
+						list.append('<li><div class="entry-container"><span class="position">' + (index + 1) + '°</span><div class="entry"><div class="address">' + address + '</div><div class="score">' + score + '</div></div></div></li>');
+					});
+
+					menu.removeClass("hide");
+				});
+			}
+			else
+			{
+				menu.addClass("hide");
+			}
+		});
+
+    </script>
 </body>
 </html>
