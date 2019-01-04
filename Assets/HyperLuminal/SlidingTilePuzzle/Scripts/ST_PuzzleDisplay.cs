@@ -343,8 +343,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	                var score = CalculateScore(PuzzleMoves, (int) GameTimerUpdater.ElapsedSeconds);
 
 					var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
-	                CompletingText.text = "You're in the leaderboard with a score of " + score +
-	                                      "!\nPayouts will be awarded at the end of the first season.";//"You won 1 Herc token with score " + score + "\nand decrypted HerciD: " + amount.ToString("000-000-000");
+	                CompletingText.text = "Nicely done! You scored " + score +
+	                                      "!\nBe sure to accept the transaction, or your score will not be added in the leaderboard!";
                     
                     CompletingPopup.gameObject.SetActive(true);
 
