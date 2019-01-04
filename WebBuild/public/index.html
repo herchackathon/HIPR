@@ -19,10 +19,11 @@
                     try {
                         // Request account access if needed
                         await ethereum.enable();
-                        // Acccounts now exposed
+						// Acccounts now exposed
                         OnCheckingDone();
                     } 
                     catch (error) {
+						console.log(error);
                         OnError("User denied access to Metamask for this app");
                     }
                 }
@@ -46,14 +47,23 @@
     			OnError("Please log into Metamask to play on HIPR.");
     		}
     		else
-    		{                
-                // TODO: go to game page.
-                window.location.href = "/validate";
+    		{              
+				window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
+					let weiBalance = window.web3.fromWei(balance);
+					console.log(weiBalance); 
+					if(weiBalance.c[1] >= 20000000000)
+						window.location.href = "/validate";
+					else
+						OnError("Your account has NOT enough eth. Make sure to buy some before playing!");
+				});
+				
     		}
     	}
 
     	function OnError(message)
     	{
+			console.log(message);
+			document.getElementById("errorText").innerHTML = message;
             document.getElementById("web3Error").style.visibility = "visible";
     	}
 
@@ -74,13 +84,13 @@
                     <div class="columns">
                         <div class="column col-12 buttonsContainer text-center">
 							<a id="playButton" class="playButton text-center" href="#"><img class="img-responsive" style="margin:auto;" src="images/PlayButton.png" /></a>
-							<!--<p style="color:red; margin-bottom:0;">Scheduled maintainance! We need to construct additional pylons!</p>-->
                         </div>
                         <!--<div class="column col-6">
                             <a class="infoButton float-left" href="https://herc.one/metamask" target="_blank"><img class="img-responsive" src="images/InfoButton.png" style="height: 50px" /></a>
                         </div>-->
 					</div>
 					<div id="web3Error">
+						<p id="errorText" style="color:red; margin-bottom:0;text-align:center;"></p>
 						<div class="column col-12 text-center dapp-error-text">
 							<p>HIPR requires a dApp browser to work. <a href="https://herc.one/metamask" target="_blank">Learn more.</a></p>
 							<p class="small-description">Try from these web3 providers:</p>
