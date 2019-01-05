@@ -25,6 +25,7 @@
                     catch (error) {
 						console.log(error);
                         OnError("User denied access to Metamask for this app");
+						document.getElementById("errorText").style.visibility = "visible";
                     }
                 }
                 // Legacy dapp browsers...
@@ -35,7 +36,8 @@
                 }
                 // Non-dapp browsers...
                 else {
-                    OnError('Non-Ethereum browser detected. You should consider trying MetaMask!');
+					OnError('Non-Ethereum browser detected. You should consider trying MetaMask!');
+					document.getElementById("noWeb3Error").style.visibility = "visible";
                 }
             });
         });
@@ -45,6 +47,8 @@
     		if(typeof(window.web3.eth.accounts[0]) == 'undefined')
     		{
     			OnError("Please log into Metamask to play on HIPR.");
+				document.getElementById("errorText").style.visibility = "visible";
+				document.getElementById("noWeb3Error").style.visibility = "visible";
     		}
     		else
     		{              
@@ -54,7 +58,8 @@
 					if(weiBalance.c[1] >= 20000000000)
 						window.location.href = "/validate";
 					else
-						OnError("Your account has NOT enough eth. Make sure to buy some before playing!");
+						OnError("It seems you do not have enough ETH to submit your score. Your scores would not be submitted without the fuel of the Ethereum blockchain.");
+            			document.getElementById("errorText").style.visibility = "visible";
 				});
 				
     		}
@@ -90,31 +95,33 @@
                         </div>-->
 					</div>
 					<div id="web3Error">
-						<p id="errorText" style="color:red; margin-bottom:0;text-align:center;"></p>
-						<div class="column col-12 text-center dapp-error-text">
-							<p>HIPR requires a dApp browser to work. <a href="https://herc.one/metamask" target="_blank">Learn more.</a></p>
-							<p class="small-description">Try from these web3 providers:</p>
-						</div>
-						<div class="columns" style="max-width: 600px; margin: auto;">
-							<div class="column col-3 text-center">
-								<a href="https://wallet.coinbase.com/">
-									<img class="img-responsive wallet-icon" src="images/logos/coinbase.png" />
-								</a>
+						<p id="errorText" style="color:red; margin-bottom:0;text-align:center;visibility: hidden"></p>
+						<div class="noWeb3Error" style="visibility: hidden">
+							<div class="column col-12 text-center dapp-error-text">
+								<p>HIPR requires a dApp browser to work. <a href="https://herc.one/metamask" target="_blank">Learn more.</a></p>
+								<p class="small-description">Try from these web3 providers:</p>
 							</div>
-							<div class="column col-3 text-center">
-								<a href="https://trustwallet.com/">
-									<img class="img-responsive wallet-icon" src="images/logos/trust.png" />
-								</a>
-							</div>
-							<div class="column col-3 text-center">
-								<a href="https://www.opera.com/it/crypto">
-									<img class="img-responsive wallet-icon" src="images/logos/opera.png" />
-								</a>
-							</div>
-							<div class="column col-3 text-center">
-								<a href="https://metamask.io/">
-									<img class="img-responsive wallet-icon" src="images/logos/metamask.png" />
-								</a>
+							<div class="columns" style="max-width: 600px; margin: auto;">
+								<div class="column col-3 text-center">
+									<a href="https://wallet.coinbase.com/">
+										<img class="img-responsive wallet-icon" src="images/logos/coinbase.png" />
+									</a>
+								</div>
+								<div class="column col-3 text-center">
+									<a href="https://trustwallet.com/">
+										<img class="img-responsive wallet-icon" src="images/logos/trust.png" />
+									</a>
+								</div>
+								<div class="column col-3 text-center">
+									<a href="https://www.opera.com/it/crypto">
+										<img class="img-responsive wallet-icon" src="images/logos/opera.png" />
+									</a>
+								</div>
+								<div class="column col-3 text-center">
+									<a href="https://metamask.io/">
+										<img class="img-responsive wallet-icon" src="images/logos/metamask.png" />
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
