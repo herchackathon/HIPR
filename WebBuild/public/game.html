@@ -118,8 +118,12 @@
     			OnError("Please log into Metamask to play on HIPR.");
     		}
     		else
-    		{                
-				window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
+    		{               
+				if (window.UnityLoader)
+					gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json", {onProgress: UnityCustomProgress});
+				
+				HIPRInternal.init() 
+				/*window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
 					let weiBalance = window.web3.fromWei(balance);
 					console.log(weiBalance); 
 					if(weiBalance.c[1] >= 20000000000)
@@ -131,8 +135,7 @@
 					}
 					else
 						window.location.href = "/";
-				});
-                
+				});*/
     		}
     	}
 

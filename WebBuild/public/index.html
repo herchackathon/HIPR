@@ -51,8 +51,9 @@
 				document.getElementById("noWeb3Error").style.visibility = "visible";
     		}
     		else
-    		{              
-				window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
+    		{     
+				window.location.href = "/validate";         
+				/*window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
 					let weiBalance = window.web3.fromWei(balance);
 					console.log(weiBalance); 
 					if(weiBalance.c[1] >= 20000000000)
@@ -60,8 +61,7 @@
 					else
 						OnError("It seems you do not have enough ETH to submit your score. Your scores would not be submitted without the fuel of the Ethereum blockchain.");
             			document.getElementById("errorText").style.visibility = "visible";
-				});
-				
+				});*/
     		}
     	}
 
