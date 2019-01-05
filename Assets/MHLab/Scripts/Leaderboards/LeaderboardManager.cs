@@ -21,6 +21,8 @@ namespace MHLab.SlidingTilePuzzle.Leaderboards
                 {
                     LeaderboardManager.Instance.SetEntry(index, topScore.PlayerAddress, topScore.Score);
                     index++;
+                    if (index > 4)
+                        break;
                 }
             });
 		}

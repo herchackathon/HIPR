@@ -14,7 +14,7 @@ namespace MHLab.Ethereum
 				JavascriptInteractor.Actions.Add("GetTopScores", (result) => {ProcessGetTopScores(result, callback);});
 			else
 				JavascriptInteractor.Actions["GetTopScores"] = (result) => { ProcessGetTopScores(result, callback); };
-			MetamaskManager.GetTopScores(5);
+			MetamaskManager.GetTopScores(50);
         }
 
 		private static void ProcessGetTopScores(string result, Action<List<TopScore>> callback)

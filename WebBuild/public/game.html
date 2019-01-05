@@ -125,7 +125,7 @@
 					if(weiBalance.c[1] >= 20000000000)
 					{
 						if (window.UnityLoader)
-							gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json");
+							gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json", {onProgress: UnityCustomProgress});
 						
 						HIPRInternal.init()
 					}
@@ -141,6 +141,39 @@
             window.location.href = "/";
     	}
 
+		var textUnderLogo;
+
+		function UnityCustomProgress(gameInstance, progress) 
+		{
+			if (!gameInstance.Module)
+				return;
+			if (!gameInstance.logo) {
+				gameInstance.logo = document.createElement("div");
+				gameInstance.logo.className = "startupLogo";// + gameInstance.Module.splashScreenStyle;
+				gameInstance.container.appendChild(gameInstance.logo);
+
+				textUnderLogo = document.createElement("div");
+				textUnderLogo.className = "textUnderLogo";
+				gameInstance.container.appendChild(textUnderLogo);
+			}
+			if (!gameInstance.progress) {    
+				gameInstance.progress = document.createElement("div");
+				gameInstance.progress.className = "progress ";// + gameInstance.Module.splashScreenStyle;
+				gameInstance.progress.empty = document.createElement("div");
+				gameInstance.progress.empty.className = "empty";
+				gameInstance.progress.appendChild(gameInstance.progress.empty);
+				gameInstance.progress.full = document.createElement("div");
+				gameInstance.progress.full.className = "full";
+				gameInstance.progress.appendChild(gameInstance.progress.full);
+				gameInstance.container.appendChild(gameInstance.progress);
+			}
+			gameInstance.progress.full.style.width = (100 * progress) + "%";
+			gameInstance.progress.empty.style.width = (100 * (1 - progress)) + "%";
+			if (progress == 1)
+			{
+				gameInstance.logo.style.display = gameInstance.progress.style.display = textUnderLogo.style.display = "none";
+			}
+		}
     </script>
 
 </head>
@@ -190,6 +223,9 @@
 	</div>
 	
 	<div id="menu_toggle">&equiv;</div>
+	<div id="fullscreen_toggle">
+		<div class="fullscreen-content"></div>
+	</div>
 	
 	<script>
 		jQuery("#menu_toggle").on("click", function(event) {
@@ -201,6 +237,12 @@
 
 					var list = jQuery("#menu .scores-list > ul");
 					list.html("");
+
+					result.sort( function(item1, item2) {
+						let score1 = item1.value[1];
+						let score2 = item2.value[1];
+						return score2 - score1;
+					});
 					
 					result.forEach(function(item, index) {
 						if(index < 3)
@@ -239,6 +281,11 @@
 			}
 		});
 
+		var isFullscreen = false;
+		jQuery("#fullscreen_toggle").on("click", function(event) {
+			isFullscreen = !isFullscreen;
+			gameInstance.SetFullscreen(isFullscreen);
+		});
     </script>
 </body>
 </html>

@@ -2,8 +2,6 @@
 "companyName": "Hercules SECZ",
 "productName": "HIPR",
 "dataUrl": "public.data.unityweb",
-"wasmCodeUrl": "public.wasm.code.unityweb",
-"wasmFrameworkUrl": "public.wasm.framework.unityweb",
 "asmCodeUrl": "public.asm.code.unityweb",
 "asmMemoryUrl": "public.asm.memory.unityweb",
 "asmFrameworkUrl": "public.asm.framework.unityweb",
