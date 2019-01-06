@@ -159,15 +159,18 @@ body {
 .dialog {
 	background-color: #08112b;
     border: 2px solid #ecd23a;
-	border-radius: 15px;
-	margin: auto;
-	max-width: 400px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	color: #ecd23a;    
-	margin-top: 30px;
+    border-radius: 15px;
+    margin: auto;
+    max-width: 600px;
+    top: 0;
+    bottom: 70px;
+    left: 30px;
+    right: 30px;
+    color: #ecd23a;
+    margin-top: 30px;
+	position: absolute;
+	display: flex;
+    flex-direction: column;
 }
 .dialog .title {
 	text-align: center;    
@@ -194,7 +197,6 @@ body {
 	font-size: 23px;
 }
 .dialog .scores-list {
-    max-height: 450px;
 	overflow-y: auto;    
 	margin: 10px;
 }
@@ -214,15 +216,20 @@ body {
 
 .dialog .podium td {
 	text-align: center;
+	width: 16%;
 }
 .dialog .podium .podium-cell{
-    background-color: #ecd23a;
-	width: 40px;    
+    background-color: #ecd23a;  
 	height: 40px;
     color: #08112b;
 }
 .dialog .podium {
-    padding: 10px 0 10px 50px;
+    width: 100%;
+}
+.dialog .podium table {
+	border-spacing: 0;
+    width: 100%;
+    padding: 30px;
 }
 
 .startupLogo {
