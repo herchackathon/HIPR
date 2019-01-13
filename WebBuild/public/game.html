@@ -249,6 +249,18 @@
 						{
 							let address = item.value[0];
 							let score = item.value[1];
+
+							if(address == 'undefined' || address == null || address == '')
+								address = '0x';
+							if(score == 'undefined' || score == null || score == '')
+								score = 0;
+							
+							if(address == '0x')
+							{
+								address = "---";
+								score = "---";
+							}
+
 							if(index == 0)
 							{
 								jQuery("#score_number_one .address").html(address);
@@ -269,6 +281,18 @@
 						//console.log(item.value[0] + ", " + item.value[1]);
 						let address = item.value[0];
 						let score = item.value[1];
+
+						if(address == 'undefined' || address == null || address == '')
+							address = '0x';
+						if(score == 'undefined' || score == null || score == '')
+							score = 0;
+
+						if(address == '0x')
+						{
+							address = "---";
+							score = "---";
+						}
+
 						list.append('<li><div class="entry-container"><span class="position">' + (index + 1) + '°</span><div class="entry"><div class="address">' + address + '</div><div class="score">' + score + '</div></div></div></li>');
 					});
 
