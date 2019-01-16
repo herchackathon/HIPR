@@ -186,7 +186,19 @@
 
 	<div id="menu" class="hide">
 		<div class="dialog">
-			<div class="title">Top 50 Players</div>
+			<div class="title">
+				Top 50 Players
+				<div class="info-box">
+					<span class="info-button">?</span>
+					<div class="info-dialog hide">
+						<p>This is the leaderboard for this season. If you want to join it, make sure to submit your score when you complete the puzzle and accept the transaction.</p>
+						<p>The score is calculated with this formula:</p>
+						<div class="formula">
+							(1000000 / ((moves * 1.3f) + (seconds * 0.8f))
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="podium">
 				<table>
 					<tbody>
@@ -309,6 +321,17 @@
 		jQuery("#fullscreen_toggle").on("click", function(event) {
 			isFullscreen = !isFullscreen;
 			gameInstance.SetFullscreen(isFullscreen);
+		});
+
+		jQuery(".dialog .title .info-button").on("click", function(event){
+			var dialog = jQuery(".dialog .info-box .info-dialog");
+			if(dialog.hasClass("hide"))
+				dialog.removeClass("hide");
+			else
+				dialog.addClass("hide");
+		});
+		jQuery(".dialog .info-box .info-dialog").on("click", function(event){
+			jQuery(".dialog .info-box .info-dialog").addClass("hide");
 		});
     </script>
 </body>

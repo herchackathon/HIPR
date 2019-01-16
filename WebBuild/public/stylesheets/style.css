@@ -176,6 +176,29 @@ body {
 	text-align: center;    
 	padding: 10px;
 }
+.dialog .info-box {
+	float: right;
+}
+.dialog .info-box .info-button {
+    border: 2px solid;
+    padding: 2px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.dialog .info-box .info-dialog {
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 11px;
+    position: absolute;
+    right: 45px;
+    top: 18px;
+    padding: 20px 14px;
+	background-color: #08112b;
+	width: 300px;
+}
+.dialog .info-box .info-dialog .formula {
+    font-size: 14px;
+}
 .dialog .scores-list > ul {
 	list-style: none;
 }
@@ -205,13 +228,15 @@ body {
 }
 
 .dialog .scores-list::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #9e903a; 
+	-webkit-box-shadow: inset 0 0 6px #9e903a;
+	box-shadow: inset 0 0 6px #9e903a;
     border-radius: 10px;
 }
 
 .dialog .scores-list::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px #ecd23a; 
+	-webkit-box-shadow: inset 0 0 6px 6px #ecd23a;
+	box-shadow: inset 0 0 6px 6px #ecd23a;
 }
 
 .dialog .podium td {
