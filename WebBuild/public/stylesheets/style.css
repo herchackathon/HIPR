@@ -304,3 +304,9 @@ body {
 	height: 100%; 
 	display: inline-block;
 }
+
+.no-eth-checkbox-description {
+    font-size: 12px;
+    margin-left: 3px;
+    color: #a2a2a2;
+}
