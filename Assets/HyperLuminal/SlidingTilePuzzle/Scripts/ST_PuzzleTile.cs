@@ -73,14 +73,16 @@ public class ST_PuzzleTile : MonoBehaviour
 	    {
 	        ST_PuzzleDisplay.CanMove = false;
 
-	        var movePosition = this.transform.parent.GetComponent<ST_PuzzleDisplay>().GetTargetLocation(this.GetComponent<ST_PuzzleTile>());
+	        var gridLocation = GridLocation;
+            var movePosition = this.transform.parent.GetComponent<ST_PuzzleDisplay>().GetTargetLocation(this.GetComponent<ST_PuzzleTile>());
 
 	        if (movePosition == TargetPosition)
 	            ST_PuzzleDisplay.CanCount = false;
 
 	        if (ST_PuzzleDisplay.CanCount)
 	        {
-	            ST_PuzzleDisplay.PuzzleMoves++;
+	            ST_PuzzleDisplay.Moves.Add(new Vector2(gridLocation.x, gridLocation.y));
+                ST_PuzzleDisplay.PuzzleMoves++;
 	            ScoreCounter.AddScore();
 	            ST_PuzzleDisplay.Instance.AudioSource.PlayOneShot(ST_PuzzleDisplay.Instance.OnMoveSound);
             }

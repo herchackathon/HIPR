@@ -349,3 +349,8 @@ D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Unity.PackageManagerUI.Editor.pdb
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.TextCoreModule.xml
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.UnityTestProtocolModule.xml
 D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.VFXModule.xml
+D:\Lavori\HIPR\HIPR\Temp\bin\Debug\Newtonsoft.Json.dll
+D:\Lavori\HIPR\HIPR\Temp\bin\Debug\nunit.framework.dll
+D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\Lavori\HIPR\HIPR\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\Lavori\HIPR\HIPR\Temp\bin\Debug\nunit.framework.xml

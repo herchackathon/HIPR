@@ -66,12 +66,15 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
     public AudioSource AudioSource;
 
+    public static readonly List<Vector2> Moves = new List<Vector2>();
+
 	// Use this for initialization
 	void Start()
 	{
 	    ST_PuzzleDisplay.PuzzleMoves = 0;
 	    ST_PuzzleDisplay.CanMove = false;
 	    ST_PuzzleDisplay.CanCount = false;
+        ST_PuzzleDisplay.Moves.Clear();
         //Texture2D encryptImg = PuzzleImage as Texture2D;
         Instance = this;
 	    AudioSource = GetComponent<AudioSource>();
@@ -447,14 +450,5 @@ public class ST_PuzzleDisplay : MonoBehaviour
 				TileDisplayArray[i,j].GetComponent<Renderer>().material = thisTileMaterial;
 			}
 		}
-
-		/*
-		// Enable an impossible puzzle for fun!
-		// switch the second and third grid location textures.
-		Material thisTileMaterial2 = TileDisplayArray[1,3].GetComponent<Renderer>().material;
-		Material thisTileMaterial3 = TileDisplayArray[2,3].GetComponent<Renderer>().material;
-		TileDisplayArray[1,3].GetComponent<Renderer>().material = thisTileMaterial3;
-		TileDisplayArray[2,3].GetComponent<Renderer>().material = thisTileMaterial2;
-		*/
 	}
 }

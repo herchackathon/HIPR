@@ -1,6 +1,8 @@
 ﻿using MHLab.Metamask;
 using MHLab.Utilities;
 using System;
+using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MHLab.Ethereum
@@ -30,7 +32,8 @@ namespace MHLab.Ethereum
 				{
 					callback.Invoke(bool.Parse(result));
 				};
-			MetamaskManager.ValidatePuzzleResult(hash);
+
+			MetamaskManager.ValidatePuzzleResult(hash, JsonConvert.SerializeObject(ST_PuzzleDisplay.Moves));
         }
 	}
 }

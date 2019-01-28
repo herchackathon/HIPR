@@ -58,10 +58,11 @@ var LibraryHIPR = {
 	/// Pushes the puzzle result to the smart contract for validation.
 	/// </summary>
 	/// <param name="resultHash">The resulting hash from the puzzle solving.</param>
+	/// <param name="movesSet">The JSON representation of the moves performed by the player.</param>
 	/// <returns>True if correctly validated, false if not.</returns>
-	ValidatePuzzleResult: function(resultHash)
+	ValidatePuzzleResult: function(resultHash, movesSet)
 	{
-		ValidatePuzzleResultInternal(resultHash);
+		ValidatePuzzleResultInternal(resultHash, movesSet);
 	},
 };
 

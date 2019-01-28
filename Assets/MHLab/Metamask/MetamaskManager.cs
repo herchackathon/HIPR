@@ -82,13 +82,13 @@ namespace MHLab.Metamask
 	    /// </summary>
 	    /// <param name="resultHash">The resulting hash from the puzzle solving.</param>
 #if UNITY_EDITOR
-	    public static void ValidatePuzzleResult(string resultHash)
+	    public static void ValidatePuzzleResult(string resultHash, string movesSet)
 	    {
 		    JavascriptInteractor.ProcessResultGlobal("ValidatePuzzleResult#true");
 	    }
 #else
 		[DllImport("__Internal")]
-        public static extern void ValidatePuzzleResult(string resultHash);
+        public static extern void ValidatePuzzleResult(string resultHash, string movesSet);
 #endif
     }
 }
