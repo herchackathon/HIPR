@@ -53,7 +53,8 @@
 
 		function GetEndOfSeasonInternal()
 		{
-			SendResultBack("GetEndOfSeason", "1548979199000");
+			//SendResultBack("GetEndOfSeason", "1548979199000");
+			HIPRInternal.PayoutInfo();
 		}
 
         function GetPuzzleInternal()
@@ -86,6 +87,9 @@
     
 <!--    <script src="Build/UnityLoader.js"></script> -->
     <script>
+		// Locked HIPR!
+		window.location.href = "/";
+
     	window.addEventListener('load', async () => {
             // Modern dapp browsers...
             if (window.ethereum) {
@@ -97,7 +101,7 @@
                     OnCheckingDone();
                 } 
                 catch (error) {
-                    OnError("User denied access to Metamask for this app");
+                    window.location.href = "/noaccount";
                 }
             }
             // Legacy dapp browsers...
@@ -108,7 +112,7 @@
             }
             // Non-dapp browsers...
             else {
-                OnError('Non-Ethereum browser detected. You should consider trying MetaMask!');
+                window.location.href = "/metamask";
             }
         });
 
@@ -116,7 +120,7 @@
     	{
     		if(typeof(window.web3.eth.accounts[0]) == 'undefined')
     		{
-    			OnError("Please log into Metamask to play on HIPR.");
+    			window.location.href = "/noaccount";
     		}
     		else
     		{               
@@ -138,11 +142,6 @@
 						window.location.href = "/";
 				});*/
     		}
-    	}
-
-    	function OnError(message)
-    	{
-            window.location.href = "/";
     	}
 
 		var textUnderLogo;

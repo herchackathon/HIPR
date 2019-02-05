@@ -146,6 +146,33 @@ HIPRInternal = {
 			return null
 	},
 
+	PayoutInfo: function() {
+        this.defaultWeb3();
+
+        var self = this,
+            requestId = this.getRequestId('GetEndOfSeason')
+/*
+            let lastWipeDate = await m.lastWipeDate().call()
+            let startDate = await m.startDate().call()
+            let releaseDate = await m.releaseDate().call()
+            let seasonInterval = await m.seasonInterval().call()
+
+            let hercContract = await m.hercContract().call()
+            let payoutAddress = await m.payoutBoss().call()
+*/
+
+        this.puzzleManager.releaseDate((error, result) => {
+            if (!error) {
+                self.setRequestValue(requestId, result)
+            }
+            else {
+                this.setRequestError(requestId, error)
+            }
+        })
+
+        return requestId
+	},
+	
 	/// <summary>
     /// Get top scores.
     /// </summary>

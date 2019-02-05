@@ -25,9 +25,7 @@
                         OnCheckingDone();
                     } 
                     catch (error) {
-						console.log(error);
-                        OnError("User denied access to Metamask for this app");
-						document.getElementById("errorText").style.visibility = "visible";
+                        window.location.href = "/noaccount";
                     }
                 }
                 // Legacy dapp browsers...
@@ -38,8 +36,7 @@
                 }
                 // Non-dapp browsers...
                 else {
-					OnError('Non-Ethereum browser detected. You should consider trying MetaMask!');
-					document.getElementById("noWeb3Error").style.visibility = "visible";
+					window.location.href = "/metamask";  
                 }
             });
         });
@@ -48,9 +45,7 @@
     	{
     		if(typeof(window.web3.eth.accounts[0]) == 'undefined')
     		{
-    			OnError("Please log into Metamask to play on HIPR.");
-				document.getElementById("errorText").style.visibility = "visible";
-				document.getElementById("noWeb3Error").style.visibility = "visible";
+    			window.location.href = "/noaccount";
     		}
     		else
     		{     
@@ -66,14 +61,6 @@
 				});*/
     		}
     	}
-
-    	function OnError(message)
-    	{
-			console.log(message);
-			document.getElementById("errorText").innerHTML = message;
-            document.getElementById("web3Error").style.visibility = "visible";
-    	}
-
     </script>
 
 </head>
@@ -83,50 +70,20 @@
             <div class="columns">
                 <div class="column col-5 col-xl-12">
                     <div class="column col-12 text-center">
-                        <h2>Human Initiated Performance Report</h2>
+                        <h1>Human Initiated Performance Report</h1>
                     </div>
                     <div class="column col-12 text-center">
                         <img class="img-responsive hiprLogo" src="images/hipr_logo_loop.gif" />
                     </div>
                     <div class="columns">
-                        <div class="column col-12 buttonsContainer text-center">
+                        <!--<div class="column col-12 buttonsContainer text-center">
 							<input type="checkbox" id="no_eth_checkbox" required /><span class="no-eth-checkbox-description">I understand that if I have no ETH my scores cannot be submitted to the leaderboard.</span>
 							<a id="playButton" class="playButton text-center hide" href="#"><img class="img-responsive" style="margin:auto;" src="images/PlayButton.png" /></a>
                         </div>
-                        <!--<div class="column col-6">
+                        <div class="column col-6">
                             <a class="infoButton float-left" href="https://herc.one/metamask" target="_blank"><img class="img-responsive" src="images/InfoButton.png" style="height: 50px" /></a>
-                        </div>-->
-					</div>
-					<div id="web3Error">
-						<p id="errorText" style="color:red; margin-bottom:0;text-align:center;visibility: hidden"></p>
-						<div id="noWeb3Error" style="visibility: hidden">
-							<div class="column col-12 text-center dapp-error-text">
-								<p>HIPR requires a dApp browser to work. <a href="https://herc.one/metamask" target="_blank">Learn more.</a></p>
-								<p class="small-description">Try from these web3 providers:</p>
-							</div>
-							<div class="columns" style="max-width: 600px; margin: auto;">
-								<div class="column col-3 text-center">
-									<a href="https://wallet.coinbase.com/">
-										<img class="img-responsive wallet-icon" src="images/logos/coinbase.png" />
-									</a>
-								</div>
-								<div class="column col-3 text-center">
-									<a href="https://trustwallet.com/">
-										<img class="img-responsive wallet-icon" src="images/logos/trust.png" />
-									</a>
-								</div>
-								<div class="column col-3 text-center">
-									<a href="https://www.opera.com/it/crypto">
-										<img class="img-responsive wallet-icon" src="images/logos/opera.png" />
-									</a>
-								</div>
-								<div class="column col-3 text-center">
-									<a href="https://metamask.io/">
-										<img class="img-responsive wallet-icon" src="images/logos/metamask.png" />
-									</a>
-								</div>
-							</div>
-						</div>
+						</div>-->
+						<p class="closed-season-text">Congratulations on the Season 2 winners! We need to construct additional pylons! Stay tuned for Season 3 announcements!</p>
 					</div>
                 </div>
                 <div class="column col-7 col-xl-12">
@@ -135,7 +92,7 @@
                     </div>
                     <div class="column col-12">
 						<!--<img class="img-responsive puzzleImage" src="images/puzzle.png" />-->
-						<video controls width="100%" heigh="100%" style="margin-top: 5rem;">
+						<video controls width="100%" heigh="100%" style="margin-top: 2rem;">
 							<source src="media/HIPR_ShortVid_v4.mp4" type="video/mp4">
 						</video>
                     </div>
@@ -156,7 +113,6 @@
 		}
 	});
 	window.addEventListener('load', async () => {
-		console.log("mario");
 		var checkbox = jQuery("#no_eth_checkbox")[0];
 		if(checkbox.checked)
 		{
