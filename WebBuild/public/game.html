@@ -8,8 +8,12 @@
 	<script src="Build/UnityLoader.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheets/style.css">
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+	<link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/ui.css">
 
     <!-- STEP 1. define gameInstance -->
 
@@ -29,6 +33,7 @@
     <!-- STEP 2. load metamask web3 -->
 
     <script src="javascripts/config.js"></script>
+    <script src="javascripts/config-contracts.js"></script>
     <script src="javascripts/web3-client-internal.js"></script>
 
     <!-- STEP 3. connect to hipr browser internal -->
@@ -36,59 +41,19 @@
     <script src="javascripts/hipr-browser-internal.js"></script>
 
     <!-- STEP 4. define internal api -->
-    
-    <script type="text/javascript">
-        // API
+	
+	<script src="javascripts/api-internal.js"></script>
 
-        // CALLBACK
+	<!-- STEP 5. hipr ui -->
 
-        function SendResultBack(key, result)
-        {
-            var message = key + "#" + result;
-            console.log('SendResultBack', message)
-            gameInstance.SendMessage('JavascriptInteractor', 'ProcessResult', message);
-        }
+	<script src="javascripts/ui.js"></script>
 
-        // METHODS
-
-		function GetEndOfSeasonInternal()
-		{
-			//SendResultBack("GetEndOfSeason", "1548979199000");
-			HIPRInternal.PayoutInfo();
-		}
-
-        function GetPuzzleInternal()
-        {
-            //HIPRInternal.GetPuzzle()
-            SendResultBack("GetPuzzle", "ajdhajsndjsadjsah");
-        }
-
-        function GetTopScoresInternal(count)
-        {
-            HIPRInternal.GetTopScores(count)
-            // -> "0x111111111|15;0x22222222|12;0x33333333|11;0x444444444|9;0x555555555|3;"
-        }
-
-        function SetScoreInternal(score)
-        {
-            HIPRInternal.SetScore(score);
-            // -> "true"
-        }
-
-        function ValidatePuzzleResultInternal(resultHash, movesSet)
-        {
-            SendResultBack('ValidatePuzzleResult', 'true');
-            //return HIPRInternal.ValidatePuzzleResult();
-            // -> "true"
-        }
-    </script>
-
-    <!-- STEP 5. onload init web3 -->
+    <!-- STEP 6. onload init web3 -->
     
 <!--    <script src="Build/UnityLoader.js"></script> -->
     <script>
 		// Locked HIPR!
-		window.location.href = "/";
+//		window.location.href = "/";
 
     	window.addEventListener('load', async () => {
             // Modern dapp browsers...
@@ -101,6 +66,7 @@
                     OnCheckingDone();
                 } 
                 catch (error) {
+					console.log('error: noaccount', error)
                     window.location.href = "/noaccount";
                 }
             }
@@ -112,6 +78,7 @@
             }
             // Non-dapp browsers...
             else {
+				console.log('error: Non-dapp browsers...')
                 window.location.href = "/metamask";
             }
         });
@@ -120,6 +87,7 @@
     	{
     		if(typeof(window.web3.eth.accounts[0]) == 'undefined')
     		{
+				console.log(' error: noaccount - window.web3.eth.accounts[0] is undefined')
     			window.location.href = "/noaccount";
     		}
     		else
@@ -127,7 +95,8 @@
 				if (window.UnityLoader)
 					gameInstance = UnityLoader.instantiate("gameContainer", "Build/public.json", {onProgress: UnityCustomProgress});
 				
-				HIPRInternal.init() 
+				HIPRInternal.init()
+
 				/*window.web3.eth.getBalance(window.web3.eth.accounts[0], function(error, balance) {
 					let weiBalance = window.web3.fromWei(balance);
 					console.log(weiBalance); 

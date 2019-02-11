@@ -1,3 +1,46 @@
+// hipr util [
+
+function hiprUrl(urlType, options) {
+	if (urlType == status) {
+
+	}
+	else if (urlType == 'registerPuzzle') {
+		var address = options.address
+		var params = options.params // ipfsHash
+		var url = `${Web3Options[Web3Options.env].hipr_restful}/registerPuzzleAddress/${address}/${encodeURIComponent(params)}`
+		return url
+	}
+	else if (urlType == 'createPuzzle') {
+		var modes = {
+			'hipr-restful': '(default, secure)',
+			'web3-browser': '(unsecure, not implemented)',
+		}
+
+		var mode = 'hipr-restful' // always hipr-restful mode in this update
+		var puzzleType = '15'
+		var plainTextMetrics = ''
+		var address = options.address
+		var password = options.password
+
+		url = `${Web3Options[Web3Options.env].hipr_restful}/createPuzzleSecure/${address}/${puzzleType}/undefined/${encodeURIComponent(JSON.stringify({password}))}`
+		return url
+	}
+	else if (urlType == 'validatePuzzle') {
+		var puzzleId = options.puzzleId
+		var address = options.address
+		var score = options.score
+		var resultHash = options.resultHash
+		var movesSet = options.movesSet
+		
+		url = `${Web3Options[Web3Options.env].hipr_restful}/validatePuzzleSecure/${puzzleId}/${address}/${score}/${resultHash}/${encodeURIComponent(movesSet)}`
+		return url
+	}
+
+	return null
+}
+
+// hipr util ]
+
 HIPRInternal = {
 
     isInit: false,
@@ -146,33 +189,6 @@ HIPRInternal = {
 			return null
 	},
 
-	PayoutInfo: function() {
-        this.defaultWeb3();
-
-        var self = this,
-            requestId = this.getRequestId('GetEndOfSeason')
-/*
-            let lastWipeDate = await m.lastWipeDate().call()
-            let startDate = await m.startDate().call()
-            let releaseDate = await m.releaseDate().call()
-            let seasonInterval = await m.seasonInterval().call()
-
-            let hercContract = await m.hercContract().call()
-            let payoutAddress = await m.payoutBoss().call()
-*/
-
-        this.puzzleManager.releaseDate((error, result) => {
-            if (!error) {
-                self.setRequestValue(requestId, result)
-            }
-            else {
-                this.setRequestError(requestId, error)
-            }
-        })
-
-        return requestId
-	},
-	
 	/// <summary>
     /// Get top scores.
     /// </summary>
@@ -185,7 +201,7 @@ HIPRInternal = {
 		var self = this,
 			requestId = this.getRequestId('GetTopScores')
 
-		this.playerScore.GetTopScoresCount(function (error, result) {
+		this.playerScore.GetTopScoresSecureCount(function (error, result) {
 			if (!error) {
 				var values = new Array(count),
 					resultsCount = 0
@@ -230,7 +246,7 @@ HIPRInternal = {
 		var self = this,
 			requestId = this.getRequestId('GetTopScores')
 
-		this.playerScore.GetTopScoresCount(function (error, result) {
+		this.playerScore.GetTopScoresSecureCount(function (error, result) {
 			if (!error) {
 				var values = new Array(count),
 					resultsCount = 0
@@ -380,7 +396,7 @@ HIPRInternal = {
 		var self = this,
 			requestId = this.getRequestId('RegisterPuzzle')
 
-		var url = `${Web3Options[Web3Options.env].hipr_restful}/registerPuzzleAddress/${address}/${encodeURIComponent(params)}`
+		var url = hiprUrl('registerPuzzle', {address, params})
 
 		axios.post(url)
 			.then(function (response) {
@@ -411,14 +427,7 @@ HIPRInternal = {
 		var self = this,
 			requestId = this.getRequestId('GetPuzzle')
 
-		var modes = {
-			'hipr-restful': '(default, secure)',
-			'web3-browser': '(unsecure, not implemented)',
-		}
-
-		mode = 'hipr-restful'; // always hipr-restful mode in this update
-
-		var url = `${Web3Options[Web3Options.env].hipr_restful}/createPuzzleSecure/${address}/${puzzleType}/undefined`
+		var url = hiprUrl('createPuzzle', {address})
 
 		axios.post(url)
 			.then(function (response) {
@@ -470,4 +479,58 @@ HIPRInternal = {
 
 		return requestId
 	},
+
+	PayoutInfo: function() {
+		this.defaultWeb3();
+
+		var self = this,
+			requestId = this.getRequestId('releaseDate')
+/*
+			let lastWipeDate = await m.lastWipeDate().call()
+            let startDate = await m.startDate().call()
+            let releaseDate = await m.releaseDate().call()
+            let seasonInterval = await m.seasonInterval().call()
+
+            let hercContract = await m.hercContract().call()
+            let payoutAddress = await m.payoutBoss().call()
+*/
+
+		this.puzzleManager.releaseDate((error, result) => {
+			if (!error) {
+				self.setRequestValue(requestId, result)
+			}
+			else {
+				this.setRequestError(requestId, error)
+			}
+		})
+
+		return requestId
+	},
+
+    ValidatePuzzle: function(puzzleId, address, score, resultHash, movesSet)
+    {
+    	this.defaultWeb3();
+
+		var self = this,
+			requestId = this.getRequestId('GetPuzzle')
+
+		var url = hiprUrl('validatePuzzle', {puzzleId, address, score, resultHash, movesSet})
+
+		axios.post(url)
+			.then(function (response) {
+				// handle success
+//				console.log(requestId, response);
+				self.setRequestValue(requestId, response)
+
+				HIPRInternal.setRequestValue(requestId, response)
+			})
+			.catch(function (error) {
+				// handle error
+//				console.log(error);
+				this.setRequestError(requestId, error)
+			})
+
+		return requestId
+    },
 }
+
