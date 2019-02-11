@@ -1,0 +1,93 @@
+#menu_web3_info {
+    position: fixed;
+	bottom: 0;    
+	left: 50%;
+	transform: translateX(-180%);
+    margin-left: -20px;
+    z-index: auto;
+    color: #ecd23a;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #08112b;
+    border-left: 2px solid #ecd23a;
+    border-right: 2px solid #ecd23a;
+    border-top: 2px solid #ecd23a;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+    line-height: 50px;
+}
+
+.web3_dialog {
+	background-color: #08112b;
+    border: 2px solid #ecd23a;
+    border-radius: 15px;
+    margin: auto;
+    max-width: 800px;
+    top: 0;
+    left: 30px;
+    right: 30px;
+    color: #ecd23a;
+    margin-top: 30px;
+	position: absolute;
+	display: flex;
+    flex-direction: column;
+}
+.web3_dialog .title {
+	text-align: center;    
+	padding: 10px;
+}
+
+.web3-table-info {
+    width: 100%;
+    padding: 0 0 100px 0;
+}
+
+table.web3 {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  border-width: 2px;
+  border-color: #ffcc00;
+  border-style: solid;
+  color: #000000;
+}
+
+table.web3 td, table.web3 th {
+  border-width: 2px;
+  border-color: #ffcc00;
+  border-style: solid;
+  padding: 3px;
+}
+
+table.GeneratedTable thead {
+  background-color: #ffcc00;
+}
+
+#web3-table {
+    width: 100%;
+}
+
+table#table-rewards {
+    font-size: 10px;
+}
+
+.test-name {
+    display: inline-block;
+    color: #880044;
+    font-weight: bold;
+}
+
+.test-input {
+    width: 100%;
+}
+
+.test-bn {
+    float: right;
+}
+
+#test1-bn-run {
+}
+
+
