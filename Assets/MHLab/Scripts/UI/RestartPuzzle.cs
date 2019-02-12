@@ -1,4 +1,5 @@
 ﻿using MHLab.Ethereum;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,7 +19,12 @@ namespace MHLab.UI
             HostScreen.SetActive(false);
             FetchingScreen.SetActive(true);
             PuzzleManager.GetPuzzleHash(
-                (hash) => { SceneManager.LoadScene(SceneToStart); },
+                (puzzleDataSerialized) =>
+                {
+                    PuzzleManager.PuzzleData = JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
+                    PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.puzzleId.ToString();
+                    SceneManager.LoadScene(SceneToStart);
+                },
                 (error) =>
                 {
                     FetchingText.text = error.Message;

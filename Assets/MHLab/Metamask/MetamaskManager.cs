@@ -70,7 +70,7 @@ namespace MHLab.Metamask
 #if UNITY_EDITOR
 	    public static void GetPuzzle()
 	    {
-		    JavascriptInteractor.ProcessResultGlobal("GetPuzzle#sandshdiuashfuiashfuidahfuihfuia");
+		    JavascriptInteractor.ProcessResultGlobal("GetPuzzle#{puzzleId: 1, field: [1,0,2,3,4,5,6,7,8]}");
 	    }
 #else
 		[DllImport("__Internal")]
@@ -82,13 +82,13 @@ namespace MHLab.Metamask
 	    /// </summary>
 	    /// <param name="resultHash">The resulting hash from the puzzle solving.</param>
 #if UNITY_EDITOR
-	    public static void ValidatePuzzleResult(string resultHash, string movesSet)
+	    public static void ValidatePuzzleResult(int puzzleId, int score, string resultHash, string movesSet)
 	    {
 		    JavascriptInteractor.ProcessResultGlobal("ValidatePuzzleResult#true");
 	    }
 #else
 		[DllImport("__Internal")]
-        public static extern void ValidatePuzzleResult(string resultHash, string movesSet);
+        public static extern void ValidatePuzzleResult(int puzzleId, int score, string resultHash, string movesSet);
 #endif
     }
 }

@@ -60,9 +60,9 @@ var LibraryHIPR = {
 	/// <param name="resultHash">The resulting hash from the puzzle solving.</param>
 	/// <param name="movesSet">The JSON representation of the moves performed by the player.</param>
 	/// <returns>True if correctly validated, false if not.</returns>
-	ValidatePuzzleResult: function(resultHash, movesSet)
+    ValidatePuzzleResult: function(puzzleId, score, resultHash, movesSet)
 	{
-		ValidatePuzzleResultInternal(resultHash, movesSet);
+        ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet);
 	},
 };
 

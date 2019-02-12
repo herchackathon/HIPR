@@ -1,15 +1,23 @@
 ﻿using MHLab.Metamask;
 using MHLab.Utilities;
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MHLab.Ethereum
 {
-	public class PuzzleManager
+    public struct GetPuzzleData
+    {
+        public int puzzleId;
+        public List<int> field;
+    }
+
+	public static class PuzzleManager
     {
         public static string CurrentHash = "TestIt";
+        public static GetPuzzleData PuzzleData;
 
         public static void GetPuzzleHash(Action<string> callback, Action<Exception> errorCallback)
         {
@@ -20,7 +28,7 @@ namespace MHLab.Ethereum
 			MetamaskManager.GetPuzzle();
         }
 
-        public static void ValidatePuzzleResult(string hash, Action<bool> callback)
+        public static void ValidatePuzzleResult(int puzzleId, int score, string hash, List<STPuzzleMove> moveset, Action<bool> callback)
 		{
 			if (!JavascriptInteractor.Actions.ContainsKey("ValidatePuzzleResult"))
 				JavascriptInteractor.Actions.Add("ValidatePuzzleResult", (result) =>
@@ -33,7 +41,7 @@ namespace MHLab.Ethereum
 					callback.Invoke(bool.Parse(result));
 				};
 
-			MetamaskManager.ValidatePuzzleResult(hash, JsonConvert.SerializeObject(ST_PuzzleDisplay.Moves));
+			MetamaskManager.ValidatePuzzleResult(puzzleId, score, hash, JsonConvert.SerializeObject(moveset));
         }
 	}
 }

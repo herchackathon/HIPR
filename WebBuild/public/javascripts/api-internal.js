@@ -42,7 +42,7 @@ function SetScoreInternal(score)
     // -> "true"
 }
 
-function ValidatePuzzleResultInternal(resultHash, movesSet)
+function ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet)
 {
     var puzzleId // lastest PuzzleId returned by createPuzzle
     var address = window.web3.eth.accounts[0]

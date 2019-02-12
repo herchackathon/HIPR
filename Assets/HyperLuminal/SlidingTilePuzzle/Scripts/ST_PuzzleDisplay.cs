@@ -1,4 +1,5 @@
-﻿using HIPR.Encoding;
+﻿using System;
+using HIPR.Encoding;
 using MHLab;
 using MHLab.SlidingTilePuzzle;
 using MHLab.SlidingTilePuzzle.Data;
@@ -11,6 +12,17 @@ using MHLab.Ethereum;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+
+public struct STPuzzleMove
+{
+    public int x, y;
+
+    public STPuzzleMove(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 public class ST_PuzzleDisplay : MonoBehaviour
 {
@@ -66,7 +78,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
     public AudioSource AudioSource;
 
-    public static readonly List<Vector2> Moves = new List<Vector2>();
+    public static readonly List<STPuzzleMove> Moves = new List<STPuzzleMove>();
 
 	// Use this for initialization
 	void Start()
@@ -83,11 +95,18 @@ public class ST_PuzzleDisplay : MonoBehaviour
         PuzzleImage = Steganography.Encode(PuzzleImage, PuzzleManager.CurrentHash);
 
         // create the games puzzle tiles from the provided image.
-        CreatePuzzleTiles();
+        CreatePuzzleTiles2();
 
-		// mix up the puzzle.
-		StartCoroutine(JugglePuzzle());
-	}
+        // mix up the puzzle.
+        //StartCoroutine(JugglePuzzle());
+        //SetInitialState(PuzzleManager.PuzzleData.field);
+
+	    StartCoroutine(CheckForComplete());
+	    CanMove = true;
+	    CanCount = true;
+	    LetsgoPopup.EnableFor(1);
+	    GameTimerUpdater.StartTimer();
+    }
 	
 	// Update is called once per frame
 	void Update() 
@@ -268,6 +287,58 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		return thisTile;
 	}
 
+    private void SetInitialState(List<int> state)
+    {
+        int maxIndex = (Height * Width) - 1;
+        if (state.Count - 1 == maxIndex)
+        {
+            Vector3[] positions = new Vector3[maxIndex + 1];
+
+            for (int i = 0; i <= maxIndex; i++)
+            {
+                var xy = ConvertIndexToGrid(i);
+                var tile = TileDisplayArray[(int) xy.x, (int) xy.y];
+                var tilePosition = tile.GetComponent<ST_PuzzleTile>().TargetPosition;
+                positions[i] = new Vector3(tilePosition.x, tilePosition.y, tilePosition.z);
+            }
+
+            GameObject[,] newTiles = new GameObject[Width, Height];
+            for (int newIndex = 0; newIndex <= maxIndex; newIndex++)
+            {
+                var oldIndex = state[newIndex];
+                var newCoordinates = ConvertIndexToGrid(newIndex);
+                var oldCoordinates = ConvertIndexToGrid(oldIndex);
+
+                if (oldIndex == -1)
+                {
+                    var oldTile = TileDisplayArray[(int)newCoordinates.x, (int)newCoordinates.y];
+                    newTiles[(int)newCoordinates.x, (int)newCoordinates.y] = oldTile;
+                    oldTile.GetComponent<ST_PuzzleTile>().Active = false;
+                }
+                else
+                {
+                    var oldTile = TileDisplayArray[(int)oldCoordinates.x, (int)oldCoordinates.y];
+                    newTiles[(int)newCoordinates.x, (int)newCoordinates.y] = oldTile;
+                    oldTile.GetComponent<ST_PuzzleTile>().GridLocation = new Vector2(newCoordinates.x, newCoordinates.y);
+
+                    var position = positions[newIndex];
+                    oldTile.GetComponent<ST_PuzzleTile>().transform.localPosition = new Vector3(position.x, position.y, position.z);
+                    oldTile.GetComponent<ST_PuzzleTile>().TargetPosition = new Vector3(position.x, position.y, position.z);
+                }
+            }
+
+            TileDisplayArray = newTiles;
+
+            StartCoroutine(CheckForComplete());
+            CanMove = true;
+            CanCount = true;
+            LetsgoPopup.EnableFor(1);
+            GameTimerUpdater.StartTimer();
+            return;
+        }
+        throw new ArgumentException("The initial state size does not match with puzzle size", nameof(state));
+    }
+
 	private IEnumerator JugglePuzzle()
 	{
 	    ShufflingPopup.EnableFor(4);
@@ -310,6 +381,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 	public IEnumerator CheckForComplete()
 	{
+	    yield return null;
 		while(Complete == false)
 		{
 			// iterate over all the tiles and check if they are in the correct position.
@@ -334,8 +406,9 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		{
             GameTimerUpdater.StopTimer();
             string msg = Steganography.Decode(PuzzleImage);
+		    var scoreTemp = CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds);
 
-            PuzzleManager.ValidatePuzzleResult(msg, (isValid) =>
+            PuzzleManager.ValidatePuzzleResult(PuzzleManager.PuzzleData.puzzleId, scoreTemp, msg, Moves, (isValid) =>
             {
                 if (isValid)
                 {
@@ -400,7 +473,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		return new Vector2(WidthIndex, HeightIndex);
 	}
 
-	private void CreatePuzzleTiles()
+	private void CreatePuzzleTiles2()
 	{
 		// using the width and height variables create an array.
 		TileDisplayArray = new GameObject[Width,Height];
@@ -409,14 +482,18 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		Scale = new Vector3(1.0f/Width, 1.0f, 1.0f/Height);
 		Tile.transform.localScale = Scale;
 
-		// used to count the number of tiles and assign each tile a correct value.
-		int TileValue = 0;
-
+	    var newIndexes = PuzzleManager.PuzzleData.field;
+	    var newIndexesCounter = 0;
 		// spawn the tiles into an array.
-		for(int j = Height - 1; j >= 0; j--)
+		for(int j = 0; j < Height; j++)
 		{
 			for(int i = 0; i < Width; i++)
 			{
+			    var newIndex = newIndexes[newIndexesCounter++];
+			    var newCoordinates = ConvertIndexToGrid(newIndex);
+			    var x = (int)newCoordinates.x;
+			    var y = (int)newCoordinates.y;
+
 				// calculate the position of this tile all centred around Vector3(0.0f, 0.0f, 0.0f).
 				Position = new Vector3(((Scale.x * (i + 0.5f))-(Scale.x * (Width/2.0f))) * (10.0f + SeperationBetweenTiles), 
 				                       0.0f, 
@@ -431,10 +508,10 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 				// set and increment the display number counter.
 				ST_PuzzleTile thisTile = TileDisplayArray[i,j].GetComponent<ST_PuzzleTile>();
-				thisTile.ArrayLocation = new Vector2(i,j);
+				thisTile.ArrayLocation = new Vector2(x,y);
 				thisTile.GridLocation = new Vector2(i,j);
-				thisTile.LaunchPositionCoroutine(Position);
-				TileValue++;
+			    thisTile.CorrectLocation = thisTile.ArrayLocation == thisTile.GridLocation;
+                thisTile.LaunchPositionCoroutine(Position);
 
 				// create a new material using the defined shader.
 				Material thisTileMaterial = new Material(PuzzleShader);
@@ -443,12 +520,67 @@ public class ST_PuzzleDisplay : MonoBehaviour
 				thisTileMaterial.mainTexture = PuzzleImage;
 					
 				// set the offset and tile values for this material.
-				thisTileMaterial.mainTextureOffset = new Vector2(1.0f/Width * i, 1.0f/Height * j);
+				thisTileMaterial.mainTextureOffset = new Vector2(1.0f/Width * x, 1.0f/Height * y);
 				thisTileMaterial.mainTextureScale  = new Vector2(1.0f/Width, 1.0f/Height);
 					
 				// assign the new material to this tile for display.
 				TileDisplayArray[i,j].GetComponent<Renderer>().material = thisTileMaterial;
-			}
+
+                if(newIndex == 0)
+                    thisTile.Active = false;
+            }
 		}
 	}
+
+    private void CreatePuzzleTiles()
+    {
+        // using the width and height variables create an array.
+        TileDisplayArray = new GameObject[Width, Height];
+
+        // set the scale and position values for this puzzle.
+        Scale = new Vector3(1.0f / Width, 1.0f, 1.0f / Height);
+        Tile.transform.localScale = Scale;
+
+        // used to count the number of tiles and assign each tile a correct value.
+        int TileValue = 0;
+
+        // spawn the tiles into an array.
+        for (int j = Height - 1; j >= 0; j--)
+        {
+            for (int i = 0; i < Width; i++)
+            {
+                // calculate the position of this tile all centred around Vector3(0.0f, 0.0f, 0.0f).
+                Position = new Vector3(((Scale.x * (i + 0.5f)) - (Scale.x * (Width / 2.0f))) * (10.0f + SeperationBetweenTiles),
+                                       0.0f,
+                                      ((Scale.z * (j + 0.5f)) - (Scale.z * (Height / 2.0f))) * (10.0f + SeperationBetweenTiles));
+
+                // set this location on the display grid.
+                DisplayPositions.Add(Position);
+
+                // spawn the object into play.
+                TileDisplayArray[i, j] = Instantiate(Tile, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.Euler(90.0f, -180.0f, 0.0f)) as GameObject;
+                TileDisplayArray[i, j].gameObject.transform.parent = this.transform;
+
+                // set and increment the display number counter.
+                ST_PuzzleTile thisTile = TileDisplayArray[i, j].GetComponent<ST_PuzzleTile>();
+                thisTile.ArrayLocation = new Vector2(i, j);
+                thisTile.GridLocation = new Vector2(i, j);
+                thisTile.LaunchPositionCoroutine(Position);
+                TileValue++;
+
+                // create a new material using the defined shader.
+                Material thisTileMaterial = new Material(PuzzleShader);
+
+                // apply the puzzle image to it.
+                thisTileMaterial.mainTexture = PuzzleImage;
+
+                // set the offset and tile values for this material.
+                thisTileMaterial.mainTextureOffset = new Vector2(1.0f / Width * i, 1.0f / Height * j);
+                thisTileMaterial.mainTextureScale = new Vector2(1.0f / Width, 1.0f / Height);
+
+                // assign the new material to this tile for display.
+                TileDisplayArray[i, j].GetComponent<Renderer>().material = thisTileMaterial;
+            }
+        }
+    }
 }

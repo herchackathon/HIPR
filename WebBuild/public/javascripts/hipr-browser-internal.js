@@ -435,12 +435,12 @@ HIPRInternal = {
 //				console.log(requestId, response);
 				self.setRequestValue(requestId, response)
 
-				HIPRInternal.setRequestValue(requestId, response)
+				//HIPRInternal.setRequestValue(requestId, response)
 			})
 			.catch(function (error) {
 				// handle error
 //				console.log(error);
-				this.setRequestError(requestId, error)
+				self.setRequestError(requestId, error)
 			})
 
 		return requestId
@@ -484,7 +484,7 @@ HIPRInternal = {
 		this.defaultWeb3();
 
 		var self = this,
-			requestId = this.getRequestId('releaseDate')
+			requestId = this.getRequestId('GetEndOfSeason')
 /*
 			let lastWipeDate = await m.lastWipeDate().call()
             let startDate = await m.startDate().call()

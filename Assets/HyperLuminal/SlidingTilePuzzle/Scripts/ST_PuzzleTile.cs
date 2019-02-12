@@ -81,7 +81,7 @@ public class ST_PuzzleTile : MonoBehaviour
 
 	        if (ST_PuzzleDisplay.CanCount)
 	        {
-	            ST_PuzzleDisplay.Moves.Add(new Vector2(gridLocation.x, gridLocation.y));
+	            ST_PuzzleDisplay.Moves.Add(new STPuzzleMove((int)gridLocation.x, (int)gridLocation.y));
                 ST_PuzzleDisplay.PuzzleMoves++;
 	            ScoreCounter.AddScore();
 	            ST_PuzzleDisplay.Instance.AudioSource.PlayOneShot(ST_PuzzleDisplay.Instance.OnMoveSound);
