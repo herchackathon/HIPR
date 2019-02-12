@@ -22,7 +22,7 @@ namespace MHLab.UI
                 (puzzleDataSerialized) =>
                 {
                     PuzzleManager.PuzzleData = JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
-                    PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.puzzleId.ToString();
+                    PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.hash;
                     SceneManager.LoadScene(SceneToStart);
                 },
                 (error) =>

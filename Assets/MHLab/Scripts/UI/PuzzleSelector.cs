@@ -100,7 +100,7 @@ public class PuzzleSelector : MonoBehaviour
             (puzzleDataSerialized) =>
             {
                 PuzzleManager.PuzzleData = JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
-	            PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.puzzleId.ToString();
+	            PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.hash;
 	            SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex);
             },
             (error) =>

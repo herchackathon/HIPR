@@ -12,6 +12,7 @@ namespace MHLab.Ethereum
     {
         public int puzzleId;
         public List<int> field;
+        public string hash;
     }
 
 	public static class PuzzleManager
