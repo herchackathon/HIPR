@@ -117,5 +117,22 @@ namespace MHLab.Metamask
 		[DllImport("__Internal")]
         public static extern void ValidatePuzzleResult(int puzzleId, int score, string resultHash, string movesSet);
 #endif
+
+        /// <summary>
+        /// Pays out the player if they have credit.
+        /// </summary>
+#if UNITY_EDITOR
+        public static void PlayerPayout()
+        {
+            // PARAMS THAT WEB3 JAVASCRIPT HAS TO PASS BACK TO HIPR
+            // Key      = PlayerPayout: string
+            // Value    = 23321: int            => (if possible) The amount of paid tokens. 0 if nothing has been paid.
+            //                                  => (if not possible) 1 for success, 0 for unsuccess.
+            JavascriptInteractor.ProcessResultGlobal("PlayerPayout#23321");
+        }
+#else
+		[DllImport("__Internal")]
+        public static extern void PlayerPayout();
+#endif
     }
 }

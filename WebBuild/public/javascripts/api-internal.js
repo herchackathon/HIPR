@@ -52,3 +52,11 @@ function ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet)
     //return HIPRInternal.ValidatePuzzleResult();
     // -> "true"
 }
+
+function PlayerPayoutInternal()
+{
+	var address = window.web3.eth.accounts[0];
+	
+	SendResultBack("PlayerPayout", 213812);
+	//HIPRInternal.PlayerPayout(address);
+}

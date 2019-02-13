@@ -63,6 +63,14 @@ var LibraryHIPR = {
     ValidatePuzzleResult: function(puzzleId, score, resultHash, movesSet)
 	{
         ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet);
+    },
+
+	/// <summary>
+	/// Pays out the player if they have credit.
+	/// </summary>
+    PlayerPayout: function ()
+    {
+	    PlayerPayoutInternal();
 	},
 };
 
