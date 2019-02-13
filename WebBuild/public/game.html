@@ -155,18 +155,23 @@
     <div id="gameContainer" style="width: 100%; height: 100%; position: absolute; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; padding: 0px; border: 0px; background: rgb(35, 31, 32);"></div>
   
 
-	<div id="menu" class="hide">
+	<div id="menu">
 		<div class="dialog">
 			<div class="title">
 				Top 50 Players
 				<div class="info-box">
-					<span class="info-button">?</span>
-					<div class="info-dialog hide">
+					<span class="info-button" id="info_button">?</span>
+					<span class="info-button" id="my_reward_button">My Reward</span>
+					<div class="info-dialog hide" id="info_dialog">
 						<p>This is the leaderboard for this season. If you want to join it, make sure to submit your score when you complete the puzzle and accept the transaction.</p>
 						<p>The score is calculated with this formula:</p>
 						<div class="formula">
 							(1000000 / ((moves * 1.3f) + (seconds * 0.8f))
 						</div>
+					</div>
+					<div class="info-dialog hide" id="my_reward_dialog">
+						<p>If you are in the leaderboard, you can be paid at the End of Season! Just hit the button below and trigger the transaction on our Smart Contract!</p>
+						<span class="info-button" id="get_reward_button">I won! Send me HERCs!</span>
 					</div>
 				</div>
 			</div>
@@ -294,15 +299,32 @@
 			gameInstance.SetFullscreen(isFullscreen);
 		});
 
-		jQuery(".dialog .title .info-button").on("click", function(event){
-			var dialog = jQuery(".dialog .info-box .info-dialog");
+		jQuery("#info_button").on("click", function(event){
+			var dialog = jQuery(".dialog .info-box #info_dialog");
 			if(dialog.hasClass("hide"))
 				dialog.removeClass("hide");
 			else
 				dialog.addClass("hide");
 		});
-		jQuery(".dialog .info-box .info-dialog").on("click", function(event){
-			jQuery(".dialog .info-box .info-dialog").addClass("hide");
+		jQuery(".dialog .info-box #info_dialog").on("click", function(event){
+			jQuery(".dialog .info-box #info_dialog").addClass("hide");
+		});
+
+		jQuery("#my_reward_button").on("click", function(event){
+			var dialog = jQuery(".dialog .info-box #my_reward_dialog");
+			if(dialog.hasClass("hide"))
+				dialog.removeClass("hide");
+			else
+				dialog.addClass("hide");
+		});
+		jQuery(".dialog .info-box #my_reward_dialog").on("click", function(event){
+			jQuery(".dialog .info-box #my_reward_dialog").addClass("hide");
+		});
+
+		jQuery("#get_reward_button").on("click", function(event){
+			event.preventDefault();
+			event.stopPropagation();
+			PlayerPayoutInternal();
 		});
     </script>
 </body>

@@ -57,6 +57,7 @@ function PlayerPayoutInternal()
 {
 	var address = window.web3.eth.accounts[0];
 	
+	console.log("PlayerPayout pressed!");
 	SendResultBack("PlayerPayout", 213812);
 	//HIPRInternal.PlayerPayout(address);
 }
