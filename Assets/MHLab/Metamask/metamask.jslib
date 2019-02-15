@@ -71,7 +71,12 @@ var LibraryHIPR = {
     PlayerPayout: function ()
     {
 	    PlayerPayoutInternal();
-	},
+    },
+
+    DebugLog: function (message)
+    {
+        console.log(Pointer_stringify(message));
+    },
 };
 
 mergeInto(LibraryManager.library, LibraryHIPR);

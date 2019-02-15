@@ -57,7 +57,10 @@ function PlayerPayoutInternal()
 {
 	var address = window.web3.eth.accounts[0];
 	
-	console.log("PlayerPayout pressed!");
-	SendResultBack("PlayerPayout", 213812);
+	//console.log("PlayerPayout pressed!");
+	//SendResultBack("PlayerPayout", 213812);
+	SendResultBack("GetPuzzle", 
+		'{"puzzleId":53,"hash":"0xb5ae2176999f7f4169c5c97eadab42c2b536c7196c2f9d3abdeaa2faf5f64ca8","field":[6,3,2,7,1,5,0,4,8]}'
+	);
 	//HIPRInternal.PlayerPayout(address);
 }

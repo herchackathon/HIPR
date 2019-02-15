@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
+[Serializable]
 public struct STPuzzleMove
 {
     public int x, y;

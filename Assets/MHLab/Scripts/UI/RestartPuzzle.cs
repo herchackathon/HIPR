@@ -21,7 +21,7 @@ namespace MHLab.UI
             PuzzleManager.GetPuzzleHash(
                 (puzzleDataSerialized) =>
                 {
-                    PuzzleManager.PuzzleData = JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
+                    PuzzleManager.PuzzleData = JsonUtility.FromJson<GetPuzzleData>(puzzleDataSerialized);//JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
                     PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.hash;
                     SceneManager.LoadScene(SceneToStart);
                 },

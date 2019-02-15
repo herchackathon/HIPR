@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace MHLab.Metamask
 {
@@ -116,6 +117,19 @@ namespace MHLab.Metamask
 #else
 		[DllImport("__Internal")]
         public static extern void ValidatePuzzleResult(int puzzleId, int score, string resultHash, string movesSet);
+#endif
+
+        /// <summary>
+        /// Shows a message as debug.
+        /// </summary>
+#if UNITY_EDITOR
+        public static void DebugLog(string message)
+        {
+            Debug.Log(message);
+        }
+#else
+		[DllImport("__Internal")]
+        public static extern void DebugLog(string message);
 #endif
     }
 }

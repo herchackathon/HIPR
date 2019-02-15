@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 namespace MHLab.Metamask
 {
@@ -21,6 +22,8 @@ namespace MHLab.Metamask
 		public static void ProcessResultGlobal(string result)
 		{
 			var tmp = result.Split('#');
+
+            MetamaskManager.DebugLog("Received interop request. Key: " + tmp[0] + " Value: " + tmp[1]);
 
 			Actions[tmp[0]].Invoke(tmp[1]);
 		}

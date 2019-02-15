@@ -1,13 +1,11 @@
 ﻿using MHLab.Metamask;
-using MHLab.Utilities;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MHLab.Ethereum
 {
+    [Serializable]
     public struct GetPuzzleData
     {
         public int puzzleId;
@@ -41,8 +39,8 @@ namespace MHLab.Ethereum
 				{
 					callback.Invoke(bool.Parse(result));
 				};
-
-			MetamaskManager.ValidatePuzzleResult(puzzleId, score, hash, JsonConvert.SerializeObject(moveset));
+		    
+			MetamaskManager.ValidatePuzzleResult(puzzleId, score, hash, JsonUtility.ToJson(moveset));
         }
 	}
 }
