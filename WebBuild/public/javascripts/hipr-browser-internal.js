@@ -208,7 +208,7 @@ HIPRInternal = {
 
 				for (var i = 0; i < count; i++) {
 					function f(i) {
-						self.playerScore.TopScores(i, function (error, result) {
+						self.playerScore.TopScoresSecure(i, function (error, result) {
 							var value = 0
 							if (!error)
 								value = `[${result[0]}, ${result[1].c[0]}]`
@@ -253,24 +253,12 @@ HIPRInternal = {
 
 				for (var i = 0; i < count; i++) {
 					function f(i) {
-						self.playerScore.TopScores(i, function (error, result) {
+						self.playerScore.TopScoresSecure(i, function (error, result) {
 							var value = 0
 							if (!error)
-								//value = `[${result[0]}, ${result[1].c[0]}]`
 								value = [result[0], result[1].c[0]];
 							values[i] = {error, value}
 							if (++resultsCount == count) {
-								/*var s = ''
-								for (var j = 0; j < count; j++) {
-									if (values[j].error) {
-										self.setRequestError(requestId, error)
-										return
-									}
-									if (j != 0)
-										s += ', '
-									s += `${values[j].value}`
-								}*/
-								//self.setRequestValue(requestId, s)
 								callback(values);
 							}
 						})
