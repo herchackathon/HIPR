@@ -88,7 +88,7 @@ namespace MHLab.Metamask
             //              field: [0,7,3,4,1,2,6,8,5],     => the initial state of the puzzle
             //              hash: "HashMetricsHere"         => the hash to encode in the puzzle
 	        //            }: stringified JSON object
-            JavascriptInteractor.ProcessResultGlobal("GetPuzzle#{puzzleId: 1, field: [0,7,3,4,1,2,6,8,5], hash: \"HashMetricsHere\"}");
+            JavascriptInteractor.ProcessResultGlobal("GetPuzzle#{\"puzzleId\":51,\"hash\":\"0x9d06d052ccee7a6d392127c015a58c1c89a9cd4cb84c79726132451c1cb1718b\",\"field\":[6,3,2,1,4,5,0,7,8]}");
 	    }
 #else
 		[DllImport("__Internal")]
