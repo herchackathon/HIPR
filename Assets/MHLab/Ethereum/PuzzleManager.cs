@@ -13,6 +13,12 @@ namespace MHLab.Ethereum
         public string hash;
     }
 
+    [Serializable]
+    public struct MovesSetData
+    {
+        public List<STPuzzleMove> moveset;
+    }
+
 	public static class PuzzleManager
     {
         public static string CurrentHash = "TestIt";
@@ -39,8 +45,11 @@ namespace MHLab.Ethereum
 				{
 					callback.Invoke(bool.Parse(result));
 				};
-		    
-			MetamaskManager.ValidatePuzzleResult(puzzleId, score, hash, JsonUtility.ToJson(moveset));
+            var movesSetWrapper = new MovesSetData();
+		    movesSetWrapper.moveset = moveset;
+		    var temp = JsonUtility.ToJson(movesSetWrapper);
+
+            MetamaskManager.ValidatePuzzleResult(puzzleId, score, hash, temp);
         }
 	}
 }
