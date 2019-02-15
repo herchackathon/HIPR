@@ -16,7 +16,6 @@ HiprUI = {
             })
 
             self.toggleWeb3Info()
-
         }
     },
     isDebug: function() {
@@ -105,7 +104,9 @@ HiprUI = {
             this.tableWeb3addRow('seasonInterval', '...', {tags: 'id="season-interval"'})
             this.tableWeb3addRow('lastWipeDate', '...', {tags: 'id="season-last-wipe-date"'})
             
-            this.tableWeb3addRow('Top scores', '...', {tags: 'id="top-scores-count"', style: 'font-weight: bold'})
+            this.tableWeb3addRow('Top scoresS max', '...', {tags: 'id="top-scores-max"', style: 'font-weight: bold'})
+            this.tableWeb3addRow('Top scoresS', '...', {tags: 'id="top-scores-count"', style: 'font-weight: bold'})
+            
 
             this.tableWeb3addRow('Rewards', '<table id="table-rewards"></table>')
             this.tableWeb3addRow('Payout Approves', '')
@@ -160,11 +161,11 @@ HiprUI = {
             // Test #3
 
             try {
-                var puzzleId = 0
+                var puzzleId = 42
                 var address = window.web3.eth.accounts[0]
-                var score = 10
-                var resultHash = ''//options.resultHash
-                var movesSet = '9,8,7'//options.movesSet
+                var score = 1000000
+                var resultHash = '0x'//options.resultHash
+                var movesSet = '7,8,6'//options.movesSet
 
                 this.tableWeb3addRow('Test #3', '<div class="test-name">Validate puzzle</div><button id="test3-bn-run" class="test-bn">Run</button>')
                 this.tableWeb3addRow('- puzzleId', `<input id="test3-input-puzzle-id" class="test-input" value="${puzzleId}"></input>`)
@@ -210,7 +211,7 @@ HiprUI = {
             url = hiprUrl('createPuzzle', {address, password})
         }
         else if (testId == 'test3') {
-            var puzzleId
+            var puzzleId = $('#test3-input-puzzle-id').val()
             var address = $('#test3-input-address').val()
             var score = $('#test3-input-score').val()
             var resultHash = $('#test3-input-result-hash').val()
@@ -219,6 +220,17 @@ HiprUI = {
             self.testLog('Test #3: Result', `run ${address} ${score} '${resultHash}' ${movesSet}`, {style: 'color: #224488; font-weight: bold'})
 
             var url = hiprUrl('validatePuzzle', {puzzleId, address, score, resultHash, movesSet})
+/*
+            axios.get(url)
+            .then(function (response) {
+                var data = response.data
+                self.testLog('HIPR-RESTFUL Response', `<div style="max-width: 600px; overflow: auto;">${JSON.stringify(data, null, 2)}<div>`, {style: 'color: #224488; font-weight: bold'})
+            })
+            .catch(function (error) {
+                self.testLog(`#ERROR ${testId}`, JSON.stringify(error), {style: 'color: red'})
+            })
+    
+            return*/
         }
 
         axios.post(url)
@@ -334,7 +346,7 @@ HiprUI = {
 
         // top scores
 
-        ps.GetTopScoresCount((error, result)=>{
+        ps.GetTopScoresSecureCount((error, result)=>{
             var count = error ? 0 : result.c[0]
             $('#top-scores-count > td:eq(1)').html(error ? JSON.stringify(error) : count)
             $('#top-scores-count > td:eq(1)').append('<button id="top-scores-bn-populate" style="margin: 0 10px;">populate</button>')
@@ -342,7 +354,7 @@ HiprUI = {
             $('#top-scores-bn-populate').click(()=>{
                 $('#top-scores-bn-populate').hide()
                 for (var i = 0; i < count; i++) {
-                    ps.TopScores(i, (error, result)=>{
+                    ps.TopScoresSecure(i, (error, result)=>{
                         if (!error) {
                             var address = result[0]
                             var score = result[1].c[0]
@@ -362,11 +374,14 @@ HiprUI = {
         ps.GetTopScoresMax((error, result)=>{
             if (!error) {
                 let rewardsCount = result.c[0]
+                
+                $('#top-scores-max > td:eq(1)').html(rewardsCount)
+
                 var rewards = []
                 for (var i = 0; i < rewardsCount; i++) {
                     ps.winnerReward(i, (error, result)=>{
                         rewards.push(!error ? result : JSON.stringify(error))
-                        if (rewards.length == rewardsCount - 1) {
+                        if (rewards.length == rewardsCount) {
                             var m = 10
                             var n = rewardsCount / m
                             for (var j = 0; j < n; j++) {
