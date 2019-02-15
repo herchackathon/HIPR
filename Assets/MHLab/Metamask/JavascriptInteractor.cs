@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 namespace MHLab.Metamask
 {
-	public class JavascriptInteractor : MonoBehaviour
+    public class JavascriptInteractor : MonoBehaviour
 	{
 		public static Dictionary<string, Action<string>> Actions = new Dictionary<string, Action<string>>();
 
@@ -25,7 +24,16 @@ namespace MHLab.Metamask
 
             MetamaskManager.DebugLog("Received interop request. Key: " + tmp[0] + " Value: " + tmp[1]);
 
-			Actions[tmp[0]].Invoke(tmp[1]);
+            if(Actions.ContainsKey(tmp[0]))
+			    Actions[tmp[0]].Invoke(tmp[1]);
+		    else
+		    {
+		        MetamaskManager.DebugLog("Key: " + tmp[0] + " cannot be found! Registered keys are:");
+		        foreach (var action in Actions)
+		        {
+		            MetamaskManager.DebugLog(" - " + action.Key);
+                }
+		    }
 		}
 	}
 }

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using MHLab.Ethereum;
-using MHLab.Metamask;
-using Newtonsoft.Json;
+﻿using MHLab.Ethereum;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -99,7 +97,7 @@ public class PuzzleSelector : MonoBehaviour
         PuzzleManager.GetPuzzleHash(
             (puzzleDataSerialized) =>
             {
-                PuzzleManager.PuzzleData = JsonUtility.FromJson<GetPuzzleData>(puzzleDataSerialized);//JsonConvert.DeserializeObject<GetPuzzleData>(puzzleDataSerialized);
+                PuzzleManager.PuzzleData = JsonUtility.FromJson<GetPuzzleData>(puzzleDataSerialized);
 	            PuzzleManager.CurrentHash = PuzzleManager.PuzzleData.hash;
 	            SceneManager.LoadScene(PuzzleLevels[CurrentSelectedPuzzleIndex].SceneIndex);
             },

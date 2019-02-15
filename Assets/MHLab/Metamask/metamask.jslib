@@ -62,7 +62,7 @@ var LibraryHIPR = {
 	/// <returns>True if correctly validated, false if not.</returns>
     ValidatePuzzleResult: function(puzzleId, score, resultHash, movesSet)
 	{
-        ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet);
+        ValidatePuzzleResultInternal(puzzleId, score, Pointer_stringify(resultHash), Pointer_stringify(movesSet));
     },
 
 	/// <summary>

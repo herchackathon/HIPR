@@ -320,9 +320,6 @@
     <Reference Include="JMOAssets_CartoonFXFreeWelcome">
       <HintPath>D:/Lavori/HIPR/HIPR/Assets/JMO Assets/Editor/JMOAssets_CartoonFXFreeWelcome.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>D:/Lavori/HIPR/HIPR/Assets/MHLab/Plugins/Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Unity3D/2018.3.0f2/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
     </Reference>
