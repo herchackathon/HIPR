@@ -1,5 +1,5 @@
 Web3Options = {
-  "env": "dev",
+  "env": "production",
   "dev": {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ganache"
@@ -9,8 +9,8 @@ Web3Options = {
     "eth": "ropsten"
   },
   "production": {
-    "hipr_restful": "http://amazon:8086/api/1.0",
-    "eth": "mainnet"
+    "hipr_restful": "http://ec2-18-191-222-136.us-east-2.compute.amazonaws.com:8086/api/1.0",
+    "eth": "main"
   },
   "contracts": {
     "mainnet": {
@@ -140,7 +140,7 @@ Web3Options = {
     "ganache": {
       "PlayerScore": {
         "options": {},
-        "address": "0x3530aeb8e3581922ae668c6d7f236959bf7bfa78",
+        "address": "0xfbc92723775e90788108a1797628728d56c5b707",
         "validation": {
           "contractName": "PlayerScore",
           "sourcePath": "",
@@ -153,23 +153,23 @@ Web3Options = {
             "name": "solc",
             "version": "0.4.24+commit.e67f0147.Emscripten.clang"
           },
-          "updatedAt": "2019-02-12T18:24:51.174Z",
+          "updatedAt": "2019-02-15T17:06:51.410Z",
           "validation": {
-            "hash": "8a8da2ed49f1786eb77510e8fdc82fe18f54f6e5183a6eeba2ee01326868df76",
-            "deployDate": "2019-02-12T18:24:52.219Z",
+            "hash": "f0a52f9b300c1de61267af9d847dca923d3a5c31ca9c7c56fd9d1f35c41c8c60",
+            "deployDate": "2019-02-15T17:06:52.406Z",
             "deployBy": "HERC Team",
             "abiHash": "ff5a714a2f73b1fc4ebe7780615b879241edb14c586f10ad8c20e9d1246a5b95",
             "sourceSize": 20179,
             "sourceLines": 236,
             "sourceHash": "65bc13ceeceb93a5ca876ca0ef4d3e2261820ba9c2a99595a7ebcdea5d640297",
             "bytecodeHash": "3dfb8a819fe600963ef4da4a4863e3c0804be2075aa4bf41065d6c47031dd4b1",
-            "buildHash": "1c9d7bb700cc53c07a0cacb323b7e7ece382d0d56725ebf60b23b612f39a86e4"
+            "buildHash": "38ae176fbd56f7933bd6c1ec190e43649a50e38b569eba7e264eb28fab3596d2"
           }
         }
       },
       "PuzzleManager": {
         "options": {},
-        "address": "0x9d207c6384f2154af700a6f4bc95eb3bb10c52f0",
+        "address": "0x19eb42f5b45808542c1bb3acb3960a929161c39c",
         "validation": {
           "contractName": "PuzzleManager",
           "sourcePath": "",
@@ -182,17 +182,17 @@ Web3Options = {
             "name": "solc",
             "version": "0.4.24+commit.e67f0147.Emscripten.clang"
           },
-          "updatedAt": "2019-02-12T18:24:51.167Z",
+          "updatedAt": "2019-02-15T17:06:51.403Z",
           "validation": {
-            "hash": "de66f58d7d73128ce3e39c4c0f4fb086bc720b23bceffb6ad204b1d8af7689a9",
-            "deployDate": "2019-02-12T18:24:53.142Z",
+            "hash": "bf8331c25c48019f5509d06934ecae3e22e4fa4f7755539fd2d2b06f9a15c8c3",
+            "deployDate": "2019-02-15T17:06:53.316Z",
             "deployBy": "HERC Team",
             "abiHash": "adbc4184e514c05b0519c1736e80fa0dfa7cde1a22e399f1bd778be7805634f1",
             "sourceSize": 7920,
             "sourceLines": 137,
             "sourceHash": "eaf972332db6e14fd935bd5ef508058d76dc6bcd0b11e1928f2f6fd915698ee1",
             "bytecodeHash": "2738f4d1f37479f52003ad3bb53e20240b6d165588ef7c5b443ef14357636324",
-            "buildHash": "5d069be827b4e58ceb0bf93cb6eb68210aee1937f95b0febe633125b00c896d5"
+            "buildHash": "2d62e4b51f0f209867c06626be733e33d968e1467ade61760bce21a98dce03c8"
           }
         }
       },
@@ -231,6 +231,104 @@ Web3Options = {
             "sourceHash": "028883e390f1b17b50a98077d0934ea42b020bbb0ce2586e0f77b65425b84619",
             "bytecodeHash": "5435dfd5afb1cd6fec3b8325a6ea41afe608c061b464ab018b2721afc20f2d0b",
             "buildHash": "f3333df059d0b25e5d507df8fdea502d509fdce0ae7748d3f2d75102eac5acdc"
+          }
+        }
+      }
+    },
+    "main": {
+      "PlayerScore": {
+        "options": {},
+        "address": "0xf6cab195c1119f13b7ac85ceeb04b58968714ad0",
+        "validation": {
+          "contractName": "PlayerScore",
+          "sourcePath": "",
+          "exportedSymbols": {
+            "PlayerScore": [
+              577
+            ]
+          },
+          "compiler": {
+            "name": "solc",
+            "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+          },
+          "updatedAt": "2019-02-15T03:57:20.957Z",
+          "validation": {
+            "hash": "4e99a542e47b7ff7b581e004412d0a9da1b083e4d912f3cff9a1e271bc15f2d1",
+            "deployDate": "2019-02-15T03:57:21.973Z",
+            "deployBy": "HERC Team",
+            "abiHash": "ff5a714a2f73b1fc4ebe7780615b879241edb14c586f10ad8c20e9d1246a5b95",
+            "sourceSize": 20179,
+            "sourceLines": 236,
+            "sourceHash": "65bc13ceeceb93a5ca876ca0ef4d3e2261820ba9c2a99595a7ebcdea5d640297",
+            "bytecodeHash": "3dfb8a819fe600963ef4da4a4863e3c0804be2075aa4bf41065d6c47031dd4b1",
+            "buildHash": "2bd6bbf2423277b07019da1ffc6f0788f6f1a82b998dd7fc8ace825ef5e055a6"
+          }
+        }
+      },
+      "PuzzleManager": {
+        "options": {},
+        "address": "0x48529C426046d06224d2e3D88D7D4F7C821a01AA",
+        "validation": {
+          "contractName": "PuzzleManager",
+          "sourcePath": "",
+          "exportedSymbols": {
+            "PuzzleManager": [
+              464
+            ]
+          },
+          "compiler": {
+            "name": "solc",
+            "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+          },
+          "updatedAt": "2019-02-15T03:57:20.951Z",
+          "validation": {
+            "hash": "2c7a6b4564a51500d28037fdb9fc1efbbd8cee45f9230ce4156721fc2b1afe3a",
+            "deployDate": "2019-02-15T03:57:22.875Z",
+            "deployBy": "HERC Team",
+            "abiHash": "adbc4184e514c05b0519c1736e80fa0dfa7cde1a22e399f1bd778be7805634f1",
+            "sourceSize": 7920,
+            "sourceLines": 137,
+            "sourceHash": "eaf972332db6e14fd935bd5ef508058d76dc6bcd0b11e1928f2f6fd915698ee1",
+            "bytecodeHash": "2738f4d1f37479f52003ad3bb53e20240b6d165588ef7c5b443ef14357636324",
+            "buildHash": "ce6e92515c18475ae1811869bd8c4ec6684f9b09640ed8de99d077e0aa977154"
+          }
+        }
+      },
+      "HERCToken": {
+        "options": {},
+        "address": "0xfa8353be80079d6e29aec5432606fd5041d6a1e7",
+        "validation": {
+          "contractName": "HERCToken",
+          "sourcePath": "",
+          "exportedSymbols": {
+            "HERCToken": [
+              866
+            ],
+            "Int20": [
+              251
+            ],
+            "Ownable": [
+              358
+            ],
+            "SafeMath": [
+              184
+            ]
+          },
+          "compiler": {
+            "name": "solc",
+            "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+          },
+          "updatedAt": "2019-01-03T21:15:11.486Z",
+          "validation": {
+            "hash": "45cd2d1a94f6c0978aaa7ebbf74f7727e7eab00e46dedbba55416e4e481aac41",
+            "deployDate": "2019-01-03T21:15:12.431Z",
+            "deployBy": "HERC Team",
+            "abiHash": "d2758fee2c4839ce939d1b00c20e7acea61940b64170c4a4ad2ace1a27ffe9ea",
+            "sourceSize": 11958,
+            "sourceLines": 153,
+            "sourceHash": "028883e390f1b17b50a98077d0934ea42b020bbb0ce2586e0f77b65425b84619",
+            "bytecodeHash": "5435dfd5afb1cd6fec3b8325a6ea41afe608c061b464ab018b2721afc20f2d0b",
+            "buildHash": "8249b54cf109e0f318e68bacbcbc89f0155ec9a6d8b14b944916d112ad1663a0"
           }
         }
       }

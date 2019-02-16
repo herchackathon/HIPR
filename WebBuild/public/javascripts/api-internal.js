@@ -4,7 +4,7 @@
 
 function SendResultBack(key, result)
 {
-    var message = key + "#" + result;
+    var message = key + "#" + JSON.stringify(result.data);
     console.log('SendResultBack', message)
     gameInstance.SendMessage('JavascriptInteractor', 'ProcessResult', message);
 }
