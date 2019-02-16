@@ -8,6 +8,10 @@ Web3Options = {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ropsten"
   },
+  "devP": {
+    "hipr_restful": "http://localhost:8086/api/1.0",
+    "eth": "main"
+  },
   "production": {
     "hipr_restful": "http://ec2-18-191-222-136.us-east-2.compute.amazonaws.com:8086/api/1.0",
     "eth": "main"

@@ -417,8 +417,9 @@ HIPRInternal = {
 
 		var url = hiprUrl('createPuzzle', {address})
 
-		axios.post(url)
-			.then(function (response) {
+		axios({method: 'post', url, timeout: 60 * 15 * 1000})
+//		axios.post(url)
+		.then(function (response) {
 				// handle success
 //				console.log(requestId, response);
 				self.setRequestValue(requestId, response)
@@ -456,7 +457,7 @@ HIPRInternal = {
 						HIPRInternal.setRequestValue(requestId, result)
 					}
 					else {
-						this.setRequestError(requestId, error)
+						self.setRequestError(requestId, error)
 					}
 				})
 			}
@@ -488,7 +489,7 @@ HIPRInternal = {
 				self.setRequestValue(requestId, result)
 			}
 			else {
-				this.setRequestError(requestId, error)
+				self.setRequestError(requestId, error)
 			}
 		})
 
@@ -500,11 +501,12 @@ HIPRInternal = {
     	this.defaultWeb3();
 
 		var self = this,
-			requestId = this.getRequestId('GetPuzzle')
+			requestId = this.getRequestId('ValidatePuzzle')
 
 		var url = hiprUrl('validatePuzzle', {puzzleId, address, score, resultHash, movesSet})
 
-		axios.post(url)
+		axios({method: 'post', url, timeout: 60 * 30 * 1000})
+//		axios.post(url)
 			.then(function (response) {
 				// handle success
 //				console.log(requestId, response);
@@ -515,7 +517,7 @@ HIPRInternal = {
 			.catch(function (error) {
 				// handle error
 //				console.log(error);
-				this.setRequestError(requestId, error)
+				self.setRequestError(requestId, error)
 			})
 
 		return requestId
