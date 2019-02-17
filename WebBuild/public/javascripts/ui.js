@@ -44,7 +44,7 @@ HiprUI = {
     showWeb3View: function() {
         // create web3_view
 
-        $('<div id="web3_view" class="">').insertAfter('#menu')
+        $('<div id="web3_view" class="hide">').insertAfter('#menu')
         $('#web3_view').html(`
             <div class="web3_dialog">
                 <div class="title">
