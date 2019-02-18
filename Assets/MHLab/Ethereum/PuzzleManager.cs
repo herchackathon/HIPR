@@ -17,6 +17,8 @@ namespace MHLab.Ethereum
     public struct ValidatePuzzleData
     {
         public bool result;
+        public string tx;
+        public string err;
     }
 
     [Serializable]
