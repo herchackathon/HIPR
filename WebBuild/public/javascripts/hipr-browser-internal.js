@@ -422,7 +422,7 @@ HIPRInternal = {
 		.then(function (response) {
 				// handle success
 //				console.log(requestId, response);
-				self.setRequestValue(requestId, response)
+				self.setRequestValue(requestId, response.data)
 
 				//HIPRInternal.setRequestValue(requestId, response)
 			})
@@ -486,7 +486,7 @@ HIPRInternal = {
 
 		this.playerScore.releaseDate((error, result) => {
 			if (!error) {
-				self.setRequestValue(requestId, result.c[0])
+				self.setRequestValue(requestId, {time: result.c[0]})
 			}
 			else {
 				self.setRequestError(requestId, error)
@@ -510,9 +510,9 @@ HIPRInternal = {
 			.then(function (response) {
 				// handle success
 //				console.log(requestId, response);
-				self.setRequestValue(requestId, response)
+				self.setRequestValue(requestId, response.data)
 
-				HIPRInternal.setRequestValue(requestId, response)
+//				HIPRInternal.setRequestValue(requestId, response)
 			})
 			.catch(function (error) {
 				// handle error
