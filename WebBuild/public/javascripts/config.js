@@ -17,7 +17,7 @@ Web3Options = {
     "eth": "main"
   },
   "productionH": {
-    "hipr_restful": "http://herc.one:8086/api/1.0",
+    "hipr_restful": "https://herc.one:8086/api/1.0",
     "eth": "main"
   },
   "contracts": {
