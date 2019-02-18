@@ -486,7 +486,7 @@ HIPRInternal = {
 
 		this.playerScore.releaseDate((error, result) => {
 			if (!error) {
-				self.setRequestValue(requestId, result)
+				self.setRequestValue(requestId, result.c[0])
 			}
 			else {
 				self.setRequestError(requestId, error)
