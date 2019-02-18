@@ -484,7 +484,7 @@ HIPRInternal = {
             let payoutAddress = await m.payoutBoss().call()
 */
 
-		this.puzzleManager.releaseDate((error, result) => {
+		this.playerScore.releaseDate((error, result) => {
 			if (!error) {
 				self.setRequestValue(requestId, result)
 			}
