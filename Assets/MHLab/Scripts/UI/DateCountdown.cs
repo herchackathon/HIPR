@@ -3,6 +3,12 @@ using MHLab.Metamask;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public struct GetEndOfSeasonData
+{
+    public long time;
+}
+
 public class DateCountdown : MonoBehaviour
 {
 	public string TargetDate;
@@ -56,15 +62,21 @@ public class DateCountdown : MonoBehaviour
     private static void GetEndOfSeason(Action<long> callback)
     {
         if (!JavascriptInteractor.Actions.ContainsKey("GetEndOfSeason"))
-            JavascriptInteractor.Actions.Add("GetEndOfSeason", (result) => { ProcessEndOfSeason(result, callback); });
+            JavascriptInteractor.Actions.Add("GetEndOfSeason", (result) =>
+            {
+                ProcessEndOfSeason(result, callback);
+            });
         else
-            JavascriptInteractor.Actions["GetEndOfSeason"] = (result) => { ProcessEndOfSeason(result, callback); };
+            JavascriptInteractor.Actions["GetEndOfSeason"] = (result) =>
+            {
+                ProcessEndOfSeason(result, callback);
+            };
         MetamaskManager.GetEndOfSeason();
     }
 
     private static void ProcessEndOfSeason(string result, Action<long> callback)
     {
-        var time = long.Parse(result);
+        var time = JsonUtility.FromJson<GetEndOfSeasonData>(result).time;
         callback.Invoke(time);
     }
 }

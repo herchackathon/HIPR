@@ -30,8 +30,8 @@ namespace MHLab.Metamask
         {
             // PARAMS THAT WEB3 JAVASCRIPT HAS TO PASS BACK TO HIPR
             // Key      = GetEndOfSeason: string
-            // Value    = 1547510399000: Unix Timestamp (long)
-            JavascriptInteractor.ProcessResultGlobal("GetEndOfSeason#1547510399000");
+            // Value    = {"time":1547510399000}: Unix Timestamp (long)
+            JavascriptInteractor.ProcessResultGlobal("GetEndOfSeason#{\"time\":1547510399000}");
         }
 #else
 		[DllImport("__Internal")]
