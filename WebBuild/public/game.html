@@ -270,6 +270,11 @@
 			}
 		});
 
+		jQuery(document).keydown(function(event){
+			if(event.which === 27)
+				jQuery("#menu").addClass("hide");
+		});
+
 		var isFullscreen = false;
 		jQuery("#fullscreen_toggle").on("click", function(event) {
 			isFullscreen = !isFullscreen;
