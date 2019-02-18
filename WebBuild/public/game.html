@@ -158,7 +158,6 @@
 	<div id="menu" class="hide">
 		<div class="dialog">
 			<div class="title">
-				Top 50 Players
 				<div class="info-box">
 					<span class="info-button" id="info_button">?</span>
 					<span class="info-button" id="my_reward_button">My Reward</span>
@@ -174,8 +173,9 @@
 						<span class="info-button" id="get_reward_button">I won! Send me HERCs!</span>
 					</div>
 				</div>
+				<h2>Top 50 Players</h2>
 			</div>
-			<div class="podium">
+			<!--<div class="podium">
 				<table>
 					<tbody>
 						<tr>
@@ -201,7 +201,7 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div>-->
 			<div class="scores-list">
 				<ul>
 
@@ -220,7 +220,7 @@
 			var menu = jQuery("#menu");
 			if(menu.hasClass("hide"))
 			{
-				HIPRInternal.GetTopScoresForMenu(50, function(result) {
+				HIPRInternal.GetTopScoresForMenu(100, function(result) {
 					//console.log(result);
 
 					var list = jQuery("#menu .scores-list > ul");
@@ -233,40 +233,6 @@
 					});
 					
 					result.forEach(function(item, index) {
-						if(index < 3)
-						{
-							let address = item.value[0];
-							let score = item.value[1];
-
-							if(address == 'undefined' || address == null || address == '')
-								address = '0x';
-							if(score == 'undefined' || score == null || score == '')
-								score = 0;
-							
-							if(address == '0x')
-							{
-								address = "---";
-								score = "---";
-							}
-
-							if(index == 0)
-							{
-								jQuery("#score_number_one .address").html(address);
-								jQuery("#score_number_one .score").html(score);
-							}
-							if(index == 1)
-							{
-								jQuery("#score_number_two .address").html(address);
-								jQuery("#score_number_two .score").html(score);
-							}
-							if(index == 2)
-							{
-								jQuery("#score_number_three .address").html(address);
-								jQuery("#score_number_three .score").html(score);
-							}
-							return;
-						}
-						//console.log(item.value[0] + ", " + item.value[1]);
 						let address = item.value[0];
 						let score = item.value[1];
 
@@ -281,7 +247,18 @@
 							score = "---";
 						}
 
-						list.append('<li><div class="entry-container"><span class="position">' + (index + 1) + '°</span><div class="entry"><div class="address">' + address + '</div><div class="score">' + score + '</div></div></div></li>');
+						let additionalClass = "";
+
+						if(index == 0)
+							additionalClass = "special-place first";
+							
+						if(index == 1)
+							additionalClass = "special-place second";
+						
+						if(index == 2)
+							additionalClass = "special-place third";
+
+						list.append('<li><div class="entry-container ' + additionalClass + '"><span class="position">' + (index + 1) + '°</span><div class="entry"><div class="address">' + address + '</div><div class="score">' + score + '</div></div></div></li>');
 					});
 
 					menu.removeClass("hide");

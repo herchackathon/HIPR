@@ -167,7 +167,7 @@ body {
     border: 2px solid #ecd23a;
     border-radius: 15px;
     margin: auto;
-    max-width: 600px;
+    max-width: 1280px;
     top: 0;
     bottom: 70px;
     left: 30px;
@@ -182,6 +182,9 @@ body {
 	text-align: center;    
 	padding: 10px;
 }
+.dialog .title h2 {
+    font-size: 2rem;
+}
 .dialog .info-box {
 	float: right;
 }
@@ -189,12 +192,13 @@ body {
     border: 2px solid;
     padding: 2px 6px;
     border-radius: 5px;
-    cursor: pointer;
+	cursor: pointer;
+	font-size: 1.5rem;
 }
 .dialog .info-box .info-dialog {
     border: 2px solid;
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 1.3rem;
     position: absolute;
     right: 45px;
     top: 18px;
@@ -203,27 +207,125 @@ body {
 	width: 300px;
 }
 .dialog .info-box .info-dialog .formula {
-    font-size: 14px;
+    font-size: 1.5rem;
 }
 .dialog .scores-list > ul {
 	list-style: none;
+	padding-inline-start: 0;
 }
 .dialog .scores-list .position {
-    margin-right: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	font-size: 2rem;
 }
 .dialog .scores-list .entry {
     text-align: center;
-    margin-top: -20px;
+    margin-top: -35px;
 }
 .dialog .scores-list .entry-container {
-    margin-bottom: 10px;
+    margin: 0px 10px 10px 10px;
+}
+.dialog .scores-list .entry-container.special-place {
+    border-radius: 12px;
+}
+.dialog .scores-list .entry-container.special-place.first {
+    border: 4px solid #ecd23a;
+}
+.dialog .scores-list .entry-container.special-place.second {
+    border: 4px solid #a1a1a1;
+}
+.dialog .scores-list .entry-container.special-place.third {
+    border: 4px solid #ac5e1f;
 }
 .dialog .address {
-    font-size: 9px;
+    font-size: 0.8rem;
     color: #9e903a;
 }
+@media only screen and (min-width: 320px) {
+
+/* Small screen, non-retina */
+	.dialog .address {
+		font-size: 0.8rem;
+	}
+
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (                min-resolution: 192dpi) and (min-width: 320px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 320px) { 
+
+/* Small screen, retina, stuff to override above media query */
+	.dialog .address {
+		font-size: 0.8rem;
+	}
+
+}
+
+@media only screen and (min-width: 768px) {
+
+/* Medium screen, non-retina */
+	.dialog .address {
+		font-size: 1.5rem;
+	}
+
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 768px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 768px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 768px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 768px),
+only screen and (                min-resolution: 192dpi) and (min-width: 768px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 768px) { 
+
+/* Medium screen, retina, stuff to override above media query */
+
+	.dialog .address {
+		font-size: 1.5rem;
+	}
+
+}
+
+@media only screen and (min-width: 1280px) {
+
+/* Large screen, non-retina */
+
+	.dialog .address {
+		font-size: 2rem;
+	}
+
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1280px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1280px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1280px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1280px),
+only screen and (                min-resolution: 192dpi) and (min-width: 1280px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 1280px) { 
+
+/* Large screen, retina, stuff to override above media query */
+
+	.dialog .address {
+		font-size: 2rem;
+	}
+
+}
 .dialog .score {
-	font-size: 23px;
+	font-size: 2.5rem;
+}
+.dialog .scores-list .entry-container.special-place.first .score {
+    font-size: 3.5rem;
+}
+.dialog .scores-list .entry-container.special-place.second .score {
+    font-size: 3.5rem;
+}
+.dialog .scores-list .entry-container.special-place.third .score {
+    font-size: 3.5rem;
 }
 .dialog .scores-list {
 	overflow-y: auto;    
