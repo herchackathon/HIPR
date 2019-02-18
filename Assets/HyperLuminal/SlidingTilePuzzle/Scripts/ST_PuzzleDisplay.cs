@@ -39,6 +39,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
     public Texture2D[] PuzzleImages;
 	public Texture2D PuzzleImage;
     public RectTransform CompletingPopup;
+    public RectTransform WaitingValidationPopup;
     public Text CompletingText;
     public RectTransform CurrentCanvas;
     public EnableForLimitedTime ShufflingPopup;
@@ -409,6 +410,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
             string msg = Steganography.Decode(PuzzleImage);
 		    var scoreTemp = CalculateScore(PuzzleMoves, (int)GameTimerUpdater.ElapsedSeconds);
 
+            WaitingValidationPopup.gameObject.SetActive(true);
+
             PuzzleManager.ValidatePuzzleResult(PuzzleManager.PuzzleData.puzzleId, scoreTemp, msg, Moves, (isValid) =>
             {
                 if (isValid)
@@ -418,22 +421,12 @@ public class ST_PuzzleDisplay : MonoBehaviour
 					AudioSource.PlayOneShot(VictorySound);
 
 	                var score = CalculateScore(PuzzleMoves, (int) GameTimerUpdater.ElapsedSeconds);
-
-					var amount = LocalStorage.GetInt(StorageKeys.DecryptedAmountKey).Value + 1;
+                    
 	                CompletingText.text = "Nicely done! You scored " + score +
 	                                      "!\nBe sure to accept the transaction, or your score will not be added in the leaderboard!";
-                    
-                    CompletingPopup.gameObject.SetActive(true);
 
-                    ScoresManager.PushScore(score,
-                        (done) =>
-                        {
-                            if(done)
-                                Debug.Log("Score correctly pushed");
-                            else
-                                Debug.Log("Score has not been pushed.");
-                        });
-                    LocalStorage.Store(StorageKeys.DecryptedAmountKey, amount);
+                    WaitingValidationPopup.gameObject.SetActive(false);
+                    CompletingPopup.gameObject.SetActive(true);
                 }
                 else
                 {

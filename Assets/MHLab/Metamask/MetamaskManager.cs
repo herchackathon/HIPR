@@ -68,8 +68,8 @@ namespace MHLab.Metamask
         {
             // PARAMS THAT WEB3 JAVASCRIPT HAS TO PASS BACK TO HIPR
             // Key      = SetScore: string
-            // Value    = true/false: bool
-            JavascriptInteractor.ProcessResultGlobal("SetScore#true");
+            // Value    = {"result": true}
+            JavascriptInteractor.ProcessResultGlobal("SetScore#{\"result\": true}");
 	    }
 #else
 		[DllImport("__Internal")]
@@ -111,8 +111,8 @@ namespace MHLab.Metamask
 
             // PARAMS THAT WEB3 JAVASCRIPT HAS TO PASS BACK TO HIPR
             // Key      = ValidatePuzzleResult: string
-            // Value    = true/false: bool
-            JavascriptInteractor.ProcessResultGlobal("ValidatePuzzleResult#true");
+            // Value    = {"result": true}
+            JavascriptInteractor.ProcessResultGlobal("ValidatePuzzle#{\"result\": true}");
 	    }
 #else
 		[DllImport("__Internal")]

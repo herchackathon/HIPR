@@ -3,10 +3,17 @@ using MHLab.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace MHLab.Ethereum
 {
-	public class ScoresManager
+    [Serializable]
+    public struct SetScoreData
+    {
+        public bool result;
+    }
+
+    public class ScoresManager
     {
         public static void GetTopScores(Action<List<TopScore>> callback)
 		{
@@ -62,38 +69,16 @@ namespace MHLab.Ethereum
 			if (!JavascriptInteractor.Actions.ContainsKey("SetScore"))
 				JavascriptInteractor.Actions.Add("SetScore", (result) =>
 				{
-					bool r = false;
-					try
-					{
-						r = bool.Parse(result);
-					}
-					catch
-					{
-						if (result == "true")
-							r = true;
-						else
-							r = false;
-					}
-					callback.Invoke(r);
-				});
+				    var r = JsonUtility.FromJson<SetScoreData>(result);
+				    callback.Invoke(r.result);
+                });
 			else
 			{
 				JavascriptInteractor.Actions["SetScore"] = (result) =>
 				{
-					bool r = false;
-					try
-					{
-						r = bool.Parse(result);
-					}
-					catch
-					{
-						if (result == "true")
-							r = true;
-						else
-							r = false;
-					}
-					callback.Invoke(r);
-				};
+				    var r = JsonUtility.FromJson<SetScoreData>(result);
+				    callback.Invoke(r.result);
+                };
 			}
 			MetamaskManager.SetScore(score);
         }
