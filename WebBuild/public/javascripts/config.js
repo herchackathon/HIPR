@@ -1,5 +1,5 @@
 Web3Options = {
-  "env": "productionH",
+  "env": "dev",
   "dev": {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ganache"
@@ -13,11 +13,11 @@ Web3Options = {
     "eth": "main"
   },
   "production": {
-    "hipr_restful": "http://ec2-18-191-222-136.us-east-2.compute.amazonaws.com:8086/api/1.0",
+    "hipr_restful": "http://amazon:8086/api/1.0",
     "eth": "main"
   },
   "productionH": {
-    "hipr_restful": "https://hipr.one:8086/api/1.0",
+    "hipr_restful": "https://herc.one:8086/api/1.0",
     "eth": "main"
   },
   "contracts": {
@@ -148,59 +148,59 @@ Web3Options = {
     "ganache": {
       "PlayerScore": {
         "options": {},
-        "address": "0xfbc92723775e90788108a1797628728d56c5b707",
+        "address": "0x11ee9ff611bd9d24fd760aef7980e0dd977f9f63",
         "validation": {
           "contractName": "PlayerScore",
           "sourcePath": "",
           "exportedSymbols": {
             "PlayerScore": [
-              577
+              965
             ]
           },
           "compiler": {
             "name": "solc",
             "version": "0.4.24+commit.e67f0147.Emscripten.clang"
           },
-          "updatedAt": "2019-02-15T17:06:51.410Z",
+          "updatedAt": "2019-02-25T04:48:23.263Z",
           "validation": {
-            "hash": "f0a52f9b300c1de61267af9d847dca923d3a5c31ca9c7c56fd9d1f35c41c8c60",
-            "deployDate": "2019-02-15T17:06:52.406Z",
+            "hash": "1b0c1e35f03cca71de8b43628964767f434fa97d3a156041cb5d46263fce26a7",
+            "deployDate": "2019-02-25T04:48:24.246Z",
             "deployBy": "HERC Team",
-            "abiHash": "ff5a714a2f73b1fc4ebe7780615b879241edb14c586f10ad8c20e9d1246a5b95",
-            "sourceSize": 20179,
-            "sourceLines": 236,
-            "sourceHash": "65bc13ceeceb93a5ca876ca0ef4d3e2261820ba9c2a99595a7ebcdea5d640297",
-            "bytecodeHash": "3dfb8a819fe600963ef4da4a4863e3c0804be2075aa4bf41065d6c47031dd4b1",
-            "buildHash": "38ae176fbd56f7933bd6c1ec190e43649a50e38b569eba7e264eb28fab3596d2"
+            "abiHash": "de0bd078f1a3507d8268d61ef8f6ec6237a83239ea744b5fb57297d9381327e9",
+            "sourceSize": 27574,
+            "sourceLines": 334,
+            "sourceHash": "5293c89d47615e83c48be32ff0462392e6a596947d3daf49ce1bdb5680f3534c",
+            "bytecodeHash": "7be9f1cba1e154a88fb87c1a5968e11a772838ff658818a703ba5c6014bc3d7d",
+            "buildHash": "c4c9327514198a0b22f6182375b4f7f65f968d595d236f31ce5e8fb31158cc10"
           }
         }
       },
       "PuzzleManager": {
         "options": {},
-        "address": "0x19eb42f5b45808542c1bb3acb3960a929161c39c",
+        "address": "0xf0831e19dadc09d13b1189a8c8b39b5ed90c23ac",
         "validation": {
           "contractName": "PuzzleManager",
           "sourcePath": "",
           "exportedSymbols": {
             "PuzzleManager": [
-              464
+              483
             ]
           },
           "compiler": {
             "name": "solc",
             "version": "0.4.24+commit.e67f0147.Emscripten.clang"
           },
-          "updatedAt": "2019-02-15T17:06:51.403Z",
+          "updatedAt": "2019-02-25T04:48:23.251Z",
           "validation": {
-            "hash": "bf8331c25c48019f5509d06934ecae3e22e4fa4f7755539fd2d2b06f9a15c8c3",
-            "deployDate": "2019-02-15T17:06:53.316Z",
+            "hash": "8b8f5a6ea4dc33e5e6c7f372ddbc0f84e54e2094a8e33445024299c9ebd02601",
+            "deployDate": "2019-02-25T04:48:25.107Z",
             "deployBy": "HERC Team",
-            "abiHash": "adbc4184e514c05b0519c1736e80fa0dfa7cde1a22e399f1bd778be7805634f1",
-            "sourceSize": 7920,
-            "sourceLines": 137,
-            "sourceHash": "eaf972332db6e14fd935bd5ef508058d76dc6bcd0b11e1928f2f6fd915698ee1",
-            "bytecodeHash": "2738f4d1f37479f52003ad3bb53e20240b6d165588ef7c5b443ef14357636324",
-            "buildHash": "2d62e4b51f0f209867c06626be733e33d968e1467ade61760bce21a98dce03c8"
+            "abiHash": "66d04ced002f87c1aad27660584cf20bf8f273af02a92a17f0dabe13367480e8",
+            "sourceSize": 8101,
+            "sourceLines": 140,
+            "sourceHash": "ec3035e566c6a987b893157a45b221d55cb0821f3da72c861581b7fa22fa0988",
+            "bytecodeHash": "c7a3e00d697ef00f44400e0a255defce86fdd68d77b53a93835a914aff0de91c",
+            "buildHash": "f33bad00e2c0d9d357f6ecf00357233d57f8fb943479d95d811970c0c98a51c3"
           }
         }
       },

@@ -19,7 +19,7 @@ HiprUI = {
         }
     },
     isDebug: function() {
-        return false
+        return true
     },
 
     toggleWeb3Info: function() {
@@ -44,7 +44,7 @@ HiprUI = {
     showWeb3View: function() {
         // create web3_view
 
-        $('<div id="web3_view">').insertAfter('#menu')
+        $('<div id="web3_view" class="">').insertAfter('#menu')
         $('#web3_view').html(`
             <div class="web3_dialog">
                 <div class="title">
@@ -113,8 +113,8 @@ HiprUI = {
 
             // hipr-restufl state
 
-            this.tableWeb3addRow('HIPR-RESTFUL State', '',  {style: 'color: #ecd23a; background-color: #08112b;'})
-            this.tableWeb3addRow('Contracts', '')
+//            this.tableWeb3addRow('HIPR-RESTFUL State', '',  {style: 'color: #ecd23a; background-color: #08112b;'})
+//            this.tableWeb3addRow('Contracts', '')
 
             // tests
 
@@ -141,12 +141,12 @@ HiprUI = {
             }
 
             // Test #2
-
+/*
             try {
                 var address = window.web3.eth.accounts[0]
                 var password
 
-                this.tableWeb3addRow('Test #2', '<div class="test-name">Create puzzle</div><button id="test2-bn-run" class="test-bn">Run</button>')
+                this.tableWeb3addRow('restPendingTimeTest #2', '<div class="test-name">Create puzzle</div><button id="test2-bn-run" class="test-bn">Run</button>')
                 this.tableWeb3addRow('- address', `<input id="test2-input-address" class="test-input" value="${address}"></input>`)
                 this.tableWeb3addRow('- password', `<input id="test2-input-password" class="test-input" value="${password}"></input>`)
                 $('#test2-bn-run').click(()=>{
@@ -157,9 +157,9 @@ HiprUI = {
             {
                 this.tableWeb3addRow('#ERROR Test #1', e, {style: 'color: red'})
             }
-
+*/
             // Test #3
-
+/*
             try {
                 var puzzleId = 42
                 var address = window.web3.eth.accounts[0]
@@ -181,7 +181,7 @@ HiprUI = {
             {
                 this.tableWeb3addRow('#ERROR Test #1', e, {style: 'color: red'})
             }
-
+*/
             this.updateSeasonStats()
         }
         catch (e) {
@@ -298,8 +298,44 @@ HiprUI = {
 
     getRestStatusHTML: function (restStatus, i) {
         var restStatusColor = restStatus == 'pending' ? "orange" : (restStatus == 'connected' ? "green" : "red")
-        var s = restStatus == 'pending' ? `pending (${i})...` : ''
+        var s = restStatus == 'pending' ? `pending (${i})...` : restStatus
         return `<div style="color: ${restStatusColor}; font-weight: bold">${s}</div>`
+    },
+
+    restStatusRequest: function () {
+        var self = this
+
+        var requestInterval = 10 // seconds
+
+        if (self.restPendingTime % requestInterval == 0) {
+            var url = hiprUrl('status', {})
+
+            axios.get(url)
+            .then(function (response) {
+                if (!response.data || !response.data.status) {
+                    self.testLog(`#ERROR status`, JSON.stringify(response), {style: 'color: red'})
+                    return
+                }
+
+//                clearInterval(self.restStatusInterval)
+                if (self.restStatus == 'connected')
+                    return
+
+                var status = response.data.status
+//                self.testLog(`#STATUS`, JSON.stringify(status), {style: 'color: purple'})
+                self.restStatus = 'connected'
+                self.tableWeb3addRow('HIPR-RESTFUL State', '',  {style: 'color: #ecd23a; background-color: #08112b;'})
+                self.tableWeb3addRow('started', status.startDate)
+                self.tableWeb3addRow('last update', status.nowDate)
+                self.tableWeb3addRow('chain', JSON.stringify(status.chain))
+                self.tableWeb3AddContract('PlayerScore', status.eth.playerScore)
+                self.tableWeb3AddContract('assetValidator', status.eth.assetValidator)
+            })
+            .catch(function (error) {
+                self.testLog(`#ERROR status`, JSON.stringify(error), {style: 'color: red'})
+                self.restStatus = 'pending'
+            })
+        }
     },
 
     updateHiprRestfultStats: function () {
@@ -308,9 +344,11 @@ HiprUI = {
         var self = this
 
         function restStatusUpdate() {
-            var restStatusInterval = setInterval(()=>{
+            self.restStatusRequest()
+            self.restStatusInterval = setInterval(()=>{
                 var text = self.getRestStatusHTML(self.restStatus, ++self.restPendingTime)
                 $('#rest-status-row > td:eq(1)').html(text)
+                self.restStatusRequest()
             }, 1000)
         }
 
