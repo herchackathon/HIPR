@@ -17,7 +17,7 @@ It is the first ever gamified “Internal Review” function; whereas the softwa
 >2. Navigate to *"WebBuild"* folder
 >3. Run *"npm install --production"* command
 >4. Run *"npm start"* command
->5. Open your browser at *"localhost:3000/"*
+>5. Open your browser at *"localhost:8080/"*
 
 --------
 # Unity3D

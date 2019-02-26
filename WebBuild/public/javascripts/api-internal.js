@@ -4,6 +4,16 @@
 
 function SendResultBack(key, result)
 {
+    if (key == 'CreatePuzzle1') {
+        key = 'GetPuzzle'
+        if (!HIPRInternal.puzzleData) {
+            console.error('HIPRInternal.puzzleData is null')
+            return
+        }
+
+        HIPRInternal.puzzleData.puzzleId = result
+        result = HIPRInternal.puzzleData //{data: HIPRInternal.puzzleData}
+    }
     var message = key + "#" + JSON.stringify(result);
     console.log('SendResultBack', message)
     gameInstance.SendMessage('JavascriptInteractor', 'ProcessResult', message);
