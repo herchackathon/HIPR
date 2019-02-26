@@ -476,7 +476,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		Scale = new Vector3(1.0f/Width, 1.0f, 1.0f/Height);
 		Tile.transform.localScale = Scale;
 
-	    var newIndexes = PuzzleManager.PuzzleData.field;
+	    var newIndexes = PuzzleManager.PuzzleData.puzzleField;
 	    var newIndexesCounter = 0;
 		// spawn the tiles into an array.
 		for(int j = 0; j < Height; j++)

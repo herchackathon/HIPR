@@ -9,8 +9,11 @@ namespace MHLab.Ethereum
     public struct GetPuzzleData
     {
         public int puzzleId;
-        public List<int> field;
-        public string hash;
+        public List<int> puzzleField;
+        public string metricsHash;
+        public object @params;
+        public string plainTextMetrics;
+        public bool checkOwner;
     }
 
     [Serializable]

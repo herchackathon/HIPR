@@ -17,7 +17,7 @@ Web3Options = {
     "eth": "main"
   },
   "productionH": {
-    "hipr_restful": "https://hipr.one:8086/api/1.0",
+    "hipr_restful": "http://ec2-18-220-21-56.us-east-2.compute.amazonaws.com:8086/api/1.0",
     "eth": "main"
   },
   "contracts": {

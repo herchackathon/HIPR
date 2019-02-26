@@ -496,6 +496,19 @@ HIPRInternal = {
 		return requestId
 	},
 
+	PayoutInfoForMenu: function(callback) {
+		this.defaultWeb3();
+
+		this.playerScore.releaseDate((error, result) => {
+			if (!error) {
+				callback({time: result.c[0], err: null});
+			}
+			else {
+				callback({time: 0, err: error});
+			}
+		})
+	},
+
     ValidatePuzzle: function(puzzleId, address, score, resultHash, movesSet)
     {
     	this.defaultWeb3();

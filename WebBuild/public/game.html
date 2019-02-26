@@ -170,7 +170,8 @@
 					</div>
 					<div class="info-dialog hide" id="my_reward_dialog">
 						<p>If you are in the leaderboard, you can be paid at the End of Season! Just hit the button below and trigger the transaction on our Smart Contract!</p>
-						<span class="info-button" id="get_reward_button">I won! Send me HERCs!</span>
+						<p class=""><span>End of Season in: </span><span id="season_countdown"></span></p>
+						<!--<span class="info-button" id="get_reward_button">I won! Send me HERCs!</span>-->
 					</div>
 				</div>
 				<h2>Top 50 Players</h2>
@@ -216,6 +217,23 @@
 	</div>
 	
 	<script>
+		setInterval(function() {
+			HIPRInternal.PayoutInfoForMenu(function(obj) {
+				if(obj.err == null)
+				{
+					let now = new Date();
+					let date = new Date(obj.time);
+					let difference = new Date(Math.abs(date - now));
+					let hours = difference.getHours();
+					if(hours < 10) hours = "0" + hours;
+					let minutes = difference.getMinutes();
+					if(minutes < 10) minutes = "0" + minutes;
+					let currentEndOfSeasonTime = hours + ":" + minutes;
+					jQuery("#season_countdown").html(currentEndOfSeasonTime);
+				}
+			});
+		}, 1000);
+
 		jQuery("#menu_toggle").on("click", function(event) {
 			var menu = jQuery("#menu");
 			if(menu.hasClass("hide"))

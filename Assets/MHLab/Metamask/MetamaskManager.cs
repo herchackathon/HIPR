@@ -83,13 +83,13 @@ namespace MHLab.Metamask
 	    public static void GetPuzzle()
 	    {
             // PARAMS THAT WEB3 JAVASCRIPT HAS TO PASS BACK TO HIPR
-            // Key      = SetScore: string
+            // Key      = GetPuzzle: string
             // Value    = {
             //              puzzleId: 1,                    => the puzzleId
             //              field: [0,7,3,4,1,2,6,8,5],     => the initial state of the puzzle
             //              hash: "HashMetricsHere"         => the hash to encode in the puzzle
 	        //            }: stringified JSON object
-            JavascriptInteractor.ProcessResultGlobal("GetPuzzle#{\"puzzleId\":51,\"hash\":\"0x9d06d052ccee7a6d392127c015a58c1c89a9cd4cb84c79726132451c1cb1718b\",\"field\":[1,0,2,3,4,5,6,7,8]}");
+            JavascriptInteractor.ProcessResultGlobal("GetPuzzle#{\"plainTextMetrics\":\"\",\"metricsHash\":\"0xcc0babd1bdc475da63b327ea6e0e2fc5aaa844a2aa6190c8c1263cf6e8e8baa6\",\"params\":{},\"puzzleField\":[1,0,2,3,4,5,6,7,8],\"checkOwner\":true,\"puzzleId\":6}");
 	    }
 #else
 		[DllImport("__Internal")]
