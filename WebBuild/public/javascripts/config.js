@@ -1,5 +1,5 @@
 Web3Options = {
-  "env": "productionH",
+  "env": "production1",
   "dev": {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ganache"
@@ -12,8 +12,8 @@ Web3Options = {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "main"
   },
-  "production": {
-    "hipr_restful": "http://amazon:8086/api/1.0",
+  "production1": {
+    "hipr_restful": "http://ec2-18-219-170-189.us-east-2.compute.amazonaws.com:8086/api/1.0",
     "eth": "main"
   },
   "productionH": {
