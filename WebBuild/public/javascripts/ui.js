@@ -15,7 +15,7 @@ HiprUI = {
                 self.toggleWeb3Info()
             })
 
-            self.toggleWeb3Info()
+//            self.toggleWeb3Info()
         }
     },
     isDebug: function() {
@@ -47,7 +47,7 @@ HiprUI = {
     showWeb3View: function() {
         // create web3_view
 
-        $('<div id="web3_view" class="hide">').insertAfter('#menu')
+        $('<div id="web3_view" class="">').insertAfter('#menu')
         $('#web3_view').html(`
             <div class="web3_dialog">
                 <div class="title">
