@@ -1,5 +1,5 @@
 Web3Options = {
-  "env": "production1",
+  "env": "productionH",
   "dev": {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ganache"
@@ -17,7 +17,7 @@ Web3Options = {
     "eth": "main"
   },
   "productionH": {
-    "hipr_restful": "https://herc.one:8086/api/1.0",
+    "hipr_restful": "https://hipr.one:8086/api/1.0",
     "eth": "main"
   },
   "contracts": {
