@@ -308,9 +308,6 @@
     <Reference Include="UnityEditor.OSXStandalone.Extensions">
       <HintPath>D:/Unity3D/2018.3.0f2/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
     <Reference Include="JMOAssets">
       <HintPath>D:/Lavori/HIPR/HIPR/Assets/JMO Assets/Editor/JMOAssets.dll</HintPath>
     </Reference>
