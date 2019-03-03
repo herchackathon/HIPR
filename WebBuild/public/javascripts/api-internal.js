@@ -56,6 +56,7 @@ function ValidatePuzzleResultInternal(puzzleId, score, resultHash, movesSet)
 {
     var puzzleId // lastest PuzzleId returned by createPuzzle
     var address = window.web3.eth.accounts[0]
+//    movesSet = JSON.parse(movesSet).movesSet
     HIPRInternal.ValidatePuzzle(puzzleId, address, score, resultHash, movesSet)
 
     //    SendResultBack('ValidatePuzzleResult', 'true');

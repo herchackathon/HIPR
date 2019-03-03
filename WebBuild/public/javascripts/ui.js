@@ -15,10 +15,13 @@ HiprUI = {
                 self.toggleWeb3Info()
             })
 
-            self.toggleWeb3Info()
+//            self.toggleWeb3Info()
         }
     },
     isDebug: function() {
+        if (window.location.hostname == 'hipr.one')
+            return false
+
         return true
     },
 

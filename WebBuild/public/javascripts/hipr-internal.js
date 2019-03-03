@@ -50,7 +50,7 @@ function hiprUrl(urlType, options) {
 		var resultHash = options.resultHash
 		var movesSet = options.movesSet
 		
-		url = `${Web3Options[Web3Options.env].hipr_restful}/validatePuzzleSecure/${puzzleId}/${address}/${score}/${resultHash}/${encodeURIComponent(movesSet)}`
+		url = `${Web3Options[Web3Options.env].hipr_restful}/validatePuzzleSecureSign/${puzzleId}/${address}/${score}/${resultHash}/${encodeURIComponent(movesSet)}`
 		return url
 	}
 
@@ -91,7 +91,7 @@ HIPRInternal = {
 	requestId: 1,
 
 	getRequestId (name) {
-		var id = this.requestId++
+		var id = (new Date()).getTime() //this.requestId++
 		this.requests[id] = {
 			name,
 			value: null,
@@ -252,34 +252,45 @@ HIPRInternal = {
 		// 		-> true
 
 		this.puzzleManager.ValidateMetrics(puzzleId, resultHash, (error, result) => {
+			var self = this
+
 			if (!error) {
 
 				// 2. validatePuzzle(puzzleId, address, score, resultHash, movesSet)
 				// 		-> signature
 
-				var url = hiprUrl('validatePuzzle', {puzzleId, address, score, resultHash, movesSet})
+				var url = hiprUrl('validatePuzzle', {puzzleId: self.puzzleData.id, address, score, resultHash, movesSet})
 
 				axios.post(url)
 				.then(function (response) {
 
-					// 3. SetScoreSecureSign(puzzleId, resultHash, v, r, s)
-					// 		-> true & SetScore
+					try {
+						// 3. SetScoreSecureSign(puzzleId, resultHash, v, r, s)
+						// 		-> true & SetScore
 
-					var sig = response.data
+						var sig = response.data
 
-					var r = `0x${sig.slice(0, 64)}`
-					var s = `0x${sig.slice(64, 128)}`
-					var v = web3.toDecimal(sig.slice(128, 130)) + 27
-
-					this.puzzleManager.SetScoreSecureSign(address, score, metrics, v, r, s, (error, result) => {
-						if (!error) {
-							self.setRequestValue(requestId, {result: true})
+						if (sig.err) {
+							self.setRequestError(requestId, sig.err)
+							return
 						}
-						else {
-							self.setRequestError(requestId, {result: false, error})
-						}
-					})
 
+						var r = sig.r //`0x${sig.slice(0, 64)}`
+						var s = sig.s //`0x${sig.slice(64, 128)}`
+						var v = sig.v //web3.toDecimal(sig.slice(128, 130)) + 27
+
+						self.playerScore.SetScoreSecureSign(address, score, resultHash, v, r, s, (error, result) => {
+							if (!error) {
+								self.setRequestValue(requestId, {result: true})
+							}
+							else {
+								self.setRequestError(requestId, {result: false, error})
+							}
+						})
+					}
+					catch (e) {
+						self.setRequestError(requestId, e)
+					}
 				})
 				.catch(function (error) {
 					self.setRequestError(requestId, error)
