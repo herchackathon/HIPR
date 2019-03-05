@@ -220,14 +220,25 @@
 	</div>
 	
 	<script>
+		function daysBetweenDates(date1, date2)
+		{
+			var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+			var diffDays = Math.round(Math.abs((date1.getTime() - date2.getTime())/(oneDay)));
+			return diffDays;
+		}
+
 		setInterval(function() {
 			HIPRInternal.PayoutInfoForMenu(function(obj) {
 				if(obj.err == null)
 				{
+					let time = obj.time;
+					if(time == 0) time = 1554076799000;
+
 					let now = new Date();
-					let date = new Date(obj.time);
+					let date = new Date(time);
 					let difference = new Date(Math.abs(date - now));
-					let hours = difference.getHours();
+					let daysHours = daysBetweenDates(date, now);
+					let hours = difference.getHours() + (daysHours * 24);
 					if(hours < 10) hours = "0" + hours;
 					let minutes = difference.getMinutes();
 					if(minutes < 10) minutes = "0" + minutes;
