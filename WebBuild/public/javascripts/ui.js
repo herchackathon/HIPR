@@ -19,6 +19,9 @@ HiprUI = {
         }
     },
     isDebug: function() {
+        if (window.location.search == '?debug')
+            return true
+
         if (window.location.hostname == 'hipr.one')
             return false
 
@@ -185,6 +188,22 @@ HiprUI = {
                 this.tableWeb3addRow('#ERROR Test #1', e, {style: 'color: red'})
             }
 */
+            // Test #10
+
+            try {
+                var address = window.web3.eth.accounts[0]
+
+                this.tableWeb3addRow('Test #10', '<div class="test-name">Wipe scores</div><button id="test10-bn-run" class="test-bn">Run</button>')
+                $('#test10-bn-run').click(()=>{
+                    self.runTest('test10')
+                })
+            }
+            catch (e)
+            {
+                this.tableWeb3addRow('#ERROR Test #10', e, {style: 'color: red'})
+            }
+
+
             this.updateSeasonStats()
         }
         catch (e) {
@@ -234,6 +253,11 @@ HiprUI = {
             })
     
             return*/
+        }
+        else if (testId == 'test10') {
+            HIPRInternal.wipeScores(function (res) {
+                self.testLog('Wipe scores', `<div style="max-width: 600px; overflow: auto;">${JSON.stringify(res, null, 2)}<div>`)//, {style: 'color: #224488; font-weight: bold'})
+            })
         }
 
         axios.post(url)

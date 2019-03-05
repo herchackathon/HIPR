@@ -157,6 +157,7 @@ HIPRInternal = {
 
 		this.playerScore.GetTopScoresSecureCount(function (error, result) {
 			if (!error) {
+				count = result.c[0]
 				var values = new Array(count),
 					resultsCount = 0
 
@@ -343,5 +344,26 @@ HIPRInternal = {
 			}
 		})
 	},
+
+	wipeScores: function(callback) {
+        try {
+			let from = window.web3.eth.accounts[0]
+			var m = this.playerScore
+			let res = m.WipeScores((error, result) => {
+				if (!error) {
+					callback({result})
+				}
+				else {
+					callback({err:error})
+				}
+			})
+		}
+		catch (e) {
+			console.error('WipeScores error', e.message)
+			return {
+				err: e.message
+				}
+		}
+	}
 }
 
