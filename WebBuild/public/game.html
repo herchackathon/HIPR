@@ -252,7 +252,8 @@
 			var menu = jQuery("#menu");
 			if(menu.hasClass("hide"))
 			{
-				HIPRInternal.GetTopScoresForMenu(100, function(result) {
+				var howManyEntries = 100;
+				HIPRInternal.GetTopScoresForMenu(howManyEntries, function(result) {
 					//console.log(result);
 
 					var list = jQuery("#menu .scores-list > ul");
@@ -264,7 +265,10 @@
 						return score2 - score1;
 					});
 					
+					let lastIndex = 0;
+
 					result.forEach(function(item, index) {
+						lastIndex = index;
 						let address = item.value[0];
 						let score = item.value[1];
 
@@ -292,6 +296,11 @@
 
 						list.append('<li><div class="entry-container ' + additionalClass + '"><span class="position">' + (index + 1) + '°</span><div class="entry"><div class="address">' + address + '</div><div class="score">' + score + '</div></div></div></li>');
 					});
+
+					for(let counter = lastIndex + 1; counter < howManyEntries; counter++)
+					{
+						list.append('<li><div class="entry-container"><span class="position">' + (counter + 1) + '°</span><div class="entry"><div class="address">---</div><div class="score">---</div></div></div></li>');
+					}
 
 					menu.removeClass("hide");
 				});
