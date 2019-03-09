@@ -163,7 +163,7 @@ HIPRInternal = {
 
 				for (var i = 0; i < count; i++) {
 					function f(i) {
-						self.playerScore.getTopScore(i, function (error, result) {
+/*						self.playerScore.getTopScore(i, function (error, result) {
 							var value = 0
 							if (!error)
 								value = [result[0], result[1].c[0]];
@@ -171,6 +171,20 @@ HIPRInternal = {
 							if (++resultsCount == count) {
 								callback(values);
 							}
+						})*/
+						self.playerScore.getTopPlayerAddress(i, function (error, result) {
+							var address = 0
+							if (!error)
+								address = result
+							self.playerScore.getTopPlayerScore(i, function (error, result) {
+								var score = 0
+								if (!error)
+									score = result
+								values[i] = {error, value: [address, score]}
+								if (++resultsCount == count) {
+									callback(values);
+								}
+							})
 						})
 					}
 					f(i);

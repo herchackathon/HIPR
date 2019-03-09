@@ -418,7 +418,7 @@ HiprUI = {
             $('#top-scores-count > td:eq(1)').append('<table id="top-scores-list"></table>')
             $('#top-scores-bn-populate').click(()=>{
                 $('#top-scores-bn-populate').hide()
-                for (var i = 0; i < count; i++) {
+/*                for (var i = 0; i < count; i++) {
                     ps.TopScoresSecure(i, (error, result)=>{
                         if (!error) {
                             var address = result[0]
@@ -429,8 +429,22 @@ HiprUI = {
                             $('#top-scores-list').append(`<tr><td>${JSON.stringify(error)}</td></tr>`)
                         }
                     })
-                }
-
+                }*/
+                HIPRInternal.GetTopScoresForMenu(count, (result)=>{
+                    var count = result.length
+                    for (var i = 0; i < count; i++) {
+                        var error = result[i].error
+                        if (!error) {
+                            var value = result[i].value
+                            var address = value[0]
+                            var score = value[1].c[0]
+                            $('#top-scores-list').append(`<tr><td>${address}</td><td>${score}</td></tr>`)
+                        }
+                        else {
+                            $('#top-scores-list').append(`<tr><td>${JSON.stringify(error)}</td></tr>`)
+                        }
+                    }
+                })
             })
         })
         
