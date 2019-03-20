@@ -1,5 +1,5 @@
 Web3Options = {
-  "env": "devP",
+  "env": "productionH",
   "dev": {
     "hipr_restful": "http://localhost:8086/api/1.0",
     "eth": "ganache"
