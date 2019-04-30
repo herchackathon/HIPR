@@ -52,13 +52,13 @@ namespace MHLab.Games.Rubik
             {
                 Vector2 delta = new Vector2(_lastMousePos.x - Input.mousePosition.x, _lastMousePos.y - Input.mousePosition.y) * .3f;
                 delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 10f;
-                float yRot = (_targetRot.y - delta.x);
+                float yRot = (_targetRot.y + delta.x);
                 if (yRot < -180f)
                     yRot += 359f;
 
                 if (yRot > 180f)
                     yRot -= 359f;
-                _targetRot.Set(Mathf.Clamp(_targetRot.x - delta.y, -80f, 80f), yRot);
+                _targetRot.Set(Mathf.Clamp(_targetRot.x + delta.y, -80f, 80f), yRot);
                 _lastMousePos = Input.mousePosition;
             }
 
