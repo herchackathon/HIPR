@@ -139,28 +139,11 @@
     <Compile Include="Assets\MHLab\Scripts\Utilities\Results\Result.cs" />
     <Compile Include="Assets\MHLab\Scripts\WebServiceManager.cs" />
     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\MHLab\Metamask\metamask.jslib" />
     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Free.txt" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\MHLab\Games\ColorGame\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>/Users/aaronsantamaria/UnityProjects/HIPR/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>

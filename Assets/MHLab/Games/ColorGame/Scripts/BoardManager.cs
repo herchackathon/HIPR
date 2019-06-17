@@ -73,14 +73,12 @@ public class BoardManager : MonoBehaviour
         if (CheckBoard())
         {
             NextLevel();
-            Debug.Log("STARTING LEVEL: " + level);
         }
 
         // If time is up, game over is true 
         if (gameOver == true)
         {
             GameOver();
-            Debug.Log("GAME OVER");
         }
 
         // If the left button is pressed
@@ -355,7 +353,8 @@ public class BoardManager : MonoBehaviour
         //Destroy(SceneManager.GetActiveScene());
         //add code here to restart all static variables
         Reset();
-        SceneManager.LoadScene("ColorGameStart");
+        //SceneManager.LoadScene("ColorGameStart");
+        SceneManager.LoadScene(1);
 
     }
 

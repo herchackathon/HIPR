@@ -32,25 +32,32 @@ public class PuzzleSelector : MonoBehaviour
         {
             new PuzzleLevelData()
             {
-                SceneIndex = 1,
+                SceneIndex = 2,
                 Name = "Sliding Puzzle",
                 Description = "Let's reorder puzzle pieces to restore the original image! But pay attention to moves count and to the time! Your score will be influenced by them!",
                 Image = Resources.Load<Sprite>("Sprites/SlidingPuzzleMiniature")
             },
-            /*new PuzzleLevelData()
+            new PuzzleLevelData()
             {
-                SceneIndex = 2,
+                SceneIndex = 3,
                 Name = "Rubik's Cube",
                 Description = "Let's solve the classic Rubik's puzzle to restore the original image! Pay attention to the moves count and to the time! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/RubikPuzzleMiniature")
             },
             new PuzzleLevelData()
             {
-                SceneIndex = 3,
+                SceneIndex = 4,
                 Name = "Matching Cubes",
                 Description = "Let's pop off all color groups to restore the original background image! Pay attention to the time and groups' size! Your score will be based on them!",
                 Image = Resources.Load<Sprite>("Sprites/MatchingGameMiniature")
-            },*/
+            },
+             new PuzzleLevelData()
+            {
+                SceneIndex = 5,
+                Name = "Five by Five",
+                Description = "Match colors on a 5 by 5 board of cubes, each click changes 5 cubes, each cube has 5 colors! Pay attention to the moves count and to the time! Your score will be based on them!",
+                Image = Resources.Load<Sprite>("Sprites/FiveByFiveIcon")
+            },
         };
     }
 
@@ -79,6 +86,7 @@ public class PuzzleSelector : MonoBehaviour
         {
             CurrentSelectedPuzzleIndex++;
             UpdateLevelData(CurrentSelectedPuzzleIndex);
+            Debug.Log("SelectNext: " + CurrentSelectedPuzzleIndex);
         }
     }
 
@@ -88,6 +96,7 @@ public class PuzzleSelector : MonoBehaviour
         {
             CurrentSelectedPuzzleIndex--;
             UpdateLevelData(CurrentSelectedPuzzleIndex);
+            Debug.Log("SelectPrevious: " + CurrentSelectedPuzzleIndex);
         }
     }
 
