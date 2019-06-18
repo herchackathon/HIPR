@@ -51,7 +51,6 @@ public class BoardManager : MonoBehaviour
         // Set the colors for the board 
         ColorScheme colorScheme = new ColorScheme();
         int num = GetRandomNumber(0, FindObjectOfType<ColorSchemeManager>().colorSchemes.Length);
-        Debug.Log("COLOR SCHEME: " + num);
         colorScheme = FindObjectOfType<ColorSchemeManager>().colorSchemes[num];
         //need to add code here to shuffle the color scheme 
         materials[0].SetColor("_Color", colorScheme.color1);
