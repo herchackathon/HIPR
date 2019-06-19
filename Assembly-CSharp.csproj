@@ -82,6 +82,7 @@
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\ColorScheme.cs" />
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\ColorSchemeManager.cs" />
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\GroundCollision.cs" />
+    <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\InfoPanelButton.cs" />
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\RestartGame.cs" />
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\Sound.cs" />
     <Compile Include="Assets\MHLab\Games\ColorGame\Scripts\StartMenu.cs" />
