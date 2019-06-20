@@ -306,6 +306,11 @@ public class BoardManager : MonoBehaviour
 
     public void NextLevel()
     {
+
+        //ADD A CHECK HERE FOR LEVEL DIFF
+        // THEN SEND TO HARDER BOARD IF ABOVE ... EG. LVL 20
+
+
         // make the complete sign appear
         completeSign.SetActive(true);
         // play a sound
@@ -313,7 +318,7 @@ public class BoardManager : MonoBehaviour
         // adjust level
         level += 1;
         //add time
-        int moreT = (int)(level * 1.5f) + 7;
+        int moreT = (int)(level * 1.6f) + 7;
         Timer.AddTime(moreT);
         // go to next level, but leave a delay for sound 
         Invoke("LoadNextLevel", 1f);
