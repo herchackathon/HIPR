@@ -13,12 +13,12 @@ public class InfoPanelButton : MonoBehaviour
     {
         if((infoPanel != null) && (temp == 0))
         {
-            infoPanel.active = true;
+            infoPanel.SetActive(true); 
             temp = 1;
         }
         else
         {
-            infoPanel.active = false;
+            infoPanel.SetActive(false);
             temp = 0;
         }
     }

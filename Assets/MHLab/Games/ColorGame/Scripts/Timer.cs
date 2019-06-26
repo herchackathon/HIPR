@@ -6,14 +6,14 @@ public class Timer : MonoBehaviour
 {
 
     //private TextMeshProUGUI text;
-    private Text text;
+    private Text displayText;
 
-    static float time = 5f;
+    static float time = 500f;
     //static float extraTime = 10f;
 
     void Start()
     {
-        text = this.gameObject.GetComponent<Text>();
+        displayText = this.gameObject.GetComponent<Text>();
     }
 
     void Update()
@@ -22,33 +22,13 @@ public class Timer : MonoBehaviour
         {
             time -= Time.deltaTime;
             //text.SetText(time.ToString("0") + "s");
-            text.text = time.ToString("0") + "s";
-
+            displayText.text = time.ToString("0") + "s";
         }
         else
         {
-            BoardManager.SetGameStatus(true);
-            GetComponent<Timer>().enabled = false;
+            BoardManager.SetGameOver(true);
+            //GetComponent<Timer>().enabled = false;
         }
-
-
-        //if (timer <= 0)
-        //{
-        //    InGameManager.gameOver = true;
-        //}
-
-        //if (InGameManager.levelComplete == false)
-        //{
-        //    timer -= Time.deltaTime;
-        //    timerText.SetText(timer.ToString("0") + "s");
-        //}
-
-        //if (InGameManager.levelComplete == true)
-        //{
-        //    timer += 5f;
-        //    this.gameObject.SetActive(false);
-        //}
-
     }
 
     public static void AddTime(float num)
@@ -61,22 +41,6 @@ public class Timer : MonoBehaviour
         time = num;
     }
 
-
-    //void Start()
-    //{
-    //    timer = 0;
-    //}
-
-
-    //void Update()
-    //{
-    //    if (GameOver.gameOver == false)
-    //    {
-    //        timer += Time.deltaTime;
-    //        seconds = timer;
-    //        stopwatchText.SetText(seconds.ToString("0") + "s");
-    //    }
-    //}
 
 
 }

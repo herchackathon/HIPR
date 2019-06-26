@@ -8,38 +8,35 @@ using System.Collections;
 public class BoardManager : MonoBehaviour
 {
 
-    public Color[] colors = new Color[19];
+    ////public Color[] colors = new Color[19];
     public Material[] materials = new Material[5];
 
     // The max height a cube can go before the upward force is no longer applied 
-    int maxHeight = 5;
+    private int maxHeight = 4;
 
     // The strength of upwards force applied to a cube when clicked 
-    float upForce = 100f;
+    private float upForce = 100f;
 
     // The puzzle's difficulty setting - how much is the board mixed
-    public static int level = 1;
+    private static int level = 1;
+
+    private int levelCompleteScore;
 
     // The size of the board / The X and Y axis sizes for the board 
-    public static int xAxisLength = 5; // x-axis (horizontal) 
-    public static int yAxisLength = 5; // y-axis (vertical) 
+    private static int xAxisLength = 5; // x-axis (horizontal) 
+    private static int yAxisLength = 5; // y-axis (vertical) 
 
-    //int colourSize = 5;
-    //int colourListSize = 19;
-
-    //
     public GameObject completeSign;
     public GameObject gameOverSign;
     public GameObject failureSign;
-    //public GameObject restartButton;
-    //public GameObject exitButton;
+    public GameObject board5x5;
+    public GameObject board7x7;
+    public GameObject timerScript;
+    public GameObject clickerScript;
 
     public static bool levelComplete;
-
     public static bool gameOver;
 
-    int levelCompleteScore;
-    //
 
     void Start()
     {
@@ -52,7 +49,9 @@ public class BoardManager : MonoBehaviour
         ColorScheme colorScheme = new ColorScheme();
         int num = GetRandomNumber(0, FindObjectOfType<ColorSchemeManager>().colorSchemes.Length);
         colorScheme = FindObjectOfType<ColorSchemeManager>().colorSchemes[num];
-        //need to add code here to shuffle the color scheme 
+
+        //need to add code here to shuffle the colors 
+
         materials[0].SetColor("_Color", colorScheme.color1);
         materials[1].SetColor("_Color", colorScheme.color2);
         materials[2].SetColor("_Color", colorScheme.color3);
@@ -71,11 +70,11 @@ public class BoardManager : MonoBehaviour
         // Check if the level is complete
         if (CheckBoard())
         {
-            NextLevel();
+            NextLevelStep1();
         }
 
-        // If time is up, game over is true 
-        if (gameOver == true)
+        // If time is up, game over == true 
+        if (gameOver)
         {
             GameOver();
         }
@@ -105,32 +104,27 @@ public class BoardManager : MonoBehaviour
     {
         // Find the object thats been clicked 
         GameObject cubeClicked = GameObject.Find(objectName);
-
         Material materialTemp = cubeClicked.GetComponent<Renderer>().material;
 
-        // Split the cube name 
-        // Separate the cube name into 3 parts
+        // Split the cube's name into 3 parts & increment to find cubes around
         // Part 1 being the object name/type "Cube"
         // Part 2 being the object's row 'A', index will be [1]
         // Part 3 being the object's column '1', index will be [2]
-
         string[] cubeNameSplit = objectName.Split(' ');
-
         char aboveLetter = char.Parse(cubeNameSplit[1]);
         char belowLetter = char.Parse(cubeNameSplit[1]);
         char leftNumber = char.Parse(cubeNameSplit[2]);
         char rightNumber = char.Parse(cubeNameSplit[2]);
-
         --aboveLetter;
         ++belowLetter;
         --leftNumber;
         ++rightNumber;
 
-        //if (cubeClicked.GetComponent<Transform>().position.y < maxHeight)
-        //{
-        //    Rigidbody rb = cubeClicked.GetComponent<Rigidbody>();
-        //    rb.AddForce(0, upForce, 0);
-        //}
+        if (cubeClicked.GetComponent<Transform>().position.y < maxHeight)
+        {
+            Rigidbody rb = cubeClicked.GetComponent<Rigidbody>();
+            rb.AddForce(0, upForce, 0);
+        }
 
         for (int x = 0; x < materials.Length; x++)
         {
@@ -156,17 +150,17 @@ public class BoardManager : MonoBehaviour
 
     void ChangeCubesAround(char aboveLetter, char aboveNumber)
     {
-        GameObject cube = GameObject.Find("Cube " + aboveLetter + " " + aboveNumber);
+        GameObject cubeTemp = GameObject.Find("Cube " + aboveLetter + " " + aboveNumber);
 
-        if (cube != null)
+        if (cubeTemp != null)
         {
-            Material materialTemp = cube.GetComponent<Renderer>().material;
+            Material materialTemp = cubeTemp.GetComponent<Renderer>().material;
 
-            //if (cube.GetComponent<Transform>().position.y < maxHeight)
-            //{
-            //    Rigidbody rb = cube.GetComponent<Rigidbody>();
-            //    rb.AddForce(0, upForce, 0);
-            //}
+            if (cubeTemp.GetComponent<Transform>().position.y < maxHeight)
+            {
+                Rigidbody rb = cubeTemp.GetComponent<Rigidbody>();
+                rb.AddForce(0, upForce, 0);
+            }
 
             for (int x = 0; x < materials.Length; x++)
             {
@@ -174,11 +168,11 @@ public class BoardManager : MonoBehaviour
                 {
                     if (x < 4)
                     {
-                        cube.GetComponent<Renderer>().material = materials[x + 1];
+                        cubeTemp.GetComponent<Renderer>().material = materials[x + 1];
                     }
                     else
                     {
-                        cube.GetComponent<Renderer>().material = materials[0];
+                        cubeTemp.GetComponent<Renderer>().material = materials[0];
                     }
                 }
             }
@@ -187,21 +181,17 @@ public class BoardManager : MonoBehaviour
 
     void SetBoard()
     {
-        // Rows......= A B C D E
-        // Columns...= 1 2 3 4 5
-
-        // Temporary game object, just to set each cube's material 
+        // Rows...... = A B C D E ... F G
+        // Columns... = 1 2 3 4 5 ... 6 7 
         GameObject temp;
 
-        // Set the first/starting row
-        char row = 'A';
+        char row = 'A';  // Set the first/starting row
 
         // Loop through the rows and columns and set the material for each object
         // The first IF LOOP goes through the rows
         for (int i = 0; i < yAxisLength; i++)
         {
-            // Set the first/starting column 
-            int column = 1;
+            int column = 1; // Set the first/starting column 
 
             // Loop through the columns
             for (int x = 0; x < xAxisLength; x++)
@@ -210,14 +200,11 @@ public class BoardManager : MonoBehaviour
                 temp = GameObject.Find("Cube " + row + " " + column);
                 temp.GetComponent<Renderer>().material = materials[0];
 
-                // Increment to the next column/number
-                // e.g. 1 to 2 to 3...etc. 
-                column++;
+                column++; // Increment to the next column/number, e.g. 1 to 2 to 3...etc. 
             }
-            // Increment to the next row/letter
-            // e.g. A to B to C...etc. 
-            row++;
+            row++; // Increment to the next row/letter, e.g. A to B to C...etc. 
         }
+
         // Set the goals (which are also the walls)
         GameObject.Find("Wall Top").GetComponent<Renderer>().material = materials[0];
         GameObject.Find("Wall Bottom").GetComponent<Renderer>().material = materials[0];
@@ -229,7 +216,6 @@ public class BoardManager : MonoBehaviour
         GameObject.Find("Key3").GetComponent<Renderer>().material = materials[2];
         GameObject.Find("Key4").GetComponent<Renderer>().material = materials[3];
         GameObject.Find("Key5").GetComponent<Renderer>().material = materials[4];
-
     }
 
 
@@ -258,38 +244,30 @@ public class BoardManager : MonoBehaviour
 
     public bool CheckBoard()
     {
-        GameObject cubeCheck;
+        GameObject cube;
+        GameObject goal = GameObject.Find("Wall Top");
 
-        GameObject goal1 = GameObject.Find("Wall Top");
-
-        string materialNameGoal = goal1.GetComponent<Renderer>().material.name;
+        string materialNameGoal = goal.GetComponent<Renderer>().material.name;
 
         int playerScore = 0;
 
-        // Loop through the rows and columns and set the material
+        // Loop through the rows and columns and check the materials/colors
         char rowLetter = 'A';
-
-        for (int i = 0; i < BoardManager.yAxisLength; i++)
+        for (int i = 0; i < yAxisLength; i++)
         {
             int columnNumber = 1;
-            // Loop through columns/numbers
-            for (int x = 0; x < BoardManager.xAxisLength; x++)
-            {
-                // Returns the Cube GameObject of name "***"
-                cubeCheck = GameObject.Find("Cube " + rowLetter + " " + columnNumber);
 
-                //Name of the material 
-                string materialName = cubeCheck.GetComponent<Renderer>().material.name;
+            for (int x = 0; x < xAxisLength; x++)
+            {
+                cube = GameObject.Find("Cube " + rowLetter + " " + columnNumber);
+                string materialName = cube.GetComponent<Renderer>().material.name;
 
                 if (materialName.Equals(materialNameGoal))
                 {
                     playerScore++;
                 }
-
-                // Increment the column (number) e.g. A to B to C...etc. 
                 columnNumber++;
             }
-            // Increment the row (letter) e.g. A to B to C...etc. 
             rowLetter++;
         }
 
@@ -304,38 +282,53 @@ public class BoardManager : MonoBehaviour
     }
 
 
-    public void NextLevel()
+    public void NextLevelStep1()
     {
-
-        //ADD A CHECK HERE FOR LEVEL DIFF
-        // THEN SEND TO HARDER BOARD IF ABOVE ... EG. LVL 20
-
-
-        // make the complete sign appear
         completeSign.SetActive(true);
-        // play a sound
         FindObjectOfType<AudioManager>().Play("NextLevel");
-        // adjust level
+
         level += 1;
-        //add time
-        int moreT = (int)(level * 1.6f) + 7;
-        Timer.AddTime(moreT);
-        // go to next level, but leave a delay for sound 
-        Invoke("LoadNextLevel", 1f);
+
+        int time = (level * 2) + 7;
+        Timer.AddTime(time);
+
+        Invoke("NextLevelStep2", 1f); // go to next level, but leave a delay for sound 
+
         this.gameObject.SetActive(false);
     }
 
-    public void LoadNextLevel()
+    public void NextLevelStep2()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        completeSign.SetActive(false);
+
+        if (level == 10)
+        {
+            board5x5.SetActive(false);
+            board7x7.SetActive(true);
+            xAxisLength = 7;
+            yAxisLength = 7;
+        }
+
+        Start();
+        this.gameObject.SetActive(true);
     }
+
+
+    public static void SetGameOver(bool trueOrFalse)
+    {
+        gameOver = trueOrFalse;
+    }
+
 
     public void GameOver()
     {
         failureSign.SetActive(true);
         FindObjectOfType<AudioManager>().Play("PopUp");
+
         Invoke("DisplayGameOverSign", 1f);
+
         level = 1;
+
         this.gameObject.SetActive(false);
     }
 
@@ -345,35 +338,31 @@ public class BoardManager : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("GameOver");
     }
 
-
-    public static void SetGameStatus(bool trueOrFalse)
+    public void Refresh()
     {
-        gameOver = trueOrFalse;
+        level = 1;
+        xAxisLength = 5;
+        yAxisLength = 5;
+
+        board5x5.SetActive(true);
+        board7x7.SetActive(false);
+
+        gameOverSign.SetActive(false);
+        failureSign.SetActive(false);
+        completeSign.SetActive(false);
+
+        Clicker.SetClicker(0);
+        Timer.SetTime(5);
+
+        Start();
+        this.gameObject.SetActive(true);
     }
 
 
     public void Exit()
     {
-        //Destroy(SceneManager.GetActiveScene());
-        //add code here to restart all static variables
-        Reset();
-        //SceneManager.LoadScene("ColorGameStart");
+        Refresh();
         SceneManager.LoadScene(1);
-
-    }
-
-    public void Reset()
-    {
-        level = 1;
-        Clicker.SetClicker(0);
-        Timer.SetTime(5);
-    }
-
-    public void Refresh()
-    {
-        Reset();
-        SceneManager.LoadScene("Board 5x5");
-        //Start();
     }
 
 

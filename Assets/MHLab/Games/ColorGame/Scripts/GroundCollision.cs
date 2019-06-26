@@ -12,6 +12,4 @@ public class GroundCollision : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Thud");
         }
     }
-
-
 }

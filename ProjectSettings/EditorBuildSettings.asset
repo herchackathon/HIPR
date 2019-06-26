@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MHLab/Games/Matching/Scenes/MatchingGame.unity
     guid: 24150febdd96d964d96d48b2e766b2e1
-  - enabled: 1
+  - enabled: 0
     path: Assets/MHLab/Games/ColorGame/Scenes/board 5x5 OLD.unity
     guid: 02744a0e517c942399bfb663e436b1d6
+  - enabled: 1
+    path: Assets/MHLab/Games/ColorGame/Scenes/board 5x5.unity
+    guid: e0725b581c4d04a68a5c80d62353ae11
   m_configObjects: {}

@@ -6,15 +6,15 @@ public class Clicker : MonoBehaviour
 {
 
     //private TextMeshProUGUI text;
-    private Text text;
+    public static Text textDisplayed;
 
     static int clicks = 0;
 
     void Start()
     {
-        text = this.gameObject.GetComponent<Text>();
+        textDisplayed = this.gameObject.GetComponent<Text>();
         //text.SetText(clicks.ToString("0"));
-        text.text = clicks.ToString("0");
+        textDisplayed.text = clicks.ToString("0");
     }
 
 
@@ -33,22 +33,17 @@ public class Clicker : MonoBehaviour
                 {
                     clicks++;
                     //text.SetText(clicks.ToString("0"));
-                    text.text = clicks.ToString("0");
+                    textDisplayed.text = clicks.ToString("0");
                 }
-
             }
-
         }
-    }//
+    }
 
-    //public void UpdateClicker()
-    //{
-    //    clicks++;
-    //}
 
     public static void SetClicker(int num)
     {
         clicks = num;
+        textDisplayed.text = clicks.ToString("0");
     }
 
 
