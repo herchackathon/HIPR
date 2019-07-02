@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
     //private TextMeshProUGUI text;
     private Text displayText;
 
-    static float time = 500f;
+    static float time = 5f;
     //static float extraTime = 10f;
 
     void Start()

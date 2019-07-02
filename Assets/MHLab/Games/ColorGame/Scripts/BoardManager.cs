@@ -34,6 +34,10 @@ public class BoardManager : MonoBehaviour
     public GameObject timerScript;
     public GameObject clickerScript;
 
+    public GameObject passNormal;
+    public GameObject passHighlight;
+    public static int passCount;
+
     public static bool levelComplete;
     public static bool gameOver;
 
@@ -50,13 +54,23 @@ public class BoardManager : MonoBehaviour
         int num = GetRandomNumber(0, FindObjectOfType<ColorSchemeManager>().colorSchemes.Length);
         colorScheme = FindObjectOfType<ColorSchemeManager>().colorSchemes[num];
 
-        //need to add code here to shuffle the colors 
-
         materials[0].SetColor("_Color", colorScheme.color1);
         materials[1].SetColor("_Color", colorScheme.color2);
         materials[2].SetColor("_Color", colorScheme.color3);
         materials[3].SetColor("_Color", colorScheme.color4);
         materials[4].SetColor("_Color", colorScheme.color5);
+
+        // Shuffle the materials
+        Random rand = new Random();
+        int n = materials.Length;
+        while (n > 1)
+        {
+            n--;
+            int k = GetRandomNumber(0, n + 1);
+            Color temp = materials[k].color;
+            materials[k].color = materials[n].color;
+            materials[n].color = temp;
+        }
 
         // Set the cube starting colours and goal colours 
         SetBoard();
@@ -79,6 +93,12 @@ public class BoardManager : MonoBehaviour
             GameOver();
         }
 
+        if (passCount > 0 && passHighlight.active == true)
+        {
+            PassSolve();
+            return;
+        }
+
         // If the left button is pressed
         if (Input.GetMouseButtonDown(0) && levelComplete == false && gameOver == false)
         {
@@ -93,14 +113,14 @@ public class BoardManager : MonoBehaviour
                     //temp.UpdateClicker();
                     string cubeName = hit.transform.gameObject.name;
                     FindObjectOfType<AudioManager>().Play("Click");
-                    ChangeCubeColours(cubeName);
+                    ChangeCubeColours(cubeName, false);
                 }
             }
         }
     }
 
 
-    void ChangeCubeColours(string objectName)
+    void ChangeCubeColours(string objectName, bool pass)
     {
         // Find the object thats been clicked 
         GameObject cubeClicked = GameObject.Find(objectName);
@@ -141,19 +161,35 @@ public class BoardManager : MonoBehaviour
             }
         }
 
-        ChangeCubesAround(aboveLetter, char.Parse(cubeNameSplit[2]));
-        ChangeCubesAround(belowLetter, char.Parse(cubeNameSplit[2]));
-        ChangeCubesAround(char.Parse(cubeNameSplit[1]), leftNumber);
-        ChangeCubesAround(char.Parse(cubeNameSplit[1]), rightNumber);
+
+        ChangeCubesAround(aboveLetter, char.Parse(cubeNameSplit[2]), pass);
+        ChangeCubesAround(belowLetter, char.Parse(cubeNameSplit[2]), pass);
+        ChangeCubesAround(char.Parse(cubeNameSplit[1]), leftNumber, pass);
+        ChangeCubesAround(char.Parse(cubeNameSplit[1]), rightNumber, pass);
+
+
+        if (pass)
+        {
+            cubeClicked.GetComponent<Renderer>().material = materials[0];
+            return;
+        }
+
     }
 
 
-    void ChangeCubesAround(char aboveLetter, char aboveNumber)
+    void ChangeCubesAround(char aboveLetter, char aboveNumber, bool pass)
     {
         GameObject cubeTemp = GameObject.Find("Cube " + aboveLetter + " " + aboveNumber);
 
         if (cubeTemp != null)
         {
+
+            if (pass)
+            {
+                cubeTemp.GetComponent<Renderer>().material = materials[0];
+                return;
+            }
+
             Material materialTemp = cubeTemp.GetComponent<Renderer>().material;
 
             if (cubeTemp.GetComponent<Transform>().position.y < maxHeight)
@@ -227,7 +263,7 @@ public class BoardManager : MonoBehaviour
             int row = GetRandomNumber(0, yAxisLength);
             int column = GetRandomNumber(1, (xAxisLength + 1));
             string cubeNamesToMix = "Cube " + letters[row] + " " + column;
-            ChangeCubeColours(cubeNamesToMix);
+            ChangeCubeColours(cubeNamesToMix, false);
         }
     }
 
@@ -309,6 +345,13 @@ public class BoardManager : MonoBehaviour
             yAxisLength = 7;
         }
 
+        if ((level % 3) == 0)
+        {
+            IncrementPassCount();
+            passNormal.SetActive(true);
+            passHighlight.SetActive(false);
+        }
+
         Start();
         this.gameObject.SetActive(true);
     }
@@ -327,8 +370,6 @@ public class BoardManager : MonoBehaviour
 
         Invoke("DisplayGameOverSign", 1f);
 
-        level = 1;
-
         this.gameObject.SetActive(false);
     }
 
@@ -343,6 +384,7 @@ public class BoardManager : MonoBehaviour
         level = 1;
         xAxisLength = 5;
         yAxisLength = 5;
+        passCount = 0;
 
         board5x5.SetActive(true);
         board7x7.SetActive(false);
@@ -363,6 +405,57 @@ public class BoardManager : MonoBehaviour
     {
         Refresh();
         SceneManager.LoadScene(1);
+    }
+
+
+    public void IncrementPassCount()
+    {
+        passCount++;
+
+        passNormal.GetComponentInChildren<Text>().text = "PASS:" + passCount.ToString("0");
+        passHighlight.GetComponentInChildren<Text>().text = "PASS:" + passCount.ToString("0");
+        //passText1.GetComponent<Text>().text = "PASS:" + passCount.ToString("0");
+        //passText2.GetComponent<Text>().text = "PASS:" + passCount.ToString("0");
+    }
+
+    public void DecrementPassCount()
+    {
+        passCount--;
+        passNormal.GetComponentInChildren<Text>().text = "PASS:" + passCount.ToString("0");
+        passHighlight.GetComponentInChildren<Text>().text = "PASS:" + passCount.ToString("0");
+    }
+
+    public void PassSolve()
+    {
+        if (Input.GetMouseButtonDown(0) && levelComplete == false && gameOver == false)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 100.0f))
+            {
+                if (hit.transform.gameObject.tag == "Cube")
+                {
+                    string cubeName = hit.transform.gameObject.name;
+                    FindObjectOfType<AudioManager>().Play("Click");
+                    ChangeCubeColours(cubeName, true);
+
+                    DecrementPassCount();
+
+                    if (passCount <= 0)
+                    {
+                        passNormal.SetActive(false);
+                        passHighlight.SetActive(false);
+                    }
+                    else
+                    {
+                        passNormal.SetActive(true);
+                        passHighlight.SetActive(false);
+                    }
+
+                }
+            }
+        }
     }
 
 
